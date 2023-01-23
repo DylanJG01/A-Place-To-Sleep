@@ -15,34 +15,34 @@ router.use(restoreUser);
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 
-router.post('/test', function (req, res) {
-    res.json({ requestBody: req.body });
-});
+// router.post('/test', function (req, res) {
+//     res.json({ requestBody: req.body });
+// });
 
-router.get('/set-token-cookie', async (_req, res) => {
-    const user = await User.findOne({
-        where: {
-            username: 'DoggoMcDogDog'
-        }
-    });
-    setTokenCookie(res, user);
-    return res.json({ user: user });
-});
+// router.get('/set-token-cookie', async (_req, res) => {
+//     const user = await User.findOne({
+//         where: {
+//             username: 'DoggoMcDogDog'
+//         }
+//     });
+//     setTokenCookie(res, user);
+//     return res.json({ user: user });
+// });
 
-router.get(
-    '/restore-user',
-    (req, res) => {
-        console.log(req.user)
-        return res.json(req.user);
-    }
-);
+// router.get(
+//     '/restore-user',
+//     (req, res) => {
+//         console.log(req.user)
+//         return res.json(req.user);
+//     }
+// );
 
-router.get(
-    '/require-auth',
-    requireAuth,
-    (req, res) => {
-        return res.json(req.user);
-    }
-);
+// router.get(
+//     '/require-auth',
+//     requireAuth,
+//     (req, res) => {
+//         return res.json(req.user);
+//     }
+// );
 
 module.exports = router;
