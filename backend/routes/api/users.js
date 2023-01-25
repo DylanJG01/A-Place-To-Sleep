@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Spot } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -42,6 +42,7 @@ router.post(
     }
 );
 
+
 router.get(
     '/',
     async (req, res) => {
@@ -49,5 +50,14 @@ router.get(
         res.json(allUsers)
     }
 );
+
+// router.delete( 
+//     '/current',
+//     requireAuth,
+//     async (req, res) => {
+//         deleteUser = await User.findByPk()
+//         deleteUser.delete();
+//     }
+// );
 
 module.exports = router;

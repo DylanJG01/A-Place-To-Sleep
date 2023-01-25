@@ -28,7 +28,7 @@ module.exports = {
         state: 'CA',
         country: 'TheMoon',
         lat: 22.22222222,
-        lng: 222.22222222,
+        lng: -150.22222222,
         name: 'test place 2',
         description: 'Delightful place',
         price: 2.2
@@ -40,7 +40,7 @@ module.exports = {
         state: 'CA',
         country: 'TheMoon',
         lat: 33.33333333,
-        lng: 333.33333333,
+        lng: 170.10101010,
         name: 'Third place 3',
         description: 'The Worst Place Ever',
         price: 3.3
