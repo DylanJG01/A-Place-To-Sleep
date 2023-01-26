@@ -279,6 +279,8 @@ router.post(
     async (req, res, next) => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body
         const err = new Error();
+
+
         // console.log(req.user)
         if(!address || address.length > 256){
             err.address = "Street Address must be between 1 and 256 characters"
@@ -357,6 +359,7 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
+        if(errors.message === "Authentication required") res.status(401)
        return res.json({
             errors
     })
