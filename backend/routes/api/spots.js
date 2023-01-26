@@ -199,7 +199,6 @@ router.post(
             return next(err)
         }
 
-
         const newSpotImg = await SpotImage.create({
             spotId: req.params.id,
             url,
@@ -226,8 +225,6 @@ router.put(
             return next(err)
         }
 
-        console.log("req.user.id:", req.user.id, "spot.ownerId", spot.ownerId, "+req.user.id", +req.user.id)
-        
         if(req.user.id !== spot.ownerId){
             err.message = "Forbidden"
             res.status(403)
@@ -247,7 +244,7 @@ router.put(
         if(state){
             if(state.length < 1|| state.length > 50){
                 err.state = 'State must be between 1 and 50 characters'
-            }
+            } else updatedSpot.state = state
         }
         if (lat){
             if((parseInt(lat) > 90) || parseInt(lat) < -90){
@@ -287,7 +284,7 @@ router.put(
         }
         
         
-        await spot.update({updatedSpot})
+        await spot.update({...updatedSpot})
         
         res.status(201)
         return res.json(spot)
