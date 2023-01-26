@@ -100,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         validLength(value){
-          if(value.length < 256){
+          if(value.length > 256){
             throw new Error("Description must be between 1 and 255 characters")
           }
         }

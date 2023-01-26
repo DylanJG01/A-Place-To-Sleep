@@ -182,7 +182,7 @@ router.post(
     requireAuth,
     async (req, res, next) => {
         const { url, preview } = req.body
-
+        
     }
 )
 
@@ -208,7 +208,7 @@ router.post(
         if(!name || name.length > 49){
             err.name = "Name must be more than 0 and less than 50 characters"
         }
-        if(!description || description.length < 256){
+        if(!description || description.length > 256){
             err.description = "Description must be between 1 and 255 characters"
         }
         if(!name || name.length > 49){
