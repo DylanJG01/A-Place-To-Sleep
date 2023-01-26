@@ -10,7 +10,7 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId: 1,
+        ownerId: 2,
         address: 'Test Place 1',
         city: 'TestCity',
         state: 'CA',
@@ -22,7 +22,7 @@ module.exports = {
         price: 1111.11
       },
       {
-        ownerId: 2,
+        ownerId: 3,
         address: 'Test Place 2',
         city: 'TestCity',
         state: 'CA',
@@ -34,7 +34,7 @@ module.exports = {
         price: 2.2
       },
       {
-        ownerId: 3,
+        ownerId: 1,
         address: 'Test Place 3',
         city: 'TestCity',
         state: 'CA',
