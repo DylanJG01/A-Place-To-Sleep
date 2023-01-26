@@ -67,7 +67,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
-        len: [4, 30],
+        lengthWithinBounds(value){
+          if (value.length <= 0 || value.length > 30){
+            throw new Error("Username must be between 1 and 30 characters")
+          }
+        },
         isNotEmail(value){
           if (Validator.isEmail(value)){
             throw new Error("Username cannot be an email")
@@ -93,11 +97,26 @@ module.exports = (sequelize, DataTypes) => {
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: true     
+      allowNull: false,
+      validate: {
+        validLength(value){
+          if(value.length < 1 || value.length > 35){
+            throw new Error("First name must be between 1 and 35 characters")
+          }
+        }
+      },
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
+      validate: {
+        validLength(value) {
+          if (value.length < 1 || value.length > 50) {
+            throw new Error("Last name must be between 1 and 50 characters")
+
+          }
+        }
+      }
     },
     createdAt: {
       allowNull: false,

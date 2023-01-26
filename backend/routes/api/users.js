@@ -30,10 +30,11 @@ const validateSignup = [
 router.post(
     '/',
     validateSignup,
-    async (req, res) => {
+    async (req, res, next) => {
+        
         const { email, password, username, firstName, lastName } = req.body;
         const user = await User.signup({ email, username, password, firstName, lastName });
-
+        
         await setTokenCookie(res, user);
 
         return res.json({
@@ -50,14 +51,26 @@ router.get(
         res.json(allUsers)
     }
 );
-
-// router.delete( 
-//     '/current',
-//     requireAuth,
-//     async (req, res) => {
-//         deleteUser = await User.findByPk()
-//         deleteUser.delete();
-//     }
-// );
-
+    
+router.delete( 
+    '/current',
+    requireAuth,
+    async (req, res) => {
+        deleteUser = await User.findByPk()
+        deleteUser.delete();
+    }
+    );
+    
+    
+router.use((err, req, res, next) => {
+    err.status = 400
+    if (err.errors[0].message){
+        if (err.errors[0].message.includes('unique')){
+            err.status = 403
+        }
+    }
+    next(err)
+})
+    
+    
 module.exports = router;
