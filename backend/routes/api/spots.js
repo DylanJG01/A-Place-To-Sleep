@@ -232,7 +232,7 @@ router.put(
         }
 
         if(address){
-            if (address.length > 256) err.address = "Street Address must be between 1 and 256 characters"
+            if (address.length > 255) err.address = "Street Address must be between 1 and 255 characters"
             else updatedSpot.address = address
         }
         if (city){
@@ -245,6 +245,11 @@ router.put(
             if(state.length < 1|| state.length > 50){
                 err.state = 'State must be between 1 and 50 characters'
             } else updatedSpot.state = state
+        }
+        if (country) {
+            if (country.length < 1 || country.length > 50) {
+                err.country = 'Country must be between 1 and 50 characters'
+            } else updatedSpot.country = country
         }
         if (lat){
             if((parseInt(lat) > 90) || parseInt(lat) < -90){
@@ -265,7 +270,7 @@ router.put(
             else updatedSpot.name = name
         }
         if(description){
-            if(!description || description.length > 256){
+            if(!description || description.length > 255){
                 err.description = "Description must be between 1 and 255 characters"
             }
             else updatedSpot.description = description

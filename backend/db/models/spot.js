@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [1, 256]
+        len: [1, 255]
       }
     },
     city: {
@@ -52,7 +52,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     country: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        validLen(value){
+          if (value < 1 || value > 50){
+            const err = new Error()
+            err.message = "Country must be between 1 and 50 characters"
+            err.status = 400
+            throw err;
+          }
+        }
+      }
     },
     lat: {
       type: DataTypes.DECIMAL,
