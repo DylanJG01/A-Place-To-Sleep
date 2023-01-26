@@ -68,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         lengthWithinBounds(value){
-          if (value.length <= 0 || value.length > 30){
-            throw new Error("Username must be between 1 and 30 characters")
+          if (value.length < 4 || value.length > 30){
+            throw new Error("Username must be between 4 and 30 characters")
           }
         },
         isNotEmail(value){

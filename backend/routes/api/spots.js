@@ -181,9 +181,96 @@ router.post(
     '/:id/images',
     requireAuth,
     async (req, res, next) => {
-        const { url, preview } = req.body
-        
+        const { url, preview } = req.body;
+
+        const spot = await Spot.findByPk(+req.params.id);
+
+        if(!spot){
+            let err = new Error()
+            err.message = "Spot couldn't be found";
+            res.status(404)
+            return next(err)
+        }
+
+        if (spot.ownerId !== +req.user.id){
+            let err = new Error();
+            err.message = "Forbidden"
+            res.status(403)
+            return next(err)
+        }
+
+
+        const newSpotImg = await SpotImage.create({
+            spotId: req.params.id,
+            url,
+            preview
+        })
+        res.json(newSpotImg)
     }
+)
+
+router.put(
+    '/:id',
+    requireAuth,
+    async (req, res, next) => {
+        const { address, city, state, country, lat, lng, name, description, price } = req.body
+        const err = new Error();
+        const updatedSpot = {}
+
+        if(address){
+            if (address.length > 256) err.address = "Street Address must be between 1 and 256 characters"
+            else updatedSpot.address = address
+        }
+        if (city){
+            if(city.length > 50 || city.length < 1){
+                err.city = "City must be between 1 and 50 characters"
+            }
+            else updatedSpot.city = city
+        }
+        if (lat){
+            if((parseInt(lat) > 90) || parseInt(lat) < -90){
+            err.lat = "Lat must be a number between -90 and 90 degrees"
+            }
+            else updatedSpot.lat = lat
+        }
+        if(lng){
+            if((parseInt(lng) > 180 || parseInt(lng) < -180)){
+                err.lng = "Lng Must be a number between -180 and 180 degrees"
+            }
+            else updatedSpot.lng = lng
+        }
+        if(name){
+            if(name.length < 1 || name.length > 49){
+                err.name = "Name must be more than 0 and less than 50 characters"
+            }
+            else updatedSpot.name = name
+        }
+        if(description){
+            if(!description || description.length > 256){
+                err.description = "Description must be between 1 and 255 characters"
+            }
+            else updatedSpot.description = description
+        }
+        if(price){
+            if(price < 1){
+                err.price = "Price per day is required and must be more than 0"
+            }
+            else updatedSpot.price = price
+        }
+
+        if (Object.entries(err).length){
+            res.status(400)
+            err.message = "Validation Error"
+            return next(err)
+        }
+        const spot = await Spot.findByPk(+req.params.id)
+        
+        await spot.update({...updatedSpot})
+        
+        res.status(201)
+        return res.json(spot)
+    }
+
 )
 
 router.post(
@@ -210,9 +297,6 @@ router.post(
         }
         if(!description || description.length > 256){
             err.description = "Description must be between 1 and 255 characters"
-        }
-        if(!name || name.length > 49){
-            err.name = "Name must be more than 0 and less than 50 characters"
         }
         if(!price || price < 1){
             err.price = "Price per day is required and must be more than 0"
@@ -268,6 +352,8 @@ router.delete(
         return res.json({message: "Successfully Deleted"})
     }
 )
+
+
 
 router.use(
     (errors, req, res, next) => {
