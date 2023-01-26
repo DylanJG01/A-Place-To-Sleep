@@ -217,6 +217,23 @@ router.put(
         const err = new Error();
         const updatedSpot = {}
 
+        const spot = await Spot.findByPk(+req.params.id)
+        console.log(spot.ownerId)
+
+        if(!spot){
+            err.message = "Spot does not exist";
+            res.status(404);
+            return next(err)
+        }
+
+        console.log("req.user.id:", req.user.id, "spot.ownerId", spot.ownerId, "+req.user.id", +req.user.id)
+        
+        if(req.user.id !== spot.ownerId){
+            err.message = "Forbidden"
+            res.status(403)
+            return next(err)
+        }
+
         if(address){
             if (address.length > 256) err.address = "Street Address must be between 1 and 256 characters"
             else updatedSpot.address = address
@@ -226,6 +243,11 @@ router.put(
                 err.city = "City must be between 1 and 50 characters"
             }
             else updatedSpot.city = city
+        }
+        if(state){
+            if(state.length < 1|| state.length > 50){
+                err.state = 'State must be between 1 and 50 characters'
+            }
         }
         if (lat){
             if((parseInt(lat) > 90) || parseInt(lat) < -90){
@@ -263,9 +285,9 @@ router.put(
             err.message = "Validation Error"
             return next(err)
         }
-        const spot = await Spot.findByPk(+req.params.id)
         
-        await spot.update({...updatedSpot})
+        
+        await spot.update({updatedSpot})
         
         res.status(201)
         return res.json(spot)
