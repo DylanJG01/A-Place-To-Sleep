@@ -1,18 +1,23 @@
 const express = require('express')
 const router = express.Router();
-const { Spot, Review, SpotImage, sequelize} = require('../../db/models');
+const { Spot, Review, SpotImage, sequelize, User} = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 
 const { Op } = require('sequelize')
 const { check } = require('express-validator');
 const { application } = require('express');
+const user = require('../../db/models/user');
 
 router.get(
     '/current',
     async (req, res, next) => {
 
-        
-        console.log(req.user)
+        if (!req.user){
+            const err = new Error()
+            err.message = "Not Logged In"
+            res.status(403);
+            return next(err)
+        }
         const userSpots = await Spot.findAll({
             where: {
                 ownerId: req.user.id
@@ -24,7 +29,7 @@ router.get(
                 },
             ],
         })
-        const spotsWithReview = [];
+        const spots = [];
         
         for (let spot of userSpots) {
             // console.log(spot.toJSON())
@@ -37,9 +42,25 @@ router.get(
             })
             spot = spot.toJSON()
             spot.averageRating = review[0].toJSON().averageRating
-            spotsWithReview.push(spot)
+            spots.push(spot)
         }
-        res.json({spotsWithReview})
+
+        for (let spot of spots) {
+            let previewImage;
+
+            spot.SpotImages.forEach(el => {
+                if (el.preview === true) {
+                    previewImage = el.preview.url
+                }
+            })
+            if (!previewImage) {
+                previewImage = "No image preview"
+            }
+            delete spot.SpotImages;
+            spot.preview = previewImage
+        }
+
+        res.json({spots})
     }
 );
 
@@ -59,6 +80,10 @@ router.get(
                     model: SpotImage,
                     attributes: ['url']
                 },
+                {
+                    model: User,
+                    attributes:['id','firstName','lastName']
+                }
             ],
         })
         
@@ -77,10 +102,14 @@ router.get(
                 userId: spotById.ownerId
             },
             attributes:
-                [[sequelize.fn('AVG', sequelize.col('stars')), 'averageRating']]
+            [[sequelize.fn('AVG', sequelize.col('stars')),'averageRating'],
+            [sequelize.fn('COUNT', sequelize.col('stars')), 'reviews']
+        ]
         })
+
         spot = spot.toJSON()
         spot.averageRating = review[0].toJSON().averageRating
+        spot.reviews = review[0].toJSON().reviews
         spotsWithReview.push(spot)
         
         return res.json(spotsWithReview[0])
@@ -241,7 +270,7 @@ router.put(
         const updatedSpot = {}
 
         const spot = await Spot.findByPk(+req.params.id)
-        console.log(spot.ownerId)
+        // console.log(spot.ownerId)
 
         if(!spot){
             err.message = "Spot does not exist";
@@ -311,8 +340,7 @@ router.put(
             err.message = "Validation Error"
             return next(err)
         }
-        
-        
+         
         await spot.update({...updatedSpot})
         
         res.status(201)
@@ -407,13 +435,22 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
+        // console.log(errors)
+
         if(errors.message === "Authentication required") res.status(401)
-        if(errors.message.includes('Validation')){
+        if(errors.message.includes('Validation') 
+            && errors.message.includes('failed')){
             errors.status = 400;
            return next(errors)
         }
+        const message = errors.message;
+        delete errors.message;
+
+        let response = {}
+        response.message = message;
+        if (Object.entries(errors).length){response.errors = errors}
        return res.json({
-            errors
+            ...response
     })
 })
 
