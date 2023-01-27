@@ -28,6 +28,14 @@ router.get(
 
         res.json({Bookings: userBookings})
     }
+);
+
+router.put(
+    '/',
+    requireAuth,
+    async (req, res, next) => {
+        
+    }
 )
 
 module.exports = router;
