@@ -306,6 +306,13 @@ router.post(
         }
 
         const { startDate, endDate } = req.body;
+        console.log(startDate, new Date())
+
+        if (new Date(startDate) < new Date() || newDate(endDate) < new Date()) {
+            err.message = "Cannot start or end booking in the past";
+            res.status(400);
+            return next(err)
+        } 
 
         // console.log()
         // console.log(Date.parse(startDate))
@@ -353,7 +360,9 @@ router.post(
                 return next(err)
             }
 
-            const bookedDays = [booking[0]];
+            //This needs to be refactored later
+            //it counts through days/months that aren't real
+            const bookedDays = [parseInt(booking[0])];
             const conflicts = []
             while (booking[0] < booking[1]){
                 ++booking[0];
@@ -367,7 +376,7 @@ router.post(
                     let day = dayToBook.toString().split('').slice(6).join('')
                     let month = dayToBook.toString().split('').slice(4, 6).join('')
                     let year = dayToBook.toString().split('').slice(0, 4).join('')
-                    console.log(month, day, year)
+                    console.log(bookedDays, dayToBook)
                     conflicts.push(`Booking conflict: ${month}-${day}-${year}`)
                 }
                 ++dayToBook;
@@ -610,10 +619,11 @@ router.use(
         let response = {}
         response.message = message;
         if (Object.entries(errors).length){response.errors = errors}
-       return res.json({
+        return res.json({
             ...response
-    })
-});
+        })
+    }
+);
 
 
 
