@@ -308,7 +308,7 @@ router.post(
         const { startDate, endDate } = req.body;
         console.log(startDate, new Date())
 
-        if (new Date(startDate) < new Date() || newDate(endDate) < new Date()) {
+        if (new Date(startDate) < new Date() || new Date(endDate) < new Date()) {
             err.message = "Cannot start or end booking in the past";
             res.status(400);
             return next(err)
