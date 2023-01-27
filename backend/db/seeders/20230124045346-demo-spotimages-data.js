@@ -10,19 +10,24 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       { 
         spotId: 1,
-        url: 'www.somewhere.com',
+        url: 'www.somewhere1.com',
         preview: true
       },
       { 
         spotId: 1,
-        url: 'www.somewhere.com',
-        preview: true
+        url: 'www.somewhere2.com',
+        preview: false
       },
-      { 
+      {
         spotId: 2,
-        url: 'www.somewhere.com',
-        preview: true
-      }
+        url: 'www.spot2img1.com',
+        preview: false
+      },
+      {
+        spotId: 2,
+        url: 'www.spot2img2.com',
+        preview: false
+      },
     ])
   },
 

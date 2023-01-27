@@ -47,7 +47,7 @@ router.get(
         const spotById = await Spot.findByPk(req.params.id, {
             include: [
                 {
-                    model: SpotImage, as: 'previewImage',
+                    model: SpotImage,
                     attributes: ['url']
                 },
             ],
@@ -56,7 +56,7 @@ router.get(
         if (!spotById){
             const err = new Error();
             err.message = "Couldn't find a Spot with the specified id"
-            err.status = 404;
+            res.status(404)
             return next(err);
         }
 
@@ -150,7 +150,7 @@ router.get( // I want to refactor the for loop
 
     const allSpots = await Spot.findAll({
         include:[
-            {model: SpotImage, as: 'previewImage', 
+            {model: SpotImage, 
             attributes: ['url']},
         ],
         where,
