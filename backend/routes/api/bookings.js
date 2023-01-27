@@ -26,9 +26,8 @@ router.get(
             return el;
         })
 
-        res.json(userBookings)
+        res.json({Bookings: userBookings})
     }
 )
-
 
 module.exports = router;

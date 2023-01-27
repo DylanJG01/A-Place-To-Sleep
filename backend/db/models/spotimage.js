@@ -29,13 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
-      validate: {
-        validInput(value){
-          if(value !== "true" && value !== "false"){
-            this.preview = false
-          }
-        }
-      }
     }
   }, {
     sequelize,
