@@ -22,7 +22,7 @@ router.get(
         }
 
         userBookings = userBookings.map((el, index) => {
-            el.spot = spots[index];
+            el.Spot = spots[index];
             return el;
         })
 
