@@ -10,6 +10,8 @@ const { application } = require('express');
 router.get(
     '/current',
     async (req, res, next) => {
+
+        
         console.log(req.user)
         const userSpots = await Spot.findAll({
             where: {
@@ -17,7 +19,7 @@ router.get(
             },
             include: [
                 {
-                    model: SpotImage, as: 'previewImage',
+                    model: SpotImage,
                     attributes: ['url']
                 },
             ],
@@ -44,6 +46,13 @@ router.get(
 router.get(
     '/:id',
     async (req, res, next) => {
+        
+        if(isNaN(parseInt(req.params.id))) {
+            const err = new Error("Spot couldn't be found");
+            res.status(404);
+            return next(err);            
+        }
+
         const spotById = await Spot.findByPk(req.params.id, {
             include: [
                 {
@@ -99,8 +108,8 @@ router.get( // I want to refactor the for loop
         maxPrice = parseInt(maxPrice)
         
         
-        if(isNaN(page) || (page < 1 || page > 10)){  
-            error.page = 'Page must be greater than or equal to 1'
+    if(isNaN(page) || (page < 1 || page > 10)){  
+        error.page = 'Page must be greater than or equal to 1'
     }
     if(isNaN(size) || (size < 1 || size > 20)){
         error.size = 'Size must be greater than or equal to 1 and less than 10'
@@ -150,14 +159,13 @@ router.get( // I want to refactor the for loop
 
     const allSpots = await Spot.findAll({
         include:[
-            {model: SpotImage, 
-            attributes: ['url']},
+            {model: SpotImage},
         ],
         where,
         ...pagination
     });
 
-    const spotsWithReview = [];
+    const spots = [];
 
     for (let spot of allSpots) {
         // console.log(spot.toJSON())
@@ -170,10 +178,26 @@ router.get( // I want to refactor the for loop
         })
         spot = spot.toJSON()
         spot.averageRating = review[0].toJSON().averageRating
-        spotsWithReview.push(spot)
+    
+        spots.push(spot)
     }
 
-    return res.json({spotsWithReview, page, size})
+    for (let spot of spots){
+        let previewImage;
+
+        spot.SpotImages.forEach(el => {
+            if(el.preview === true){
+                previewImage = el.preview.url
+            }
+        })
+        if(!previewImage){
+            previewImage = "No image preview"
+        }
+        delete spot.SpotImages;
+        spot.preview = previewImage
+    }
+
+    return res.json({spots, page, size})
     }
 )
 
