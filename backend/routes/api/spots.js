@@ -1,12 +1,61 @@
 const express = require('express')
 const router = express.Router();
-const { Spot, Review, SpotImage, sequelize, User, Booking} = require('../../db/models');
+const { Spot, Review, SpotImage, sequelize, User, Booking, ReviewImage} = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 
 const { Op, DataTypes } = require('sequelize')
 const { check } = require('express-validator');
 const { application } = require('express');
 const user = require('../../db/models/user');
+const review = require('../../db/models/review');
+
+router.get(
+    '/:id/reviews',
+    async (req, res, next) => {
+        const err = new Error();
+
+        let spot = await Spot.findByPk(req.params.id)
+
+        if (!spot){
+            err.message = "Spot couldn't be found";
+            res.status(404);
+            return next(err)
+        }
+
+        const reviews = await Review.findAll({
+            where: {spotId: +req.params.id}
+        })
+
+        const reviewsWithImages = [];
+
+        for (let review of reviews) {
+            review = review.toJSON();
+
+            let spot = await Spot.findByPk(review.spotId)
+            let user = await User.findByPk(+req.user.id, {
+                attributes: ['id', 'firstName', 'lastName']
+            })
+
+
+            let images = await ReviewImage.findAll({
+                where: { reviewId: +review.id },
+                attributes: ['id', 'url']
+            })
+
+            images.forEach(el => {
+                el = el.toJSON();
+            })
+            review.User = user.toJSON();
+            review.Spot = spot
+            review.ReviewImages = images
+
+            reviewsWithImages.push(review)
+        }
+
+
+        res.json({ Reviews: reviewsWithImages })
+    }
+)
 
 router.get(
     '/:id/bookings',
@@ -284,7 +333,57 @@ router.get( // I want to refactor the for loop
     return res.json({spots, page, size})
     }
 );
+router.post(
+    '/:id/reviews',
+    requireAuth,
+    async (req, res, next) => {
+        const err = new Error();
 
+        let spot = await Spot.findByPk(req.params.id);
+        let alreadyReviewed = await Review.findAll({
+            where : {
+                spotId: +req.params.id,
+                userId: +req.user.id
+            }
+        })
+
+        if (!spot) {
+            err.message = "Spot couldn't be found"
+            res.status(404);
+            return next(err);
+        }
+
+        if(alreadyReviewed.length){
+            err.message = "User already has a review for this spot";
+            res.status(403);
+            return next(err)
+        }
+
+        const {review, stars} = req.body;
+
+        if(!review.length){
+            err.review = "Review text is required";
+        }
+        if((parseInt(stars) > 5 || parseInt(stars) < 1
+            || parseInt(stars) % 1 !== 0 )){
+            err.stars = "Stars must be an integer from 1 to 5"
+        }
+        if (Object.entries(err).length){
+            err.message = "Validation Error";
+            res.status(400);
+            return next(err)
+        }
+    
+        
+        const newReview = await Review.create({
+            spotId: +req.params.id,
+            userId: +req.user.id,
+            review, 
+            stars
+        })
+        res.json(newReview)
+    }
+)
 router.post(
     '/:id/bookings',
     requireAuth,
@@ -605,8 +704,6 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
-        // console.log(errors)
-
         if(errors.message === "Authentication required") res.status(401)
         if(errors.message.includes('Validation') 
             && errors.message.includes('failed')){
