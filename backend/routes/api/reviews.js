@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const { Spot, Review, ReviewImage, User } = require('../../db/models');
+const review = require('../../db/models/review');
 const { requireAuth } = require('../../utils/auth');
 
 
@@ -78,6 +79,69 @@ router.post(
     }
 )
 
+
+router.put(
+    '/:id',
+    requireAuth,
+    async (req, res, next) => { 
+        const err = new Error();
+        const reviewToEdit = await Review.findByPk(req.params.id);
+        
+        if(!reviewToEdit){
+            err.message = "Review couldn't be found";
+            res.status(404);
+            return next(err)
+        }
+
+        const editedBody = {};
+        const { review, stars } = req.body;
+
+        if (stars && +stars % 1 !== 0) err.stars = "Stars must be an integer from 1 to 5";
+        if (!review.length) err.review = "Review text is required";
+
+        if (Object.entries(err).length){
+            res.status(400);
+            err.message = "Validation error";
+            return next(err)
+        }
+        if (review) editedBody.review = review;
+        if (stars) editedBody.stars = stars;
+
+
+        await reviewToEdit.update({...editedBody});
+        
+        return res.json(reviewToEdit)
+    }
+)
+
+router.delete(
+    '/:id',
+    requireAuth,
+    async (req, res, next) => {
+        const reviewToDelete = await Review.findByPk(req.params.id);
+
+        if (!reviewToDelete){
+            const err = new Error();
+            err.message = "Review couldn't be found";
+            res.status(404);
+            return next(err);
+        }
+
+        console.log(reviewToDelete.userId)
+        if (!+req.user.id !== reviewToDelete.userId){
+            const err = new Error();
+            err.message = "Forbidden";
+            res.status(403);
+            return next(err);
+        }
+
+        await reviewToDelete.destroy()
+
+        return res.json({message: "Successfully deleted"});
+    }
+)
+
+
 router.use(
     (errors, req, res, next) => {
         if (errors.message === "Authentication required") res.status(401)
@@ -97,6 +161,5 @@ router.use(
         })
     }
 );
-
 
 module.exports = router;

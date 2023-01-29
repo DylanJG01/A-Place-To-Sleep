@@ -12,6 +12,7 @@ const spotsRouter = require('./spots.js')
 const reviewRouter = require('./reviews.js')
 const bookingRouter = require('./bookings.js');
 const spotImageRouter = require('./spot-images')
+const reviewImageRouter = require('./review-images')
 
 router.use(restoreUser);
 
@@ -21,6 +22,7 @@ router.use('/spots', spotsRouter );
 router.use('/reviews', reviewRouter)
 router.use('/bookings', bookingRouter)
 router.use('/spot-images', spotImageRouter)
+router.use('/review-images', reviewImageRouter)
 
 
 router.post('/test', function (req, res) {

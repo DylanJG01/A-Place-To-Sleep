@@ -31,11 +31,10 @@ router.get(
         for (let review of reviews) {
             review = review.toJSON();
 
-            let spot = await Spot.findByPk(review.spotId)
+            // let spot = await Spot.findByPk(review.spotId)
             let user = await User.findByPk(+req.user.id, {
                 attributes: ['id', 'firstName', 'lastName']
             })
-
 
             let images = await ReviewImage.findAll({
                 where: { reviewId: +review.id },
@@ -46,12 +45,11 @@ router.get(
                 el = el.toJSON();
             })
             review.User = user.toJSON();
-            review.Spot = spot
+            // review.Spot = spot
             review.ReviewImages = images
 
             reviewsWithImages.push(review)
         }
-
 
         res.json({ Reviews: reviewsWithImages })
     }
