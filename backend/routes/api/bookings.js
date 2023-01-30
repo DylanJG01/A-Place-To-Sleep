@@ -187,9 +187,10 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
-        // console.log(errors)
-
-        if (errors.message === "Authentication required") res.status(401)
+        if (errors.message === "Authentication required") {
+            res.status(401)
+            return next(errors)
+        }
         if (errors.message.includes('Validation')
             && errors.message.includes('failed')) {
             errors.status = 400;
@@ -206,6 +207,5 @@ router.use(
         })
     }
 );
-
 
 module.exports = router;

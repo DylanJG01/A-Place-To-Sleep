@@ -144,7 +144,10 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
-        if (errors.message === "Authentication required") res.status(401)
+        if (errors.message === "Authentication required") {
+            res.status(401)
+            return next(errors)
+        }
         if (errors.message.includes('Validation')
             && errors.message.includes('failed')) {
             errors.status = 400;

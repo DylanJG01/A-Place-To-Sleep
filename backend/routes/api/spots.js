@@ -181,7 +181,7 @@ router.get(
             include: [
                 {
                     model: SpotImage,
-                    attributes: ['url']
+                    attributes: ['id','url', 'preview']
                 },
                 {
                     model: User,
@@ -192,7 +192,7 @@ router.get(
         
         if (!spotById){
             const err = new Error();
-            err.message = "Couldn't find a Spot with the specified id"
+            err.message = "Spot couldn't be found"
             res.status(404)
             return next(err);
         }
@@ -554,56 +554,56 @@ router.put(
             return next(err)
         }
 
-        if(address){
-            if (address.length > 255) err.address = "Street Address must be between 1 and 255 characters"
+        // if(address){
+            if (!address || address.length > 255) err.address = "Street Address must be between 1 and 255 characters"
             else updatedSpot.address = address
-        }
-        if (city){
-            if(city.length > 50 || city.length < 1){
+        // }
+        // if (city){
+            if(!city || city.length > 50 || city.length < 1){
                 err.city = "City must be between 1 and 50 characters"
             }
             else updatedSpot.city = city
-        }
-        if(state){
-            if(state.length < 1|| state.length > 50){
+        // }
+        // if(state){
+            if(!state || state.length < 1|| state.length > 50){
                 err.state = 'State must be between 1 and 50 characters'
             } else updatedSpot.state = state
-        }
-        if (country) {
-            if (country.length < 1 || country.length > 50) {
+        // }
+        // if (country) {
+            if (!country || country.length < 1 || country.length > 50) {
                 err.country = 'Country must be between 1 and 50 characters'
             } else updatedSpot.country = country
-        }
-        if (lat){
-            if((parseInt(lat) > 90) || parseInt(lat) < -90){
+        // }
+        // if (lat){
+            if(!lat || (parseInt(lat) > 90) || parseInt(lat) < -90){
             err.lat = "Lat must be a number between -90 and 90 degrees"
             }
             else updatedSpot.lat = lat
-        }
-        if(lng){
-            if((parseInt(lng) > 180 || parseInt(lng) < -180)){
+        // }
+        // if(lng){
+            if(!lng || (parseInt(lng) > 180 || parseInt(lng) < -180)){
                 err.lng = "Lng Must be a number between -180 and 180 degrees"
             }
             else updatedSpot.lng = lng
-        }
-        if(name){
-            if(name.length < 1 || name.length > 49){
+        // }
+        // if(name){
+            if(!name || name.length < 1 || name.length > 49){
                 err.name = "Name must be more than 0 and less than 50 characters"
             }
             else updatedSpot.name = name
-        }
-        if(description){
+        // }
+        // if(description){
             if(!description || description.length > 255){
                 err.description = "Description must be between 1 and 255 characters"
             }
             else updatedSpot.description = description
-        }
-        if(price){
-            if(price < 1){
+        // }
+        // if(price){
+            if(!price || price < 1){
                 err.price = "Price per day is required and must be more than 0"
             }
             else updatedSpot.price = price
-        }
+        // }
 
         if (Object.entries(err).length){
             res.status(400)
@@ -705,18 +705,21 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
-        if(errors.message === "Authentication required") res.status(401)
-        if(errors.message.includes('Validation') 
-            && errors.message.includes('failed')){
+        if (errors.message === "Authentication required") {
+            res.status(401)
+            return next(errors)
+        }
+        if (errors.message.includes('Validation')
+            && errors.message.includes('failed')) {
             errors.status = 400;
-           return next(errors)
+            return next(errors)
         }
         const message = errors.message;
         delete errors.message;
 
         let response = {}
         response.message = message;
-        if (Object.entries(errors).length){response.errors = errors}
+        if (Object.entries(errors).length) { response.errors = errors }
         return res.json({
             ...response
         })
