@@ -31,8 +31,9 @@ router.get(
         for (let review of reviews) {
             review = review.toJSON();
 
+            // console.log(review)
             // let spot = await Spot.findByPk(review.spotId)
-            let user = await User.findByPk(+req.user.id, {
+            let user = await User.findByPk(review.userId, {
                 attributes: ['id', 'firstName', 'lastName']
             })
 
@@ -57,6 +58,7 @@ router.get(
 
 router.get(
     '/:id/bookings',
+    requireAuth,
     async (req, res, next) => {
 
         let spotBookings = await Booking.findAll({
@@ -67,7 +69,7 @@ router.get(
         if (!spot) {
             const err = new Error();
             res.status(404);
-            err.message = 'Spot does not exist';
+            err.message = "Spot couldn't be found";
             return next(err)
         }
         if (!spotBookings.length){
@@ -258,11 +260,11 @@ router.get( // I want to refactor the for loop
     if(maxLng && isNaN(maxLng) || (maxLng < -180 || maxLng > 180)) {
         error.maxLng = 'Invalid maximum longitude value'
     }
-    if(minPrice && isNaN(minPrice) || (minPrice < 0)){
-        error.minPrice = 'Minimum price must be at least and decimal value of 0'
+    if(minPrice && isNaN(minPrice) || (minPrice <= 0)){
+        error.minPrice = 'Minimum price must be greater than or equal to 0'
     }
-    if(maxPrice && isNaN(maxPrice) || (maxPrice < 0)) {
-        error.maxPrice = 'Maximum price must be at least and decimal value of 0'
+    if(maxPrice && isNaN(maxPrice) || (maxPrice <= 0)) {
+        error.maxPrice = 'Maximum price must be greater than or equal to 0'
     }
     //Could add error that says "Min price cannot be greater than max price,
     //but for now, the normal search filter will just return no results, which is acceptable
@@ -341,19 +343,19 @@ router.post(
         const err = new Error();
 
         let spot = await Spot.findByPk(req.params.id);
-        let alreadyReviewed = await Review.findAll({
-            where : {
-                spotId: +req.params.id,
-                userId: +req.user.id
-            }
-        })
 
         if (!spot) {
             err.message = "Spot couldn't be found"
             res.status(404);
             return next(err);
         }
-
+        
+        let alreadyReviewed = await Review.findAll({
+            where : {
+                spotId: +req.params.id,
+                userId: +req.user.id
+            }
+        })
         if(alreadyReviewed.length){
             err.message = "User already has a review for this spot";
             res.status(403);
@@ -382,6 +384,7 @@ router.post(
             review, 
             stars
         })
+        res.status(201);
         res.json(newReview)
     }
 )
@@ -705,6 +708,7 @@ router.delete(
 
 router.use(
     (errors, req, res, next) => {
+
         if (errors.message === "Authentication required") {
             res.status(401)
             return next(errors)

@@ -20,11 +20,25 @@ router.get(
 
         for(let booking of userBookings){
            let spot = await Spot.findByPk(booking.spotId)
-           spots.push(spot.toJSON())
+           let previewImage = await SpotImage.findOne({
+            where: {
+                spotId: spot.id,
+                preview: true
+            },
+            attributes: ['url']
+           })
+            if (!previewImage) previewImage = "No preview image"
+            else previewImage = previewImage.url
+           spot = spot.toJSON()
+           spot.previewImage = previewImage
+           spots.push(spot)
         }
 
         userBookings = userBookings.map((el, index) => {
             el.Spot = spots[index];
+            delete el.Spot.description;
+            delete el.Spot.updatedAt
+            delete el.Spot.createdAt
             return el;
         })
 
@@ -53,10 +67,12 @@ router.put(
         
         let spot = bookingToEdit.toJSON().spotId
 
-        
+
         const { startDate, endDate } = req.body;
 
-        if(bookingToEdit.toJSON().endDate < new Date()){
+   
+
+        if(new Date(endDate) < new Date()){
             err.message = "Past bookings can't be modified"
         }
 
@@ -104,6 +120,7 @@ router.put(
             }
             if (Object.entries(err).length) {
                 res.status(403)
+                console.log(err)
                 err.message = "Sorry, this spot is already booked for the specified dates"
                 return next(err)
             }
@@ -129,7 +146,7 @@ router.put(
             }
             if (conflicts.length) {
                 res.status(403)
-                err.message = "Sorry, this spot is already booked for the specified dates"
+                err.message = "Sorry, this spot is already booked for the specified dates!"
                 err.conflicts = conflicts
                 return next(err)
             }
