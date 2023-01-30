@@ -116,8 +116,8 @@ router.get(
 
         if (!req.user){
             const err = new Error()
-            err.message = "Not Logged In"
-            res.status(403);
+            err.message = "Authentication required"
+            res.status(401);
             return next(err)
         }
         const userSpots = await Spot.findAll({
@@ -127,7 +127,7 @@ router.get(
             include: [
                 {
                     model: SpotImage,
-                    attributes: ['url']
+                    attributes: ['url', 'preview']
                 },
             ],
         })
@@ -151,15 +151,16 @@ router.get(
             let previewImage;
 
             spot.SpotImages.forEach(el => {
+
                 if (el.preview === true) {
-                    previewImage = el.preview.url
+                    previewImage = el.url
                 }
             })
             if (!previewImage) {
                 previewImage = "No image preview"
             }
-            delete spot.SpotImages;
             spot.preview = previewImage
+            delete spot.SpotImages;
         }
 
         res.json({spots})
@@ -312,20 +313,22 @@ router.get( // I want to refactor the for loop
     
         spots.push(spot)
     }
-
+    
     for (let spot of spots){
         let previewImage;
-
+        
         spot.SpotImages.forEach(el => {
             if(el.preview === true){
-                previewImage = el.preview.url
+                previewImage = el.url
             }
+            // console.log(el)
         })
         if(!previewImage){
             previewImage = "No image preview"
         }
-        delete spot.SpotImages;
+        // console.log(previewImage)
         spot.preview = previewImage
+        delete spot.SpotImages;
     }
 
     return res.json({spots, page, size})
@@ -403,7 +406,7 @@ router.post(
         }
 
         const { startDate, endDate } = req.body;
-        console.log(startDate, new Date())
+        // console.log(startDate, new Date())
 
         if (new Date(startDate) < new Date() || new Date(endDate) < new Date()) {
             err.message = "Cannot start or end booking in the past";
@@ -469,11 +472,11 @@ router.post(
             let dayToBook = arrivalDate;
             while (dayToBook < departureDate){
                 if(bookedDays.includes(dayToBook)){
-                    console.log(dayToBook.toString())
+                    // console.log(dayToBook.toString())
                     let day = dayToBook.toString().split('').slice(6).join('')
                     let month = dayToBook.toString().split('').slice(4, 6).join('')
                     let year = dayToBook.toString().split('').slice(0, 4).join('')
-                    console.log(bookedDays, dayToBook)
+                    // console.log(bookedDays, dayToBook)
                     conflicts.push(`Booking conflict: ${month}-${day}-${year}`)
                 }
                 ++dayToBook;

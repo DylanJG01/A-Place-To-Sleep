@@ -74,7 +74,7 @@ router.post(
             url
         })
 
-        console.log(reviewImage)
+        // console.log(reviewImage)
         res.json(reviewImage)
     }
 )
@@ -127,7 +127,7 @@ router.delete(
             return next(err);
         }
 
-        console.log(reviewToDelete.userId)
+        // console.log(reviewToDelete.userId)
         if (!+req.user.id !== reviewToDelete.userId){
             const err = new Error();
             err.message = "Forbidden";
