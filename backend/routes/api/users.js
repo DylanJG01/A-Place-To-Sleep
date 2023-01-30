@@ -71,14 +71,23 @@ router.delete(
     
     
 router.use((err, req, res, next) => {
-    err.status = 400
     if (err.errors[0].message){
         if (err.errors[0].message.includes('unique')){
             err.status = 403
         }
     }
-    next(err)
+    // if (err.errors.includes(''))
+    if (err.errors.includes('Please provide a valid email.')
+        || err.errors.includes('Please provide a username with at least 4 characters.')
+        || err.errors.includes('Password must be 6 characters or more.')
+        || err.errors.includes('First name is required.')
+        || err.errors.includes('Last name is required.')) {
+            err.message = "Validation error"
+        }
+   return next(err)
 })
     
+
+
     
 module.exports = router;
