@@ -1,8 +1,13 @@
-AirBnB Clone
-
-Database Schema Design
 
 
+AirBnB_clone API Project;
+
+https://dylan-auth-me.onrender.com
+
+This project is my first attempt at building a functional API
+
+Database Schema
+<img width="740" alt="image" src="https://user-images.githubusercontent.com/116132122/215403374-c44fd547-a000-4744-a93b-8ddaef8b5ed2.png">
 
 API Documentation
 
