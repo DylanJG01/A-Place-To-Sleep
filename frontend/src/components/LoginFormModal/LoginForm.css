@@ -3,3 +3,11 @@
     width: 400px;
     border: 1px solid black;
 } */
+.demo-user {
+    text-align: center;
+    text-decoration: underline;
+    color: blue;
+}
+.demo-user:hover{
+    cursor: pointer;
+}

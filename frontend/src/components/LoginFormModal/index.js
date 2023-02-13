@@ -31,6 +31,16 @@ function LoginFormModal() {
         return setDisableBtn(false)
     },[credential, password])
 
+    const demoUserLogin = (e) => {
+        setCredential('DemoUser1')
+        setPassword('thebestpassword')
+    }
+    // email: 'demo@user.io',
+    // `username: 'DemoUser1',
+    // `firstName: 'Alex',
+    // `lastName: 'Flanders',
+    // `hashedPassword: bcrypt.hashSync('thebestpassword')
+
     return (
         <>
             <h1>Log In</h1>
@@ -63,6 +73,7 @@ function LoginFormModal() {
                 </label>
                 <button type="submit" disabled={disableBtn}>Log In</button>
             </form>
+            <p class={'demo-user'} onClick={demoUserLogin}>Demo User</p>
         </>
     );
 }
