@@ -35,11 +35,6 @@ function LoginFormModal() {
         setCredential('DemoUser1')
         setPassword('thebestpassword')
     }
-    // email: 'demo@user.io',
-    // `username: 'DemoUser1',
-    // `firstName: 'Alex',
-    // `lastName: 'Flanders',
-    // `hashedPassword: bcrypt.hashSync('thebestpassword')
 
     return (
         <>
