@@ -1,0 +1,19 @@
+.spots__list {
+    display: flex;
+    justify-content: space-around;
+}
+.spots__list li {
+    /* display: flex; */
+    width: 300px;
+    height: 350px;
+    border: 1px solid red;
+    justify-content: space-around;
+    margin: 2px 50px;
+}
+.spots__list li img {
+    border: 1px solid blue;
+    width: 100%;
+    height: 300px;
+    display: flex;
+
+}

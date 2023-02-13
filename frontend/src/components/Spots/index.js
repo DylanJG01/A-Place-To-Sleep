@@ -2,36 +2,38 @@ import { useState, useEffect } from 'react'
 import { NavLink, Route, useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { getAllSpots } from '../../store/spots'
+import './Spots.css'
 
 const AllSpots = () => {
     const dispatch = useDispatch();
 
-    const allSpots = useSelector(state => Object.values(state.spots.allSpots))
-    const allSpots2 = Array.from(allSpots)
-
+    const allSpots = Array.from(useSelector(state => Object.values(state.spots.allSpots)))
+   
     useEffect(() => {
         dispatch(getAllSpots())
     }, [dispatch])
 
-    console.log("ALLSPOTS", allSpots)
+    // console.log("ALLSPOTS", allSpots)
 
-    const funct = () => {
+    const avgRating = (num) => Math.round(num * 100)/100
 
-        console.log(!allSpots2, typeof allSpots2)
+    const mapSpots = () => {
+
         if (!allSpots) return
+        return allSpots.map(spot => (
 
-        return allSpots2.map(spot => (
-            <p>{spot.id} , {spot.address}</p>
+            <li key={spot.id}>
+                <img src={spot.preview} alt={"Spot Preview"}/>
+                <p>{spot.id} , {spot.address}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
+            </li>
         ))
     }
-    console.log(typeof allSpots, "#@$!$!@#$!")
-    
-    if(!allSpots.length) return
+ 
 
     return (
         <div>
-            <ul>
-                <li>{ allSpots ? funct() :'placeholder'}</li>
+            <ul className={"spots__list"}>
+                { allSpots ? mapSpots() :'placeholder'}
             </ul>
         </div>
     )
