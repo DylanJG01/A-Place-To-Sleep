@@ -1,3 +1,51 @@
 .hidden {
     display: none;
 }
+.profile-dropdown {
+    /* border: 1px solid black; */
+    width: 100px;
+    list-style-type: none;
+}
+ul {
+    list-style-type: none;
+}
+.profile-dropdown * {
+    border: 1px solid black;
+    /* background-color: red; */
+}
+.profile-dropdown ul {
+    /* display: none; */
+    /* background-color: green; */
+}
+
+.header {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between
+}
+
+.header ul {
+    /* display: flex; */
+    /* background-color: green; */
+}
+.nav-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.profile-button{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+}
+.profile-button li{
+    margin: 3px;
+    /* background-color: blue; */
+    position: relative;
+    display: flex;
+    top: 25px;
+}
+
+.profile-button li:hover{
+    cursor: pointer;
+}

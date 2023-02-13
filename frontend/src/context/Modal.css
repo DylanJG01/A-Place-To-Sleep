@@ -92,5 +92,11 @@
 #modal-content ul li {
     display: inline-block;
     text-align: center;
-    
+}
+
+@media screen and (max-width: 500px){
+    #modal * {
+        width: 100%;
+    }
+
 }
