@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Route, useParams } from 'react-router-dom'
+import { NavLink, Route, useParams, Link } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { getAllSpots } from '../../store/spots'
+import SpotCard from '../SpotCard'
 import './Spots.css'
 
 const AllSpots = () => {
     const dispatch = useDispatch();
-
-    const allSpots = Array.from(useSelector(state => Object.values(state.spots.allSpots)))
+    const allSpots = useSelector(state => Object.values(state.spots.allSpots))
    
     useEffect(() => {
         dispatch(getAllSpots())
@@ -18,22 +18,23 @@ const AllSpots = () => {
     const avgRating = (num) => Math.round(num * 100)/100
 
     const mapSpots = () => {
-
         if (!allSpots) return
         return allSpots.map(spot => (
-
-            <li key={spot.id}>
+            <Link key={spot.id} className={'spot-card'} to={`/spots/${spot.id}`}>
                 <img src={spot.preview} alt={"Spot Preview"}/>
-                <p>{spot.id} , {spot.address}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
-            </li>
+                {/* <div> */}
+                <p>{spot.city}, {spot.state}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
+                <p>${spot.price} night</p>
+                {/* </div> */}
+            </Link>
         ))
     }
  
-
     return (
         <div>
             <ul className={"spots__list"}>
-                { allSpots ? mapSpots() :'placeholder'}
+                {/* { allSpots ? mapSpots() :'placeholder'} */}
+                {allSpots ? allSpots.map(spot => SpotCard(spot)) : 'placeholder'}
             </ul>
         </div>
     )
