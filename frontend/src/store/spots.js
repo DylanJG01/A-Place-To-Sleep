@@ -40,16 +40,10 @@ export const getSingleSpot = spotId => async dispatch => {
 
 const initialState = {
     allSpots: {
-        spotId: {
-            spotData: {}
-        }
+ 
     },
     singleSpot: {
-        spotData: {},
-        SpotImages: [],
-        Owner: {
-            ownerData: {}
-        }
+
     }
 }
 

@@ -31,9 +31,9 @@ function LoginFormModal() {
         return setDisableBtn(false)
     },[credential, password])
 
-    const demoUserLogin = (e) => {
-        setCredential('DemoUser1')
-        setPassword('thebestpassword')
+    const demoUserLogin = () => {
+        return dispatch(sessionActions.login({ credential: "DemoUser1", password: "thebestpassword" }))
+            .then(closeModal)
     }
 
     return (
@@ -68,7 +68,7 @@ function LoginFormModal() {
                 </label>
                 <button type="submit" disabled={disableBtn}>Log In</button>
             </form>
-            <p class={'demo-user'} onClick={demoUserLogin}>Demo User</p>
+            <p class={'demo-user'} onClick={() => demoUserLogin()}>Demo User</p>
         </>
     );
 }
