@@ -22,6 +22,12 @@ export const userSpots = (userId, spots) => ({
     spots
 })
 
+const addSpot = (user, spot) => ({
+    type: ADD_SPOT,
+    user,
+    spot
+})
+
 export const getAllSpots = () => async dispatch => {
     const res = await csrfFetch('/api/spots')
     // const res = await fetch('/')
@@ -35,8 +41,8 @@ export const getAllSpots = () => async dispatch => {
 
 
 export const getSingleSpot = spotId => async dispatch => {
+    if(isNaN(parseInt(spotId))) return
     const res = await csrfFetch(`/api/spots/${spotId}`)
-
     if(res.ok) {
         const spot = await res.json()
         console.log ("Spot: ", spot)
@@ -55,6 +61,20 @@ export const getUserSpots = (userId) => async dispatch => {
         return dispatch(userSpots(userId, spots))
     }
     console.log(res.status, "getUserSpots")
+}
+
+export const addSpotThunk = (user, spot) => async dispatch => {
+    console.log(spot)
+    const res = await csrfFetch(`/api/spots`, {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(spot)
+    })
+
+    if(res.ok) {
+        const spot = await res.json()
+        dispatch(addSpot(user, spot))
+    }
 }
 
 const initialState = {
@@ -92,6 +112,18 @@ export default function spotReducer(state = initialState, action) {
             const newState = {...state, allSpots}
             console.log(newState)
             return newState
+        }
+        case ADD_SPOT: {
+            const newState = {...state, singleSpot: {}}
+            // console.log("ACTION", action)
+            const singleSpot = {
+                SpotData : {...action.spot},
+                SpotImages: [],
+                Owner: {...action.user}
+            }
+            newState.singleSpot = {...singleSpot}
+            console.log(newState)
+            return newState;
         }
         default: 
             return state

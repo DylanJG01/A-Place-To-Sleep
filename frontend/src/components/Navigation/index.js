@@ -12,15 +12,15 @@ function Navigation({ isLoaded }) {
         <nav className='header'>
             <ul className='nav-list'>
                 <li>
-                    <NavLink exact to="/"> A Place To Sleep</NavLink>
+                    <NavLink to="/"> A Place To Sleep</NavLink>
                 </li>
                 {isLoaded && (
                    <>
-                   <Route exact path="/spots/current">
+                  {sessionUser && <Route exact path="/spots/current">
                         <li className='create-spot'>
-                            Create a New Spot
+                                <NavLink to="/spots/new">Create a New Spot</NavLink>
                         </li>
-                    </Route>
+                    </Route>}
                     <li className='profile-button'>
                         <ProfileButton user={sessionUser} />
                     </li>

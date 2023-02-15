@@ -10,6 +10,7 @@ const spotReviews = reviews => ({
 })
 
 export const reviewsBySpot = (spotId) => async dispatch => {
+    if(isNaN(parseInt(spotId))) return
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
     if (res.ok) {

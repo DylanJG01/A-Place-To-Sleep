@@ -13,8 +13,8 @@ const SingleSpot = () => {
         dispatch(getSingleSpot(spotId))
     }, [dispatch])
 
-    console.log(singleSpot)
-
+    // console.log(singleSpot)
+    
     return (
         <div>
             <div>
