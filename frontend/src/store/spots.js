@@ -101,6 +101,10 @@ export default function spotReducer(state = initialState, action) {
         }
         case GET_SPOT: {
             const newState = {...state, singleSpot: action.spot}
+            console.log(newState)
+            const owner = newState.singleSpot.User
+            delete newState.singleSpot.User
+            newState.singleSpot.Owner = owner
             return newState
             }
         case GET_USER_SPOTS: {
