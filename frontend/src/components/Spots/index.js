@@ -17,18 +17,18 @@ const AllSpots = () => {
 
     const avgRating = (num) => Math.round(num * 100)/100
 
-    const mapSpots = () => {
-        if (!allSpots) return
-        return allSpots.map(spot => (
-            <Link key={spot.id} className={'spot-card'} to={`/spots/${spot.id}`}>
-                <img src={spot.preview} alt={"Spot Preview"}/>
-                {/* <div> */}
-                <p>{spot.city}, {spot.state}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
-                <p>${spot.price} night</p>
-                {/* </div> */}
-            </Link>
-        ))
-    }
+    // const mapSpots = () => {
+    //     if (!allSpots) return
+    //     return allSpots.map(spot => (
+    //         <Link key={spot.id} className={'spot-card'} to={`/spots/${spot.id}`}>
+    //             <img src={spot.preview} alt={"Spot Preview"}/>
+    //             {/* <div> */}
+    //             <p>{spot.city}, {spot.state}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
+    //             <p>${spot.price} night</p>
+    //             {/* </div> */}
+    //         </Link>
+    //     ))
+    // }
  
     return (
         <div>

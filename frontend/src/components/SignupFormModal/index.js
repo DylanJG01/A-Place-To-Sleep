@@ -42,7 +42,7 @@ function SignupFormModal() {
          ||confirmPassword !== password ) return setDisableBtn(true)
 
         return setDisableBtn(false);
-    }, [password, username, firstName, lastName, password, confirmPassword])
+    }, [username, firstName, lastName, password, confirmPassword, email])
 
     return (
         <>

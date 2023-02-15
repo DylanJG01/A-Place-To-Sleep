@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserSpots } from '../../store/spots'
 import SpotCard from '../SpotCard'
