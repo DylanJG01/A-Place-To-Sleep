@@ -10,7 +10,7 @@ const ReviewsBySpot = () => {
 
     useEffect(() => {
         dispatch(reviewsBySpot(spotId))
-    }, [dispatch])
+    }, [dispatch, spotId])
 
     console.log("REVIEWS@!@!@!" , reviews)
 
