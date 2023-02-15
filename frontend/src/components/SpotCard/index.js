@@ -1,5 +1,6 @@
 import { Link, Route, useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import DeleteSpotModal from '../DeleteSpot'
 
 function SpotCard ({spot}) {
     const history = useHistory()
@@ -19,7 +20,8 @@ function SpotCard ({spot}) {
                 <p>${spot.price} night</p>
             <Route path={"/spots/current"}>
                 <button onClick={e => history.push(`/spots/${spot.id}/edit`)}>Edit</button>
-                <button>Delete</button>
+                <button><DeleteSpotModal/></button>
+                
             </Route>
             </div>
         </div>
