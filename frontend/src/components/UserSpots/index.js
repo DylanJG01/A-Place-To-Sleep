@@ -11,7 +11,7 @@ const UserSpots = () => {
     useEffect(() => {
         if(!user) return
         dispatch(getUserSpots(user.id))
-    }, [dispatch])
+    }, [dispatch, user])
 
     if (!user) {
         return (
