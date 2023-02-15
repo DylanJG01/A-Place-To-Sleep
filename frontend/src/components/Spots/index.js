@@ -33,7 +33,7 @@ const AllSpots = () => {
         <div>
             <ul className={"spots__list"}>
                 {/* { allSpots ? mapSpots() :'placeholder'} */}
-                {allSpots ? allSpots.map(spot => SpotCard(spot)) : 'placeholder'}
+                {allSpots ? allSpots.map(spot => <SpotCard spot={spot} key={spot.id}/>) : 'placeholder'}
             </ul>
         </div>
     )
