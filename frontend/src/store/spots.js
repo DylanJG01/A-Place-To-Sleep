@@ -79,6 +79,7 @@ export const addSpotThunk = (user, spot) => async dispatch => {
     if(res.ok) {
         const spot = await res.json()
         dispatch(addSpot(user, spot))
+        return spot;
     }
 }
 
@@ -108,12 +109,12 @@ export default function spotReducer(state = initialState, action) {
     switch(action.type) {
         case GET_ALL_SPOTS:{
             const allSpots = {}
-            // console.log("ACTIONSPOTS LINE48", action.spots)
+            // console.log("ACTIONSPOTS, action.spots)
             action.spots.spots.forEach(spot => {
-                // console.log("SPOT LINE 50", spot)
+                // console.log("SPOT", spot)
                 allSpots[spot.id] = spot
             })
-            // console.log("ALLSPOTS LINE53", allSpots)
+            // console.log("ALLSPOTS", allSpots)
             const newState = {...state}
             return {...newState, allSpots}
         }

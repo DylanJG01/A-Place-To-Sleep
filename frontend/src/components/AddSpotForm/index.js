@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react"
 import {useDispatch, useSelector} from 'react-redux'
 import { addSpotThunk } from "../../store/spots"
+import { useHistory } from 'react-router-dom'
 import _spotValidator from './_spotValidator'
+import _imgValidator from "./_imageValidator"
 import "./AddSpotForm.css"
 
 const AddSpotForm = () => {
     const dispatch = useDispatch()
+    const history = useHistory();
     const [country, setCountry] = useState('')//country
     const [address, setAddress] = useState('')//address
     const [city, setCity] = useState('')//city
@@ -26,7 +29,7 @@ const AddSpotForm = () => {
 
     const user = useSelector(state => state.session.user)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if(errors.length){
             setDisplayErrors(true)
@@ -45,13 +48,14 @@ const AddSpotForm = () => {
             price: +price,
             pictures
         }
-        return dispatch(addSpotThunk(user, spot))
+        const createdSpot = await dispatch(addSpotThunk(user, spot))
                .catch(
                     async (res) => {
                         const data = await res.json();
                         if (data && data.errors) setErrors(data.errors);
                     }
         );
+        return history.push(`/spots/${createdSpot.id}`)
     }
 
     useEffect(() => {
@@ -68,28 +72,25 @@ const AddSpotForm = () => {
             lng: +longitude,
             description,
             name: title,
-            price: +price
+            price: +price,
+            picture1
         }))
-    }, [country, address, city, state, latitude, longitude, description, title, price])
+    }, [country, address, city, state, latitude, longitude, description, title, price, picture1])
 
     if (!user) return (
-        <>Please Login to make create a new spot</>
+        <h2>Please Login to create a new spot</h2>
     )
-
     return  (
         <>
             <h1> Create a New Spot! </h1>
             <form onSubmit={handleSubmit} className="add-spot-form">
-                <ul>
-                    {!!errors.length && errors.map((error, idx) => {})}
-                </ul>
                 <label>
-                    <div>
-                    <h5>
-                        Country{displayErrors && errors.includes("Country") && 
-                        // (<p>Country is required</p>)}
-                             (<>  Country is required</>)}
-                    </h5>
+                    <div className={'flx'}>
+                        <h5>
+                            Country
+                        </h5>
+                        {displayErrors && errors.includes("Country") &&
+                        (<h5 className="error">Country is required</h5>)}
                     </div>
                     <input 
                         className="country"
@@ -101,7 +102,11 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h5>Street Adrress</h5>
+                    <div className={'flx'}>
+                    <h5>Street Address</h5>
+                        {displayErrors && errors.includes("Address") &&
+                        (<h5 className="error">Address is required</h5>)}
+                    </div>
                     <input
                         className="address"
                         type="text"
@@ -112,7 +117,11 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h5>City</h5>
+                    <div className={'flx'}>
+                        <h5>City</h5>
+                        {displayErrors && errors.includes("City") &&
+                        (<h5 className="error">City is required</h5>)}
+                    </div>
                     <input
                         className="city"
                         type="text"
@@ -123,7 +132,11 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h5>State</h5>
+                    <div className={'flx'}>
+                        <h5>State</h5>
+                        {displayErrors && errors.includes("State") &&
+                        (<h5 className="error">State is required</h5>)}
+                    </div>
                     <input
                         className="state"
                         type="text"
@@ -134,7 +147,11 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h5>Latitude</h5>
+                    <div className={'flx'}>
+                        <h5>Latitude</h5>
+                        {displayErrors && errors.includes("Latitude") &&
+                        (<h5 className="error">Latitude is required</h5>)}
+                    </div>
                     <input
                         className="latitude"
                         type="text"
@@ -145,7 +162,11 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h5>Longitude</h5>
+                    <div className={'flx'}>
+                        <h5>Longitude</h5>
+                        {displayErrors && errors.includes("Longitude") &&
+                        (<h5 className="error">Longitude is required</h5>)}
+                    </div>
                     <input
                         className="longitude"
                         type="text"
@@ -156,7 +177,9 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h4>Describe your place to guests</h4>
+                    <div className={'flx'}>
+                        <h5>Describe your place to guests</h5>
+                    </div>
                     <input
                         className="description"
                         type="textarea"
@@ -165,9 +188,15 @@ const AddSpotForm = () => {
                         // required
                         placeholder="Description"
                     />
+                    {displayErrors && errors.includes("Description") &&
+                    (<h5 className="error">Description is required</h5>)}
                 </label>
                 <label>
-                    <h4>Create a title for your spot</h4>
+                    <div className={'flx'}>
+                        <h5>Create a title for your spot</h5>
+                        {displayErrors && errors.includes("Name") &&
+                        (<h5 className="error">Name is required</h5>)}
+                    </div>
                     <input
                         className="title"
                         type="text"
@@ -178,7 +207,11 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h4>Set a base price for your spot</h4>
+                    <div className={'flx'}>
+                        <h5>Set a base price for your spot</h5>
+                        {displayErrors && errors.includes("Price") &&
+                        (<h5 className="error">Price is required</h5>)}
+                    </div>
                     <input
                         className="price"
                         type="text"
@@ -189,7 +222,9 @@ const AddSpotForm = () => {
                     />
                 </label>
                 <label>
-                    <h4>Liven up your spots with photos</h4>
+                    <div className={'flx'}>
+                        <h5>Liven up your spots with photos</h5>
+                    </div>
                     <input
                         className="img-link"
                         type="text"
@@ -197,7 +232,10 @@ const AddSpotForm = () => {
                         onChange={(e) => setPicture1(e.target.value)}
                         // required
                         placeholder="Preview Image Url"
-                    />
+                        />
+                    {displayErrors && errors.includes("Preview") &&
+                    (<h5 className="error">Preview image is required</h5>)}
+                    {displayErrors && !errors.includes("Preview") && _imgValidator(picture1)}
                 </label>
                 <label>
                     <input
@@ -205,9 +243,9 @@ const AddSpotForm = () => {
                         type="text"
                         value={picture2}
                         onChange={(e) => setPicture2(e.target.value)}
-                        
                         placeholder="Image Url"
                     />
+                    {displayErrors && !!picture2.length && _imgValidator(picture2)}
                 </label>
                 <label>
                     <input
@@ -215,9 +253,9 @@ const AddSpotForm = () => {
                         type="text"
                         value={picture3}
                         onChange={(e) => setPicture3(e.target.value)}
-                      
                         placeholder="Image Url"
                     />
+                    {displayErrors && !!picture3.length && _imgValidator(picture3)}
                 </label>
                 <label>
                     <input
@@ -225,9 +263,9 @@ const AddSpotForm = () => {
                         type="text"
                         value={picture4}
                         onChange={(e) => setPicture4(e.target.value)}
-                       
                         placeholder="Image Url"
                     />
+                    {displayErrors && !!picture4.length && _imgValidator(picture4)}
                 </label>
                 <label>
                     <input
@@ -237,6 +275,7 @@ const AddSpotForm = () => {
                         onChange={(e) => setPicture5(e.target.value)}
                         placeholder="Image Url"
                     />
+                    {displayErrors && !!picture5.length && _imgValidator(picture5)}
                 </label>
                 <div>
                 <button type="submit" disabled={false}>Create Spot</button>

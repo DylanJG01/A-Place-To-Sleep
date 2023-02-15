@@ -1,6 +1,7 @@
 .spots__list {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 .spot-card{
     /* display: flex; */

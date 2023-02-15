@@ -8,7 +8,8 @@ export default function spotValidator(spot){
     if(!spot.lng) errors.push("Longitude")
     if(!spot.name) errors.push("Name")
     if(!spot.price) errors.push("Price")
-    if(!spot.description.length < 30) errors.push("Description")   
-    if (!errors.length) return []
+    if(spot.description.length < 30) errors.push("Description")
+    if(!spot.picture1) errors.push("Preview")
+    if(!errors.length) return []
     return errors
 }
