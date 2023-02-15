@@ -11,7 +11,7 @@ const SingleSpot = () => {
 
     useEffect(() => {
         dispatch(getSingleSpot(spotId))
-    }, [dispatch])
+    }, [dispatch, spotId])
 
     // console.log(singleSpot)
     
