@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { NavLink, Route, useParams, Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { getAllSpots } from '../../store/spots'
 import SpotCard from '../SpotCard'
@@ -15,7 +14,7 @@ const AllSpots = () => {
 
     // console.log("ALLSPOTS", allSpots)
 
-    const avgRating = (num) => Math.round(num * 100)/100
+    // const avgRating = (num) => Math.round(num * 100)/100
 
     // const mapSpots = () => {
     //     if (!allSpots) return
