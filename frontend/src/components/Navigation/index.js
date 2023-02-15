@@ -13,16 +13,20 @@ function Navigation({ isLoaded }) {
                 <li>
                     <NavLink to="/"> A Place To Sleep</NavLink>
                 </li>
+                <li className={'profile-section'}>
                 {sessionUser && (
+                    <div>
                     <NavLink to="/spots/new" className='add-spot'>
                         Add A Spot!
                     </NavLink>
+                    </div>
                 )}
                 {isLoaded && (
-                    <li className='profile-button'>
-                        <ProfileButton user={sessionUser} />
-                    </li>
+                <div className='profile-button'>
+                    <ProfileButton user={sessionUser} />
+                </div>
                 )}
+                </li>
             </ul>
         </nav>
     );

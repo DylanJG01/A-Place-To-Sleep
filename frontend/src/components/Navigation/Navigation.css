@@ -49,7 +49,6 @@ ul {
 .profile-button li:hover{
     cursor: pointer;
 }
-/* 
-.create-spot {
-
-} */
+.profile-section {
+    display: flex;
+}
