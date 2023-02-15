@@ -20,7 +20,7 @@ const UserSpots = () => {
         )
     }
 
-    console.log("userSpots" ,userSpots.length)
+    console.log("userSpots" ,userSpots)
     return (
         <div>
             <ul className={"spots__list"}>
