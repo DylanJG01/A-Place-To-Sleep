@@ -32,39 +32,10 @@ const EditSpotForm = () => {
         dispatch(getSingleSpot(spotId))
     }, [dispatch, spotId])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (errors.length) {
-            setDisplayErrors(true)
-            console.log(errors)
-            return
-        }
-        const spot = {
-            id: spotId,
-            country,
-            address,
-            city,
-            state,
-            lat: +latitude,
-            lng: +longitude,
-            description,
-            name: title,
-            price: +price,
-        }
-        //NEED EDIT SPOT THUNK INSTEAD
-        const createdSpot = await dispatch(editSpotThunk(user, spot))
-            .catch(
-                async (res) => {
-                    console.log(res)
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
-        return history.push(`/spots/${createdSpot.id}`)
-    }
     useEffect(() => {
-        if (!spot) return
+        // console.log(spot)
+        // console.log("!SPOT", !Object.values(spot).length)
+        if (!Object.values(spot).length) return
         setCountry(spot.country)
         setAddress(spot.address)
         setCity(spot.city)
@@ -90,8 +61,38 @@ const EditSpotForm = () => {
         }))
     }, [country, address, city, state, latitude, longitude, description, title, price])
 
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-
+        if (errors.length) {
+            setDisplayErrors(true)
+            console.log(errors)
+            return
+        }
+        const spot = {
+            id: spotId,
+            country,
+            address,
+            city,
+            state,
+            lat: +latitude,
+            lng: +longitude,
+            description,
+            name: title,
+            price: +price,
+        }
+        const createdSpot = await dispatch(editSpotThunk(user, spot))
+            .catch(
+                async (res) => {
+                    console.log(res)
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                }
+            );
+        return history.push(`/spots/${createdSpot.id}`)
+    }
+    
     if (!user) return (
         <h2>Please Login to edit this spot</h2>
     )

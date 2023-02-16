@@ -24,8 +24,8 @@ const UserSpots = () => {
         <div>
             <ul className={"spots__list"}>
                 {/* { allSpots ? mapSpots() :'placeholder'} */}
-                {!!userSpots.length ? userSpots.map(spot => (
-                        <SpotCard spot={spot}/>
+                {!!userSpots.length ? userSpots.map((spot, idx) => (
+                    <li key={idx}><SpotCard spot={spot} /></li>  
                 )) : 'placeholder'}
             </ul>
 
