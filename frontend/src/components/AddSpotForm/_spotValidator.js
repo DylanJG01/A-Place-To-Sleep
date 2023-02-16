@@ -1,3 +1,5 @@
+import _imgValidator from "./_imageValidator";
+
 export default function spotValidator(spot){
     const errors = []; 
     if(!spot.country) errors.push("Country")
@@ -8,8 +10,16 @@ export default function spotValidator(spot){
     if(!spot.lng) errors.push("Longitude")
     if(!spot.name) errors.push("Name")
     if(!spot.price) errors.push("Price")
-    if(spot.description.length < 30) errors.push("Description")
-    if(!spot.picture1) errors.push("Preview")
+    if(!spot.description || spot.description.length < 30) errors.push("Description")
+
+    for(let i = 0; i < 5; i++) {
+        // console.log(picture)
+        const picture = spot.pictures[i]
+        if(i === 0 && !picture) errors.push("Preview")
+        else if (!picture){}
+        else if (!_imgValidator(picture)) errors.push(`Url${i + 1}`)
+    }
+    // console.log(errors)
     if(!errors.length) return []
     return errors
 }

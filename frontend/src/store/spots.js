@@ -6,6 +6,7 @@ export const GET_USER_SPOTS = 'spots/GET_USER_SPOTS'
 export const DELETE_SPOT = 'spot/DELETE_SPOT'
 export const ADD_SPOT = 'spot/ADD_SPOT'
 export const EDIT_SPOT = 'spot/EDIT_SPOT'
+export const ADD_SPOT_IMAGE = 'spot/ADD_SPOT_IMAGE'
 
 const allSpots = spots => ({
     type: GET_ALL_SPOTS,
@@ -68,8 +69,15 @@ export const getUserSpots = (userId) => async dispatch => {
     console.log(res.status, "getUserSpots")
 }
 
+
 export const addSpotThunk = (user, spot) => async dispatch => {
-    console.log(spot)
+
+    const spotImages = []
+    //Create a spotImage Array filled only with (not null) values
+    spot.SpotImages.forEach(img => {
+        if (img !== null) spotImages.push(img)
+    })
+
     const res = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -78,10 +86,34 @@ export const addSpotThunk = (user, spot) => async dispatch => {
 
     if(res.ok) {
         const spot = await res.json()
+        
+        console.log("SPOT IMAGES", spotImages)
+        spot.SpotImages = []
+        let preview = true;
+
+        for(const image of spotImages){
+            
+            const res = await csrfFetch(`/api/spots/${spot.id}/images`,{
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({url: image, preview: preview})
+            })
+
+            preview = false;//Set preview to true only for first time, then all others are false.
+
+            console.log("RES", res)
+            if (res.ok) {
+                const image = await res.json()
+                console.log(image)
+                spot.SpotImages.push(image)
+                console.log("5555555", spot)
+            }
+        }
         dispatch(addSpot(user, spot))
         return spot;
     }
 }
+
 
 export const deleteSpotThunk = (user, spot) => async dispatch => {
 
@@ -120,7 +152,7 @@ export default function spotReducer(state = initialState, action) {
         }
         case GET_SPOT: {
             const newState = {...state, singleSpot: action.spot}
-            // console.log(newState)
+            console.log("GET SPOT IN REDUCER", action.spot)
             const owner = newState.singleSpot.User
             delete newState.singleSpot.User
             newState.singleSpot.Owner = owner
@@ -141,7 +173,6 @@ export default function spotReducer(state = initialState, action) {
             // console.log("ACTION", action)
             const singleSpot = {
                 SpotData : {...action.spot},
-                SpotImages: [],
                 Owner: {...action.user}
             }
             newState.singleSpot = {...singleSpot}
