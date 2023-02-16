@@ -29,10 +29,16 @@ const addSpot = (user, spot) => ({
     spot
 })
 
+const editSpot = (user, spot) => ({
+    type: EDIT_SPOT,
+    spot,
+    user
+})
 const deleteSpot = (spot) => ({
     type: DELETE_SPOT,
     spot
 })
+
 
 export const getAllSpots = () => async dispatch => {
     const res = await csrfFetch('/api/spots')
@@ -67,7 +73,6 @@ export const getUserSpots = (userId) => async dispatch => {
     }
     console.log(res.status, "getUserSpots")
 }
-
 
 export const addSpotThunk = (user, spot) => async dispatch => {
 
@@ -113,6 +118,22 @@ export const addSpotThunk = (user, spot) => async dispatch => {
     }
 }
 
+export const editSpotThunk = (user, spot) => async dispatch => {
+
+    const res = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(spot)
+    })
+
+    if (res.ok) {
+        const spot = await res.json()
+        console.log("SPOT", spot)
+        dispatch(editSpot(user, spot))
+        return spot;
+    }
+}
+
 export const deleteSpotThunk = (spot) => async dispatch => {
     console.log("SPOT BEFORE fetch",spot)
 
@@ -129,12 +150,8 @@ export const deleteSpotThunk = (spot) => async dispatch => {
 }
 
 const initialState = {
-    allSpots: {
- 
-    },
-    singleSpot: {
-
-    }
+    allSpots: {},
+    singleSpot: {}
 }
 
 export default function spotReducer(state = initialState, action) {
@@ -179,12 +196,21 @@ export default function spotReducer(state = initialState, action) {
             // console.log(newState)
             return newState;
         }
+        case EDIT_SPOT: {
+            const newState = {...state, singleSpot: {}}
+            console.log(action)
+            const singleSpot = {
+                SpotData: {...action.spot},
+                Owner: {...action.user}
+            }
+            newState.singleSpot = {...singleSpot}
+            return newState
+        }
         case DELETE_SPOT : {
             const newState = {...state}
             console.log("NEW STATE DELETE SPOT",newState)
             console.log("action!", action)
             delete newState.allSpots[action.spot.id]
-            delete newState.singleSpot
             newState.singleSpot = {}
             return newState
         }
