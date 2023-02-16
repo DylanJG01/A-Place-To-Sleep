@@ -1,13 +1,13 @@
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteSpotModal from "./DeleteSpotModal";
 
-export default function DeleteSpotButton({spot, user}){
+export default function DeleteSpotButton({spot}){
 
     return(
         <>
             <OpenModalMenuItem
                 itemText="Delete"
-                modalComponent={<DeleteSpotModal />}
+                modalComponent={<DeleteSpotModal spot={spot}/>}
             />
         </>
     )

@@ -1,17 +1,17 @@
 import { Link, Route, useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import DeleteSpotModal from '../DeleteSpot'
+import DeleteSpotButton from '../DeleteSpot'
 
 function SpotCard ({spot}) {
     const history = useHistory()
 
     const avgRating = (num) => Math.round(num * 100) / 100
-    console.log(spot)
+    // console.log(spot)
 
 
     return (
         <>
-        <div className={"spot-card"}>
+            <div className={"spot-card"}>
             <Link key={spot.id} to={`/spots/${spot.id}`}>
                 <img src={spot.preview} alt={"Spot preview"}/>
             </Link>
@@ -20,7 +20,7 @@ function SpotCard ({spot}) {
                 <p>${spot.price} night</p>
             <Route path={"/spots/current"}>
                 <button onClick={e => history.push(`/spots/${spot.id}/edit`)}>Edit</button>
-                <button><DeleteSpotModal/></button>
+                <button><DeleteSpotButton spot={spot}/></button>
                 
             </Route>
             </div>

@@ -29,9 +29,8 @@ const addSpot = (user, spot) => ({
     spot
 })
 
-const deleteSpot = (user, spot) => ({
+const deleteSpot = (spot) => ({
     type: DELETE_SPOT,
-    user,
     spot
 })
 
@@ -104,9 +103,9 @@ export const addSpotThunk = (user, spot) => async dispatch => {
             console.log("RES", res)
             if (res.ok) {
                 const image = await res.json()
-                console.log(image)
+                // console.log(image)
                 spot.SpotImages.push(image)
-                console.log("5555555", spot)
+                // console.log("5555555", spot)
             }
         }
         dispatch(addSpot(user, spot))
@@ -114,17 +113,18 @@ export const addSpotThunk = (user, spot) => async dispatch => {
     }
 }
 
+export const deleteSpotThunk = (spot) => async dispatch => {
+    console.log("SPOT BEFORE fetch",spot)
 
-export const deleteSpotThunk = (user, spot) => async dispatch => {
-
-    const res = await csrfFetch(`api/spots/${spot.id}`, {
+    const res = await csrfFetch(`/api/spots/${spot.id}`, {
         method: 'DELETE', 
         headers: {'Content-Type': 'application/json'},
     })
-
+    console.log("SPOT AFTER fetch", spot)
     if (res.ok) {
         const message = res.json();
         dispatch(deleteSpot(spot))
+        return message;
     }
 }
 
@@ -181,7 +181,11 @@ export default function spotReducer(state = initialState, action) {
         }
         case DELETE_SPOT : {
             const newState = {...state}
-            delete newState.spots.allSpots[action.spot.id]
+            console.log("NEW STATE DELETE SPOT",newState)
+            console.log("action!", action)
+            delete newState.allSpots[action.spot.id]
+            delete newState.singleSpot
+            newState.singleSpot = {}
             return newState
         }
         default: 
