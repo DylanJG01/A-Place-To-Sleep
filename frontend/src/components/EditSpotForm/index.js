@@ -105,7 +105,7 @@ const EditSpotForm = () => {
 
     return (
         <>
-            <h1> Create a New Spot! </h1>
+            <h1> Edit Spot! </h1>
             <form onSubmit={handleSubmit} className="add-spot-form">
                 <label>
                     <div className={'flx'}>

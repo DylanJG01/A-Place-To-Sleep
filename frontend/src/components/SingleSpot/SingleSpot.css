@@ -1,1 +1,15 @@
 
+.spot-images-div {
+    border: 1px solid red;
+}
+
+.preview-image-div {
+    display: flex;
+    height: 50vh;
+    border: 1px solid green;
+}
+.preview-image {
+    height: auto;
+    /* width: 412px; */
+    display: flex;
+}

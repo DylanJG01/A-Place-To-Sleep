@@ -8,7 +8,6 @@ function SpotCard ({spot}) {
     const avgRating = (num) => Math.round(num * 100) / 100
     // console.log(spot)
 
-
     return (
         <>
             <div className={"spot-card"}>

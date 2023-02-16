@@ -2,15 +2,17 @@ import _imgValidator from "./_imageValidator";
 
 export default function spotValidator(spot){
     const errors = []; 
+    console.log(spot.lat)
     if(!spot.country) errors.push("Country")
     if(!spot.address) errors.push("Address")
     if(!spot.city) errors.push("City")
     if(!spot.state) errors.push("State")
-    if(!spot.lat) errors.push("Latitude")
-    if(!spot.lng) errors.push("Longitude")
     if(!spot.name) errors.push("Name")
     if(!spot.price) errors.push("Price")
     if(!spot.description || spot.description.length < 30) errors.push("Description")
+
+    latChecker(spot.lat, errors)
+    lngChecker(spot.lng, errors)
 
     for(let i = 0; i < 5; i++) {
         // console.log(picture)
@@ -22,4 +24,16 @@ export default function spotValidator(spot){
     // console.log(errors)
     if(!errors.length) return []
     return errors
+}
+
+function latChecker(lat, errors) {
+    if(lat === undefined) return errors.push("Latitude")
+    if(isNaN(lat)) return errors.push("Latitude")
+    if (lat > 90 || lat < -90) errors.push("Latitude")
+}
+
+function lngChecker(lng, errors) {
+    if (lng === undefined) return errors.push("Longitude")
+    if (isNaN(lng)) return errors.push("Longitude")
+    if (lng > 180 || lng < -180) errors.push("Longitude")
 }
