@@ -4,8 +4,10 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { useHistory , NavLink} from 'react-router-dom'
 
 function ProfileButton({ user }) {
+const history = useHistory()
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -47,25 +49,25 @@ function ProfileButton({ user }) {
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (
-                    <>
-                        <li>{user.username}</li>
-                        <li>{user.firstName} {user.lastName}</li>
-                        <li>{user.email}</li>
-                        <li>
-                            <button onClick={logout}>Log Out</button>
+                    <>  
+                        <li id="hello-user">Hello, {user.firstName} {user.lastName}</li>
+                        <li id="user-email">{user.email}</li>
+                        <NavLink to="/spots/current" className={"manage-spot"}> <li>Manage Spot</li></NavLink>
+                        <li id="logout-button-li">
+                            <button onClick={logout} className="logout-button">Log Out</button>
                         </li>
                     </>
                 ) : (
                     <>
                         <OpenModalMenuItem
-                            itemText="Log In"
-                            onItemClick={closeMenu}
-                            modalComponent={<LoginFormModal />}
-                        />
-                        <OpenModalMenuItem
                             itemText="Sign Up"
                             onItemClick={closeMenu}
                             modalComponent={<SignupFormModal />}
+                        />
+                        <OpenModalMenuItem
+                            itemText="Log In"
+                            onItemClick={closeMenu}
+                            modalComponent={<LoginFormModal />}
                         />
                     </>
                 )}

@@ -12,28 +12,10 @@ const AllSpots = () => {
         dispatch(getAllSpots())
     }, [dispatch])
 
-    // console.log("ALLSPOTS", allSpots)
-
-    // const avgRating = (num) => Math.round(num * 100)/100
-
-    // const mapSpots = () => {
-    //     if (!allSpots) return
-    //     return allSpots.map(spot => (
-    //         <Link key={spot.id} className={'spot-card'} to={`/spots/${spot.id}`}>
-    //             <img src={spot.preview} alt={"Spot Preview"}/>
-    //             {/* <div> */}
-    //             <p>{spot.city}, {spot.state}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
-    //             <p>${spot.price} night</p>
-    //             {/* </div> */}
-    //         </Link>
-    //     ))
-    // }
- 
     return (
-        <div>
+        <div className='main-spot-container-div'>
             <ul className={"spots__list"}>
-                {/* { allSpots ? mapSpots() :'placeholder'} */}
-                {allSpots ? allSpots.map(spot => <SpotCard spot={spot} key={spot.id}/>) : 'placeholder'}
+                {allSpots ? allSpots.map(spot => <SpotCard spot={spot} key={spot.id} />) : <h1>'Loading Site'</h1>}
             </ul>
         </div>
     )

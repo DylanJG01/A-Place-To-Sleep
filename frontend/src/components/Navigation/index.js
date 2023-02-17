@@ -13,11 +13,11 @@ function Navigation({ isLoaded }) {
                 <li>
                     <NavLink to="/"> A Place To Sleep</NavLink>
                 </li>
-                <li className={'profile-section'}>
+                <li className='profile-section'>
                 {sessionUser && (
-                    <div>
+                    <div className='add-a-spot-div'>
                     <NavLink to="/spots/new" className='add-spot'>
-                        Add A Spot!
+                        Create a New Spot
                     </NavLink>
                     </div>
                 )}

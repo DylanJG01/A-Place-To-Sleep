@@ -1,6 +1,6 @@
 import { Link, Route, useHistory } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import DeleteSpotButton from '../DeleteSpot'
+import './SpotCard.css'
 
 function SpotCard ({spot}) {
     const history = useHistory()
@@ -10,18 +10,25 @@ function SpotCard ({spot}) {
 
     return (
         <>
-            <div className={"spot-card"}>
+        <div className={"spot-card"}>
             <Link key={spot.id} to={`/spots/${spot.id}`}>
                 <img src={spot.preview} alt={"Spot preview"}/>
             </Link>
             <div>
-                <p>{spot.city}, {spot.state}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
-                <p>${spot.price} night</p>
-            <Route path={"/spots/current"}>
-                <button onClick={e => history.push(`/spots/${spot.id}/edit`)}>Edit</button>
-                <button><DeleteSpotButton spot={spot}/></button>
-                
-            </Route>
+                <div>
+                <p>{spot.name}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
+                </div>
+                <div className='cost-update-delete-div'>
+                    <div>
+                    <p>${spot.price} night</p>
+                    </div>
+                    <div className='update-delete-div'>
+                    <Route path={"/spots/current"}>
+                        <button onClick={e => history.push(`/spots/${spot.id}/edit`)}>Edit</button>
+                        <button><DeleteSpotButton spot={spot} /></button>
+                    </Route>
+                     </div>
+                </div>
             </div>
         </div>
         </>

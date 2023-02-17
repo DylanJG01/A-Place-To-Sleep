@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import {useHistory} from 'react-router-dom'
 import "./LoginForm.css";
 
 function LoginFormModal() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -17,6 +19,7 @@ function LoginFormModal() {
         setErrors([]);
         return dispatch(sessionActions.login({ credential, password }))
             .then(closeModal)
+            .then(history.push('/'))
             .catch(
                 async (res) => {
                     const data = await res.json();
@@ -34,6 +37,7 @@ function LoginFormModal() {
     const demoUserLogin = () => {
         return dispatch(sessionActions.login({ credential: "DemoUser1", password: "thebestpassword" }))
             .then(closeModal)
+            .then(history.push('/'))
     }
 
     return (
@@ -68,7 +72,7 @@ function LoginFormModal() {
                 </label>
                 <button type="submit" disabled={disableBtn}>Log In</button>
             </form>
-            <p class={'demo-user'} onClick={() => demoUserLogin()}>Demo User</p>
+            <p className={'demo-user'} onClick={() => demoUserLogin()}>Demo User</p>
         </>
     );
 }

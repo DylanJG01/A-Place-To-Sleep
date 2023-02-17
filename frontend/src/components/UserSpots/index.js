@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserSpots } from '../../store/spots'
 import SpotCard from '../SpotCard'
-
+import './UserSpots.css'
 const UserSpots = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
@@ -21,12 +21,12 @@ const UserSpots = () => {
 
     console.log("userSpots" ,userSpots)
     return (
-        <div>
-            <ul className={"spots__list"}>
+        <div className='main-spot-container-div'>
+            <ul className={"user-spots-list"}>
                 {/* { allSpots ? mapSpots() :'placeholder'} */}
                 {!!userSpots.length ? userSpots.map((spot, idx) => (
-                    <li key={idx}><SpotCard spot={spot} /></li>  
-                )) : 'placeholder'}
+                    <SpotCard spot={spot} key={spot.id} />  
+                )) : <h1>Loading Content</h1>}
             </ul>
 
         </div>

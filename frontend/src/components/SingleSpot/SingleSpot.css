@@ -1,6 +1,9 @@
 
 .spot-images-div {
     border: 1px solid red;
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .preview-image-div {
@@ -13,3 +16,74 @@
     /* width: 412px; */
     display: flex;
 }
+.other-images-ul {
+    display: flex;
+}
+.other-image {
+    height:100%;
+    width: 100%;
+}
+
+.single-spot-div-1 {
+    display: flex;
+    border: 1px solid black;
+    height: 50vh;
+    min-height: 200px;
+    width: 85%;
+    justify-content: space-around;
+    align-items: center;
+    align-self: center;
+    /* flex-wrap: wrap; */
+}
+.single-spot-div-2 {
+    display: flex;
+    border: 1px solid rgb(228, 30, 30);
+    height: 100%;
+    width: 50%;
+}
+.single-spot-div-3 {
+    display: flex;
+    border: 1px solid rgb(45, 167, 31);
+    height: 100%;
+    width: 50%;
+    flex-wrap: wrap;
+}
+.single-spot-div-4 {
+    display: flex;
+    border: 1px solid rgb(93, 7, 198);
+    height: 48%;
+    width: 49.5%;
+    /* padding: 2px; */
+}
+.single-spot-div-5 {
+    display: flex;
+    border: 1px solid rgb(252, 235, 2);
+    height: 48%;
+    width: 49.5%;
+    /* padding: 2px; */
+}
+.single-spot-div-6 {
+    display: flex;
+    border: 1px solid rgb(122, 71, 122);
+    height: 48%;
+    width: 49.5%;
+    /* padding: 2px; */
+}
+.single-spot-div {
+    display: flex;
+    border: 1px solid black;
+    height: 48%;
+    width: 49.5%;
+    /* padding: 2px; */
+}
+
+.single-spot-img {
+    width: 100%;
+}
+.container-div {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    width: 100vw;
+}
+
