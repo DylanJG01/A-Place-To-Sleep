@@ -130,6 +130,7 @@ export const editSpotThunk = (user, spot) => async dispatch => {
         const spot = await res.json()
         console.log("SPOT", spot)
         dispatch(editSpot(user, spot))
+        spot.id = +id;
         return spot;
     }
 }
@@ -198,12 +199,14 @@ export default function spotReducer(state = initialState, action) {
         }
         case EDIT_SPOT: {
             const newState = {...state, singleSpot: {}}
+            const SpotImages = {...state.spots.singleSpot.SpotImages}
             console.log(action)
             const singleSpot = {
                 SpotData: {...action.spot},
                 Owner: {...action.user}
             }
             newState.singleSpot = {...singleSpot}
+            newState.singleSpot.SpotImages = SpotImages
             return newState
         }
         case DELETE_SPOT : {

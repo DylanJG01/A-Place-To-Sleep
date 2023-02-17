@@ -15,7 +15,7 @@ const SingleSpot = () => {
         dispatch(getSingleSpot(spotId))
     }, [dispatch, spotId])
 
-    console.log("SIGNLE SPOT", Object.values(singleSpot).length)
+    console.log("SIGNLE SPOT", singleSpot)
     
     let previewImg = "";
     const otherImgs = []
