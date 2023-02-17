@@ -53,19 +53,28 @@ const SingleSpot = () => {
     // )
 
     return (
+        <>
         <div className='container-div'>
-        <div className='single-spot-div-1'>
-            <div className='single-spot-div-2'>
-                <img className="preview-image single-spot-img" src={previewImg} alt={"Preview"} />
-            </div>
-            <div className='single-spot-div-3'>
-                
-                {otherImgs.map((img, idx) => (
-             <div className='single-spot-div' key={idx}><img className='other-image' src={img} alt={`Other ${idx}`}/></div> 
-                ))}
+            <div className='single-spot-div-1'>
+                <div className='single-spot-div-2'>
+                    <img className="preview-image single-spot-img" src={previewImg} alt={"Preview"} />
+                </div>
+                <div className='single-spot-div-3'>
+                    
+                    {otherImgs.map((img, idx) => (
+                <div className='single-spot-div' key={idx}><img className='other-image' src={img} alt={`Other ${idx}`}/></div> 
+                    ))}
+                </div>
             </div>
         </div>
+        <div>
+            <div>
+                <ReviewsBySpot />
+           </div>
+           <button>Post Your Review</button>
         </div>
+        </>
+        
     )
 }  
 
