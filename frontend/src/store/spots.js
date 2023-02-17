@@ -190,7 +190,7 @@ export default function spotReducer(state = initialState, action) {
             const newState = {...state, singleSpot: {}}
             // console.log("ACTION", action)
             const singleSpot = {
-                SpotData : {...action.spot},
+                ...action.spot,
                 Owner: {...action.user}
             }
             newState.singleSpot = {...singleSpot}
@@ -199,10 +199,11 @@ export default function spotReducer(state = initialState, action) {
         }
         case EDIT_SPOT: {
             const newState = {...state, singleSpot: {}}
-            const SpotImages = {...state.spots.singleSpot.SpotImages}
-            console.log(action)
+            // console.log("STATE IN EDITSPOT", state)
+            const SpotImages = {...state.singleSpot.SpotImages}
+            // console.log(action)
             const singleSpot = {
-                SpotData: {...action.spot},
+                ...action.spot,
                 Owner: {...action.user}
             }
             newState.singleSpot = {...singleSpot}
