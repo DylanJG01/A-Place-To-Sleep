@@ -17,9 +17,8 @@ export const getSpot = spot => ({
     spot
 })
 
-export const userSpots = (userId, spots) => ({
+export const userSpots = ( spots) => ({
     type: GET_USER_SPOTS,
-    userId, 
     spots
 })
 
@@ -62,14 +61,14 @@ export const getSingleSpot = spotId => async dispatch => {
     return console.log(res.status, "getSingleSpot")
 }
 
-export const getUserSpots = (userId) => async dispatch => {
+export const getUserSpots = () => async dispatch => {
     const res = await csrfFetch(`/api/spots/current`)
 
     if(res.ok) {
         const spots = await res.json();
         console.log("getUserSpotsThunk", spots)
-        console.log(userId, spots)
-        return dispatch(userSpots(userId, spots))
+        console.log(spots)
+        return dispatch(userSpots( spots))
     }
     console.log(res.status, "getUserSpots")
 }

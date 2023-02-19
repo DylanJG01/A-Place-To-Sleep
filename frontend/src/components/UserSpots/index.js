@@ -6,12 +6,18 @@ import './UserSpots.css'
 const UserSpots = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    const userSpots = useSelector(state => Object.values(state.spots.allSpots))
-   
+    const userSpots = useSelector(state =>
+      { console.log("LINE10@@@@@@@@@@@@@@", state)
+         return Object.values(state.spots.allSpots)})
+
+
+         //What do I want to do ?
+         // Only give UserSpots a value after user state is updated. I don't want to
+         //preload the page with the previous store setting. 
     useEffect(() => {
-        if(!user) return
-        dispatch(getUserSpots(user.id))
-    }, [dispatch, user])
+        dispatch(getUserSpots())
+
+    }, [dispatch])
 
     if (!user) {
         return (
@@ -19,7 +25,7 @@ const UserSpots = () => {
         )
     }
 
-    console.log("userSpots" ,userSpots)
+    console.log("userSpots!!" ,userSpots)
     return (
         <div className='main-spot-container-div'>
             <ul className={"user-spots-list"}>

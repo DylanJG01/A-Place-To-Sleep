@@ -4,18 +4,19 @@ import { getSingleSpot } from '../../store/spots';
 import { useEffect } from 'react'
 import ReviewsBySpot from '../ReviewsBySpot';
 import AddReview from '../AddReview';
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import './SingleSpot.css'
 
 const SingleSpot = () => {
     const dispatch = useDispatch();
     const { spotId } = useParams();
-    const singleSpot = useSelector(state => state.spots.singleSpot)
+    const [singleSpot, user, reviews] = useSelector(state => [state.spots.singleSpot, state.session.user, Object.values(state.reviews.spot)])
 
     useEffect(() => {
         dispatch(getSingleSpot(spotId))
     }, [dispatch, spotId])
 
-    console.log("SIGNLE SPOT", singleSpot)
+    // console.log("SIGNLE SPOT", singleSpot)
     
     let previewImg = "";
     const otherImgs = []
@@ -30,27 +31,16 @@ const SingleSpot = () => {
      }
     }
 
-    // return (
-    //     <div>
-    //         <div>
-    //         {singleSpot.name}
-    //         </div>
-    //         <div className='spot-images-span'>
-    //             <div className='preview-image-div'>
-    //                 <img className="preview-image" src={previewImg} alt={"Preview"}/>
-    //             </div>
-    //             <div className='other-images-div'>
-    //             <ul className='other-images-ul'>{otherImgs.map((img, idx) => (
-    //                 <li><img className='other-image' src={img} alt={`Other ${idx}`}/></li> 
-    //             ))}
-    //                 </ul> 
-    //             </div>
-    //         </div>
-    //         <div>
-    //             <ReviewsBySpot />
-    //         </div>
-    //     </div>
-    // )
+    // if (reviews.length){
+    //     // for (const review in reviews){
+    //     //     console.log(reviews[review].userId === user.id)
+    //     // }
+    //     console.log("REVIEWS.FIND")
+    //     if (reviews.find(review => review.userId === user.id)){
+    //         console.log("A flumping flopping flooping fleeping flounderer flounced")
+    //     }
+    // }
+    console.log("USER, REVIEWS", user)
 
     return (
         <>
@@ -67,16 +57,46 @@ const SingleSpot = () => {
                 </div>
             </div>
         </div>
+        <div> Host Information</div>
         <div>
+                {user && !reviews.find(review => review.userId === user.id) && <button>
+                    <OpenModalMenuItem
+                        itemText="Post review"
+                        modalComponent={<AddReview spotId={spotId} user={user} />}
+                    />
+                </button>}
             <div>
                 <ReviewsBySpot />
            </div>
-           <button>Post Your Review</button>
         </div>
-        </>
-        
+        </> 
     )
 }  
 
+
+
+
+
+    // return (
+    //     <div>
+    //         <div>
+    //         {singleSpot.name}
+    //         </div>
+    //         <div className='spot-images-span'>
+    //             <div className='preview-image-div'>
+    //                 <img className="preview-image" src={previewImg} alt={"Preview"}/>
+    //             </div>
+    //             <div className='other-images-div'>
+    //             <ul className='other-images-ul'>{otherImgs.map((img, idx) => (
+    //                 <li><img className='other-image' src={img} alt={`Other ${idx}`}/></li>
+    //             ))}
+    //                 </ul>
+    //             </div>
+    //         </div>
+    //         <div>
+    //             <ReviewsBySpot />
+    //         </div>
+    //     </div>
+    // )
 
 export default SingleSpot

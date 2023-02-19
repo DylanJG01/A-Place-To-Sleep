@@ -245,7 +245,7 @@ const EditSpotForm = () => {
                     />
                 </label>
                 <div>
-                    <button type="submit">Create Spot</button>
+                    <button type="submit">Edit Spot</button>
                 </div>
             </form>
         </>

@@ -8,6 +8,7 @@ import SingleSpot from './components/SingleSpot'
 import UserSpots from './components/UserSpots'
 import AddSpotForm  from "./components/AddSpotForm";
 import EditSpotForm from "./components/EditSpotForm";
+import UserReviews from "./components/GetUserReviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <AllSpots />
+          </Route>
+          <Route exact path="/reviews/current">
+            < UserReviews />
           </Route>
           <Route exact path={'/spots/current'}>
             <UserSpots />

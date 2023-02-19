@@ -196,7 +196,7 @@ const AddSpotForm = () => {
                         placeholder="Description"
                     />
                     {displayErrors && errors.includes("Description") &&
-                    (<h5 className="error">Description is required</h5>)}
+                    (<h5 className="error">Description is required (min 30 characters)</h5>)}
                 </label>
                 <label>
                     <div className={'flx'}>
@@ -231,7 +231,7 @@ const AddSpotForm = () => {
                 <label>
                     <div className={''}>
                         <h5>Liven up your spots with photos</h5>
-                        <h6>Valid url example: http://www.website.net/image.jpg</h6>
+                        <h6>Valid url example: http://website.net/image.jpg</h6>
                     </div>
                     <input
                         className="img-link"
