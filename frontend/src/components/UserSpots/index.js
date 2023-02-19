@@ -7,7 +7,7 @@ const UserSpots = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const userSpots = useSelector(state =>
-      { console.log("LINE10@@@@@@@@@@@@@@", state)
+      {
          return Object.values(state.spots.allSpots)})
 
 
@@ -28,9 +28,9 @@ const UserSpots = () => {
     console.log("userSpots!!" ,userSpots)
     return (
         <div className='main-spot-container-div'>
-            <ul className={"user-spots-list"}>
+            <ul className={".spots__list"}>
                 {/* { allSpots ? mapSpots() :'placeholder'} */}
-                {!!userSpots.length ? userSpots.map((spot, idx) => (
+                {!!userSpots.length ? userSpots.map((spot) => (
                     <SpotCard spot={spot} key={spot.id} />  
                 )) : <h1>Loading Content</h1>}
             </ul>

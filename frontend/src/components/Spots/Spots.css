@@ -1,27 +1,27 @@
-.spots__list {
+/* .spots__list {
     display: flex;
     flex-wrap: wrap;
 }
-
-.spot-card {
+*/
+/* .spot-card {
         display: flex;
         width: 20%;
-        /* height: 375px; */
         border: 1px solid red;
         justify-content: space-around;
         margin: 1% 2%;
         flex-direction: column;
-}
+}  */
 
-.spot-card img {
-    border: 1px solid blue;
-    width: 100%;
-    height: 270px;
-    display: flex;
-}
+
 
 .main-spot-container-div {
     display: flex;
     border: 1px solid purple;
     margin: 0 2%;
+} 
+
+img {
+    object-fit: contain;
+    height: 250px;
 }
+body {margin: 0;}

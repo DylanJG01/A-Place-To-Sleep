@@ -11,7 +11,12 @@ function Navigation({ isLoaded }) {
         <nav className='header'>
             <ul className='nav-list'>
                 <li>
-                    <NavLink to="/"> A Place To Sleep</NavLink>
+                    <NavLink to="/"> 
+                    {/* <h4>A Place To Sleep</h4> */}
+                    <div id='site-icon-div'>
+                    <img id='site-icon-img' src='https://cdn-icons-png.flaticon.com/512/3537/3537857.png' alt={'Gravestone'}/>
+                    </div>
+                    </NavLink>
                 </li>
                 <li className='profile-section'>
                 {sessionUser && (

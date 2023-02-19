@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useDispatch, userSelector, useSelector } from 'react-redux';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { reviewsByUser } from '../../store/reviews';
 
 
@@ -10,13 +10,15 @@ const UserReviews = () => {
     useEffect (() => {
         dispatch(reviewsByUser(user))
     }, [dispatch, user])
-    console.log(reviews, "!!")
-    console.log(user)  
+    // console.log(reviews, "!!")
+    // console.log(user)  
     return (
         <ul>{user && reviews.length && (reviews.map(review => {
             review = Object.values(review)[0]
             if(review){
-            return(<li key={review.id}>Review :{review.review} Stars: {review.stars} <br /> </li>)}}))}</ul>
+            return(<li key={review.id}>Review :{review.review} Stars: {review.stars} <br /> </li>
+            )}}))}
+        </ul>
     )
 }
 

@@ -1,5 +1,21 @@
-.user-spots-list {
+.main-spot-container-div {
+    display: flex;
+    border: 1px solid purple;
+    margin: 0 2%;
+}
+
+img {
+    object-fit: contain;
+    height: 250px;
+}
+
+body {
+    margin: 0;
+}
+
+.spots__list {
     width: 100%;
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
 }

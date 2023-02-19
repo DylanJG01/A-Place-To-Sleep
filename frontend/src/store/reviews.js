@@ -73,8 +73,8 @@ export const deleteReviewThunk = (review) => async dispatch => {
     })
 
     if (res.ok){
-        const message = await res.json();
-        console.log("DeleteReviewThunk")
+        // const message = await res.json();
+        // console.log("DeleteReviewThunk")
         return dispatch(deleteReview(review))
     }
 }
