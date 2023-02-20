@@ -2,7 +2,7 @@ import _imgValidator from "./_imageValidator";
 
 export default function spotValidator(spot){
     const errors = []; 
-    console.log(spot.lat)
+    // console.log(spot.lat)
     if(!spot.country) errors.push("Country")
     if(!spot.address) errors.push("Address")
     if(!spot.city) errors.push("City")
