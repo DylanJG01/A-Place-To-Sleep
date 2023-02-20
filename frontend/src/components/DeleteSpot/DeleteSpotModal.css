@@ -1,3 +1,21 @@
 .delete-spot-modal-div {
-    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+    background-color: darkgray;
+    align-items: center;
+}
+.delete-spot-modal-div button {
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+#modal-content {
+    background-color: darkgray;
+}
+
+.delete-spot-modal-div h3 {
+    margin-left: 15px;
 }

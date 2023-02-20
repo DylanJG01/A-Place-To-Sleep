@@ -120,7 +120,7 @@ export default function reviewReducer(state = initialState, action){
             const User = {...action.user}
             delete User.email
             delete User.username
-            const review = { ...action.review }
+            const review = { ...action.review}
             review.User = {...User}
             newState.spot[action.review.id] = {...review}
 

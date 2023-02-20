@@ -1,0 +1,32 @@
+.manage-reviews-h1 {
+padding-left: 40px;
+}
+
+.get-reviews-spot-name {
+    margin: 5px 0px;
+    font-size: 20px;
+}
+.get-reviews-date {
+    margin: 5px 0px;
+}
+.get-reviews-review {
+    margin: 5px 0px;
+}
+.get-reviews-stars {
+    margin: 5px 0px;
+}
+.review-list-item {
+    margin-bottom: 15px;
+    border-bottom: 2px solid black;
+}
+
+.review-list-item button {
+    margin-bottom: 5px;
+}
+
+.manage-reviews.div {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+}

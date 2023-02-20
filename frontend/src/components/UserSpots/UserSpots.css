@@ -1,11 +1,12 @@
 .main-spot-container-div {
     display: flex;
-    border: 1px solid purple;
+    /* border: 1px solid purple; */
     margin: 0 2%;
+    justify-content: center;
 }
 
 img {
-    object-fit: contain;
+    /* object-fit: contain; */
     height: 250px;
 }
 
@@ -13,7 +14,11 @@ body {
     margin: 0;
 }
 
-.spots__list {
+
+.cost-update-delete-div {
+    font-size: 14px;
+}
+.spots__listsss {
     width: 100%;
     display: flex;
     justify-content: space-around;

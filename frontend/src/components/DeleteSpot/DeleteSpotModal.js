@@ -19,8 +19,8 @@ export default function DeleteSpotModal({spot}){
             <div className="delete-spot-modal-div">
             <h1>Confirm Delete</h1>
             <h3>Are you sure you want to remove this spot from the listings?</h3>
-            <button onClick={() => confirmDelete(spot)}>Delete!</button>
-            <button onClick={() => closeModal()}>No (Keep)</button>
+            <button onClick={() => confirmDelete(spot)}>Yes (Delete Spot)</button>
+            <button onClick={() => closeModal()}>No (Keep Spot)</button>
             </div>
         </>
     )

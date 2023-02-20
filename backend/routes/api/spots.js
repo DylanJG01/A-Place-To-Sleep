@@ -204,7 +204,7 @@ router.get(
 
         let review = await Review.findAll({
             where: {
-                userId: spotById.ownerId
+                spotId: +req.params.id
             },
             attributes:
             [[sequelize.fn('AVG', sequelize.col('stars')),'averageRating'],
@@ -305,7 +305,7 @@ router.get( // I want to refactor the for loop
         // console.log(spot.toJSON())
         let review = await Review.findAll({
             where: {
-                userId: spot.ownerId
+                spotId: spot.id
             },
             attributes:
             [[sequelize.fn('AVG', sequelize.col('stars')), 'averageRating']]

@@ -5,7 +5,7 @@ import './SpotCard.css'
 function SpotCard ({spot}) {
     const history = useHistory()
 
-    const avgRating = (num) => Math.round(num * 100) / 100
+    const avgRating = (num) => (Math.round(num * 100) / 100).toFixed(2)
     // console.log(spot)
 
     return (
@@ -14,18 +14,21 @@ function SpotCard ({spot}) {
             <Link key={spot.id} to={`/spots/${spot.id}`}>
                 <img src={spot.preview} alt={"Spot preview"}/>
             </Link>
-            <div>
-                <div>
-                <p>{spot.name}, {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
+            <div className='spot-card-info'>
+                <div className='spot-card-text'>
+                    <p>{spot.name} </p>
+                        <p><i className="fas fa-sharp fa-solid fa-star" /> {spot.averageRating ? avgRating(spot.averageRating) : "New"}</p>
                 </div>
                 <div className='cost-update-delete-div'>
                     <div>
-                    <p>${spot.price} night</p>
+                        <div>
+                            ${spot.price.toFixed(2)} / Night
+                         </div>
                     </div>
                     <div className='update-delete-div'>
                     <Route path={"/spots/current"}>
-                        <button onClick={e => history.push(`/spots/${spot.id}/edit`)}>Edit</button>
-                        <button><DeleteSpotButton spot={spot} /></button>
+                        <button className={"edit-button"} onClick={e => history.push(`/spots/${spot.id}/edit`)}>Update</button>
+                        <button className={"delete-button"} ><DeleteSpotButton spot={spot} /></button>
                     </Route>
                      </div>
                 </div>

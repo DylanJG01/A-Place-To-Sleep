@@ -1,6 +1,7 @@
-#root {
+/* #root {
     background-color: grey;
-}
+} */
+html{background-color: grey;}
 .hidden {
     display: none;
 }
@@ -12,6 +13,7 @@
     list-style-type: none;
     /* width: 125px; */
     border: 1px solid black;
+    padding-bottom: 5px;
 }
 ul {
     list-style-type: none;
@@ -76,7 +78,7 @@ ul {
 .add-spot {
     margin-right: 3%;
     /* border: 1px solid blue; */
-    width: 150px;
+    width: 175px;
     display: flex;
 }
 .add-a-spot-div {
@@ -88,7 +90,7 @@ ul {
     text-decoration: none;
 }
 .fas {
-    font-size: 25px;
+    /* font-size: 25px; */
 }
 
 .fa-bars {
@@ -135,4 +137,65 @@ ul {
 #site-icon-img {
     object-fit: contain;
     height: 50px
+}
+
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+.spot-reviews {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-inline-start: 0;
+}
+
+.spot-reviews li {
+    margin: 10px 0px;
+}
+
+.delete-button {
+    background-color: rgb(198, 105, 105);
+    box-shadow: 2px 2px 1px black;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    /* width: 95%; */
+    color: white;
+}
+.edit-button {
+background-color: rgb(198, 105, 105);
+    box-shadow: 2px 2px 1px black;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    width: 95%;
+    color: white;
+}
+.post-review-button {
+    background-color: rgb(198, 105, 105);
+    box-shadow: 2px 2px 1px black;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    color: white;
+    list-style: none;
+    margin-bottom: 10px;
+
+}
+.above-post-review {
+    display: flex;
+    font-size: 22px;
+    margin: 10px 0;
+}
+
+.review-date {
+    margin: 5px 0;
+}
+
+.reviewer-name {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.manage-spots-h1 {
+    text-align: center;
 }

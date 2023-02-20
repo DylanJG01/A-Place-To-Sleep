@@ -104,151 +104,168 @@ const EditSpotForm = () => {
         <>{history.push('/spots/current')} </>)
 
     return (
-        <>
-            <h1> Edit Spot! </h1>
+        <div className="add-spot-form">
+            <h1> Update your Spot </h1>
             <form onSubmit={handleSubmit} className="add-spot-form">
-                <label>
-                    <div className={'flx'}>
-                        <h5>
-                            Country
-                        </h5>
-                        {displayErrors && errors.includes("Country") &&
-                            (<h5 className="error">Country is required</h5>)}
-                    </div>
-                    <input
-                        className="country"
-                        type="text"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        placeholder="Country"
-                    // required
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>Street Address</h5>
-                        {displayErrors && errors.includes("Address") &&
-                            (<h5 className="error">Address is required</h5>)}
-                    </div>
-                    <input
-                        className="address"
-                        type="text"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        placeholder="Street Address"
-                    // required
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>City</h5>
-                        {displayErrors && errors.includes("City") &&
-                            (<h5 className="error">City is required</h5>)}
-                    </div>
-                    <input
-                        className="city"
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
+                <div className="location-information">
+                    <label>
+                        <div className={'flx'}>
+                            <div>
+                                Country
+                            </div>
+                            {displayErrors && errors.includes("Country") &&
+                                (<div className="error">Country is required</div>)}
+                        </div>
+                        <input
+                            className="country"
+                            type="text"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            placeholder="Country"
                         // required
-                        placeholder="City"
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>State</h5>
-                        {displayErrors && errors.includes("State") &&
-                            (<h5 className="error">State is required</h5>)}
-                    </div>
-                    <input
-                        className="state"
-                        type="text"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <div className={'flx'}>
+                            <div>Street Address</div>
+                            {displayErrors && errors.includes("Address") &&
+                                (<div className="error">Address is required</div>)}
+                        </div>
+                        <input
+                            className="address"
+                            type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            placeholder="Street Address"
                         // required
-                        placeholder="State"
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>Latitude</h5>
-                        {displayErrors && errors.includes("Latitude") &&
-                            (<h5 className="error">Latitude is required</h5>)}
+                        />
+                    </label>
+                    <div className="city-state-div">
+                        <label>
+                            <div className={'flx city-label'}>
+                                <div>City</div>
+                                {displayErrors && errors.includes("City") &&
+                                    (<div className="error">City is required</div>)}
+                            </div>
+                            <input
+                                className="city"
+                                type="text"
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                // required
+                                placeholder="City"
+                            />
+                        </label>
+                        <label className="state-label">
+                            <div className={'flx'}>
+                                <div>State</div>
+                                {displayErrors && errors.includes("State") &&
+                                    (<div className="error">State is required</div>)}
+                            </div>
+                            <input
+                                className="state"
+                                type="text"
+                                value={state}
+                                onChange={(e) => setState(e.target.value)}
+                                // required
+                                placeholder="State"
+                            />
+                        </label>
                     </div>
-                    <input
-                        className="latitude"
-                        type="text"
-                        value={latitude}
-                        onChange={(e) => setLatitude(e.target.value)}
-                        // required
-                        placeholder="Latitude"
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>Longitude</h5>
-                        {displayErrors && errors.includes("Longitude") &&
-                            (<h5 className="error">Longitude is required</h5>)}
+                    <div className="lat-and-lng-div">
+                        <label>
+                            <div className={'flx'}>
+                                <div>Latitude</div>
+                                {displayErrors && errors.includes("Latitude") &&
+                                    (<div className="error">Latitude is required</div>)}
+                            </div>
+                            <input
+                                className="latitude"
+                                type="text"
+                                value={latitude}
+                                onChange={(e) => setLatitude(e.target.value)}
+                                // required
+                                placeholder="Latitude"
+                            />
+                        </label>
+                        <label>
+                            <div className={'flx'}>
+                                <div>Longitude</div>
+                                {displayErrors && errors.includes("Longitude") &&
+                                    (<div className="error">Longitude required</div>)}
+                            </div>
+                            <input
+                                className="longitude"
+                                type="text"
+                                value={longitude}
+                                onChange={(e) => setLongitude(e.target.value)}
+                                // required
+                                placeholder="Longitude"
+                            />
+                        </label>
                     </div>
-                    <input
-                        className="longitude"
-                        type="text"
-                        value={longitude}
-                        onChange={(e) => setLongitude(e.target.value)}
-                        // required
-                        placeholder="Longitude"
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>Describe your place to guests</h5>
-                    </div>
-                    <input
-                        className="description"
-                        type="textarea"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        // required
-                        placeholder="Description"
-                    />
-                    {displayErrors && errors.includes("Description") &&
-                        (<h5 className="error">Description is required</h5>)}
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>Create a title for your spot</h5>
+                </div>
+                <div className="title-and-price">
+                    <label className="description-label">
+                        <div className={'flx'}>
+                            <div>Describe your place to guests</div>
+                        </div>
+                        <textarea
+                            className="description"
+                            type="textarea"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            // required
+                            placeholder="Description"
+                            rows={4}
+                            cols={40}
+                        />
+                        {displayErrors && errors.includes("Description") &&
+                            (<div className="error description-error">Description is required (min 30 characters)</div>)}
+                    </label>
+                </div>
+                <div >
+                    <label className="description-label">
+                        <div className={'flx add-form-spot-title'}>
+                            <div>Create a title for your spot</div>
+                            <div className="smaller-text">Catch guests attention with a spot title that highlights what makes your place special.</div>
+                        </div>
+                        <input
+                            className="title"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            // required
+                            placeholder="Name of your spot"
+                        />
                         {displayErrors && errors.includes("Name") &&
-                            (<h5 className="error">Name is required</h5>)}
-                    </div>
-                    <input
-                        className="title"
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        // required
-                        placeholder="Name of your spot"
-                    />
-                </label>
-                <label>
-                    <div className={'flx'}>
-                        <h5>Set a base price for your spot</h5>
-                        {displayErrors && errors.includes("Price") &&
-                            (<h5 className="error">Price is required</h5>)}
-                    </div>
-                    <input
-                        className="price"
-                        type="text"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        // required
-                        placeholder="Price per night (USD)"
-                    />
-                </label>
+                            (<div className="error description-error">Name is required</div>)}
+                        {displayErrors && errors.includes("Title") &&
+                            (<div className="error description-error">Name too long</div>)}
+                    </label>
+                    <label className="description-label">
+                        <div className={'flx price-box'}>
+                            <div>Set a base price for your spot</div>
+                            <div className="smaller-text">Competitive pricing can help your listing stand out and rank higher in search results.</div>
+                            <div></div>
+                            {displayErrors && errors.includes("Price") &&
+                                (<div className="error description-error">Price is required</div>)}
+                        </div>
+                        <input
+                            className="price"
+                            type="text"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            // required
+                            placeholder="Price per night (USD)"
+                        />
+                    </label>
+                </div>
                 <div>
-                    <button type="submit">Edit Spot</button>
+                    <button className="delete-button update-button" type="submit" disabled={false}>Update Spot</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 

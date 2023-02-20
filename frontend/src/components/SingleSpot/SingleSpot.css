@@ -15,6 +15,7 @@
     height: auto;
     /* width: 412px; */
     display: flex;
+    border: 1px solid black;
 }
 .other-images-ul {
     display: flex;
@@ -26,10 +27,10 @@
 
 .single-spot-div-1 {
     display: flex;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: 50vh;
     min-height: 200px;
-    width: 85%;
+    width: 100%;
     justify-content: space-around;
     align-items: center;
     align-self: center;
@@ -37,34 +38,36 @@
 }
 .single-spot-div-2 {
     display: flex;
-    border: 1px solid rgb(228, 30, 30);
+    /* border: 1px solid rgb(228, 30, 30); */
     height: 100%;
     width: 50%;
+    margin-right: 5px;
 }
 .single-spot-div-3 {
     display: flex;
-    border: 1px solid rgb(45, 167, 31);
+    /* border: 1px solid rgb(45, 167, 31); */
     height: 100%;
     width: 50%;
     flex-wrap: wrap;
+    /* justify-content: center; */
 }
 .single-spot-div-4 {
     display: flex;
-    border: 1px solid rgb(93, 7, 198);
+    /* border: 1px solid rgb(93, 7, 198); */
     height: 48%;
     width: 49.5%;
     /* padding: 2px; */
 }
 .single-spot-div-5 {
     display: flex;
-    border: 1px solid rgb(252, 235, 2);
+    /* border: 1px solid rgb(252, 235, 2); */
     height: 48%;
     width: 49.5%;
     /* padding: 2px; */
 }
 .single-spot-div-6 {
     display: flex;
-    border: 1px solid rgb(122, 71, 122);
+    /* border: 1px solid rgb(122, 71, 122); */
     height: 48%;
     width: 49.5%;
     /* padding: 2px; */
@@ -73,8 +76,10 @@
     display: flex;
     border: 1px solid black;
     height: 48%;
-    width: 49.5%;
     /* padding: 2px; */
+    width: 48%;
+    /* padding: 2px; */
+    margin: 2px;
 }
 
 .single-spot-img {
@@ -84,6 +89,79 @@
     display: flex;
     justify-content: center;
     justify-content: space-around;
-    width: 100vw;
+    /* width: 100vw; */
 }
 
+.single-spot-page {
+    flex-direction: column;
+        display: flex;
+        margin: 0 5%;
+}
+
+.hosted-by-and-reserve-div {
+    display: flex;
+    border-bottom: 1px solid black;
+    margin-top: 15px;
+}
+
+.host-and-description {
+    width: 70%;
+}
+
+
+
+.price-and-review {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+    align-items: center
+}
+.single-spot-price {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+}
+
+.reserve-div {
+    width: 29%;
+    border: 2px solid black;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5%;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.reserve-button-div {
+    display: flex;
+    justify-content: center;
+}
+
+.reserve-button-div > button {
+    /* width: 90%;
+    border: 1px solid black; */
+        background-color: #de585d;
+            box-shadow: 2px 2px 1px black;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            width: 95%;
+            color: white;
+            justify-content: center;
+}
+
+.single-spot-price > h5 {
+    margin-left: 3px;
+    padding-top: 5px
+}
+
+.single-spot-review {
+    /* width: 120px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.dot {
+    margin: 0 5px;
+}

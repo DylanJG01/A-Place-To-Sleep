@@ -12,19 +12,19 @@ module.exports = {
       {
         spotId: 1,
         userId: 2,
-        review: 'The best place on earth.',
+        review: 'The best place on earth, which is why I lay beneath it in the hopes that I become one with it.',
         stars: 5,
       },
       {
         spotId: 1,
         userId: 3,
-        review: 'The Second best place on this side of the street',
-        stars: 4,
+        review: 'The Second best place on this side of the street, unfortunately I dead and therefore have quite a hard time reaching that side of the street without help',
+        stars: 3,
       },
       {
         spotId: 3,
         userId: 2,
-        review: 'Basically heck, pardon my vulgarity.',
+        review: 'Basically heck, pardon my vulgarity. I suppose suffering this for eternity could be worse, but do not expect me to like it!',
         stars: 2,
       }
     ])

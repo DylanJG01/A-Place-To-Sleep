@@ -1,15 +1,27 @@
 .spots__list {
     width: 100%;
     display: flex;
-    justify-content: space-around;   
+    /* justify-content: space-around;    */
     flex-wrap: wrap;
 }
-
-.spot-card img {
-    border: 1px solid blue;
+.spot-card {
+    min-width: 250px;
+    border: 1px solid black;
+    margin: 0 4%;
+    margin-bottom: 20px;
+}
+.spot-card a {
     width: 100%;
+    /* border: 1px dotted green; */
+    /* height: 100%; */
+    display: flex;
+}
+.spot-card img {
+    /* border: 1px solid blue; */
+    width: 250px;
     height: 270px;
     display: flex;
+    object-fit: fill;
 }
 
 .cost-update-delete-div {
@@ -21,4 +33,8 @@
 .update-delete-div {
     display: flex;
     align-items: center;
+}
+.spot-card-text {
+    display: flex;
+    justify-content: space-between;
 }
