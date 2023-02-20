@@ -49,15 +49,17 @@ const AddSpotForm = () => {
             price: +price,
             SpotImages: pictures
         }
-        const createdSpot = await dispatch(addSpotThunk(user, spot))
+            await dispatch(addSpotThunk(user, spot))
+            .then(res => history.push(`/spots/${res.id}`))
                .catch(
                     async (res) => {
-                        console.log(res)
+                        // console.log(res)
                         const data = await res.json();
                         if (data && data.errors) setErrors(data.errors);
                     }
         );
-        return history.push(`/spots/${createdSpot.id}`)
+        // console.log(createdSpot)
+        // return history.push(`/spots/${createdSpot.id}`)
     }
 
     useEffect(() => {
