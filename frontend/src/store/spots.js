@@ -44,10 +44,10 @@ export const getAllSpots = () => async dispatch => {
     // const res = await fetch('/')
     if(res.ok){
         const spots = await res.json();
-        console.log("Spots: ", spots);
+        // console.log("Spots: ", spots);
         return dispatch(allSpots(spots))
     }
-    return console.log(res.status, "getAllSpots")
+    // return console.log(res.status, "getAllSpots")
 }
 
 export const getSingleSpot = spotId => async dispatch => {
@@ -55,10 +55,10 @@ export const getSingleSpot = spotId => async dispatch => {
     const res = await csrfFetch(`/api/spots/${spotId}`)
     if(res.ok) {
         const spot = await res.json()
-        console.log ("Spot: ", spot)
+        // console.log ("Spot: ", spot)
         return dispatch(getSpot(spot))
     }
-    return console.log(res.status, "getSingleSpot")
+    // return console.log(res.status, "getSingleSpot")
 }
 
 export const getUserSpots = () => async dispatch => {
@@ -66,11 +66,11 @@ export const getUserSpots = () => async dispatch => {
 
     if(res.ok) {
         const spots = await res.json();
-        console.log("getUserSpotsThunk", spots)
-        console.log(spots)
+        // console.log("getUserSpotsThunk", spots)
+        // console.log(spots)
         return dispatch(userSpots( spots))
     }
-    console.log(res.status, "getUserSpots")
+    // console.log(res.status, "getUserSpots")
 }
 
 export const addSpotThunk = (user, spot) => async dispatch => {
@@ -90,7 +90,7 @@ export const addSpotThunk = (user, spot) => async dispatch => {
     if(res.ok) {
         const spot = await res.json()
         
-        console.log("SPOT IMAGES", spotImages)
+        // console.log("SPOT IMAGES", spotImages)
         spot.SpotImages = []
         let preview = true;
 
@@ -104,7 +104,7 @@ export const addSpotThunk = (user, spot) => async dispatch => {
 
             preview = false;//Set preview to true only for first time, then all others are false.
 
-            console.log("RES", res)
+            // console.log("RES", res)
             if (res.ok) {
                 const image = await res.json()
                 // console.log(image)
@@ -127,7 +127,7 @@ export const editSpotThunk = (user, spot) => async dispatch => {
 
     if (res.ok) {
         const spot = await res.json()
-        console.log("SPOT", spot)
+        // console.log("SPOT", spot)
         dispatch(editSpot(user, spot))
         spot.id = +id;
         return spot;
@@ -135,13 +135,13 @@ export const editSpotThunk = (user, spot) => async dispatch => {
 }
 
 export const deleteSpotThunk = (spot) => async dispatch => {
-    console.log("SPOT BEFORE fetch",spot)
+    // console.log("SPOT BEFORE fetch",spot)
 
     const res = await csrfFetch(`/api/spots/${spot.id}`, {
         method: 'DELETE', 
         headers: {'Content-Type': 'application/json'},
     })
-    console.log("SPOT AFTER fetch", spot)
+    // console.log("SPOT AFTER fetch", spot)
     if (res.ok) {
         const message = res.json();
         dispatch(deleteSpot(spot))
@@ -169,7 +169,7 @@ export default function spotReducer(state = initialState, action) {
         }
         case GET_SPOT: {
             const newState = {...state, singleSpot: action.spot}
-            console.log("GET SPOT IN REDUCER", action.spot)
+            // console.log("GET SPOT IN REDUCER", action.spot)
             const owner = newState.singleSpot.User
             delete newState.singleSpot.User
             newState.singleSpot.Owner = owner
@@ -211,8 +211,8 @@ export default function spotReducer(state = initialState, action) {
         }
         case DELETE_SPOT : {
             const newState = {...state}
-            console.log("NEW STATE DELETE SPOT",newState)
-            console.log("action!", action)
+            // console.log("NEW STATE DELETE SPOT",newState)
+            // console.log("action!", action)
             delete newState.allSpots[action.spot.id]
             newState.singleSpot = {}
             return newState

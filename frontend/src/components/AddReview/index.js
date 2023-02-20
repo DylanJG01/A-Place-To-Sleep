@@ -17,8 +17,8 @@ function AddReviewModal({spotId, user}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        console.log("Handle submit", spotId)
-        console.log(stars)
+        // console.log("Handle submit", spotId)
+        // console.log(stars)
         return dispatch(addReviewThunk({ review: reviewText, stars: +stars }, spotId, user ))
             .then(closeModal)
             .catch(

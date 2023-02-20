@@ -34,10 +34,10 @@ export const reviewsBySpot = (spotId) => async dispatch => {
 
     if (res.ok) {
         const reviews = await res.json()
-        console.log("REVIEWS: ", reviews)
+        // console.log("REVIEWS: ", reviews)
         return dispatch(spotReviews(reviews))
     }
-    return console.log(res.status, "reviewsBySpot")
+    // return console.log(res.status, "reviewsBySpot")
 }
 
 export const reviewsByUser = () => async dispatch => {
@@ -45,7 +45,7 @@ export const reviewsByUser = () => async dispatch => {
 
     if (res.ok) {
         const reviews = await res.json()
-        console.log("REVIEWS BY USER: ", reviews    )
+        // console.log("REVIEWS BY USER: ", reviews    )
         return dispatch(userReviews(reviews))
     }
 }
@@ -60,13 +60,13 @@ export const addReviewThunk = (review, spotId, user) => async dispatch => {
 
     if (res.ok){
         const review = await res.json()
-        console.log("AddReview response", review)
+        // console.log("AddReview response", review)
         return dispatch(addReview(review, user))
     }
 }
 
 export const deleteReviewThunk = (review) => async dispatch => {
-    console.log(review)
+    // console.log(review)
     const res = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'DELETE', 
         headers: {"Content-Type": "application/json"},

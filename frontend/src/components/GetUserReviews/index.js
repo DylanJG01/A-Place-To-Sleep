@@ -12,7 +12,7 @@ const UserReviews = () => {
         dispatch(reviewsByUser(user))
     }, [dispatch, user])
     // console.log(reviews, "!!")
-    console.log("!!!!", reviews)  
+    // console.log("!!!!", reviews)  
     if (!reviews.length) return (
         <>
     <h1 className='manage-reviews-h1'>My Reviews</h1>
