@@ -70,15 +70,15 @@ function AddReviewModal({spotId, user}) {
                     
                     
                     
-                    <input type="radio" id="star1" name="rate" required value={stars} onChange={e => setStars(1)} />
+                    <input type="radio" id="star1" name="rate" required value={stars} onChange={e => setStars(5)} />
                     <label htmlFor="star1" title="text"></label>
-                    <input type="radio" id="star2" name="rate" value={stars} onChange={e => setStars(2)} />
+                    <input type="radio" id="star2" name="rate" value={stars} onChange={e => setStars(4)} />
                     <label htmlFor="star2" title="text"></label>
                     <input type="radio" id="star3" name="rate" value={stars} onChange={e => setStars(3)} />
                     <label htmlFor="star3" title="text"></label>
-                    <input type="radio" id="star4" name="rate" value={stars} onChange={e => setStars(4)} />
+                    <input type="radio" id="star4" name="rate" value={stars} onChange={e => setStars(2)} />
                     <label htmlFor="star4" title="text"></label>
-                    <input type="radio" id="star5" name="rate" value={stars} onChange={e => setStars(5)} />
+                    <input type="radio" id="star5" name="rate" value={stars} onChange={e => setStars(1)} />
                     <label htmlFor="star5" title="text"></label>
                 </div>
                 <button type="submit" disabled={disableBtn}>Submit Review</button>
