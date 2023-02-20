@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reviewsByUser } from '../../store/reviews';
 import  _dateFormatter  from '../ReviewsBySpot/_dateFormatter'
 import DeleteReviewButton from '../DeleteReview'
+
 import './GetUserReviews.css'
+
 const UserReviews = () => {
     const dispatch = useDispatch()
     const [user, reviews] = useSelector(state => [state.session.user, Object.values(state.reviews.user)])

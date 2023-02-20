@@ -25,7 +25,7 @@ const SingleSpot = () => {
     const otherImgs = []
 
     if(Object.values(singleSpot).length){
-    console.log(singleSpot)
+    // console.log(singleSpot)
     previewImg = singleSpot.SpotImages
     previewImg = previewImg[0].url
      for(let i = 1; i < 5; i++) {
