@@ -134,7 +134,7 @@ router.get(
             ],
         })
         const spots = [];
-        
+
         for (let spot of userSpots) {
             // console.log(spot.toJSON())
             let review = await Review.findAll({
@@ -172,11 +172,11 @@ router.get(
 router.get(
     '/:id',
     async (req, res, next) => {
-        
+
         if(isNaN(parseInt(req.params.id))) {
             const err = new Error("Spot couldn't be found");
             res.status(404);
-            return next(err);            
+            return next(err);
         }
 
         const spotById = await Spot.findByPk(req.params.id, {
@@ -191,7 +191,7 @@ router.get(
                 }
             ],
         })
-        
+
         if (!spotById){
             const err = new Error();
             err.message = "Spot couldn't be found"
@@ -216,22 +216,22 @@ router.get(
         spot.averageRating = review[0].toJSON().averageRating
         spot.reviews = review[0].toJSON().reviews
         spotsWithReview.push(spot)
-        
+
         return res.json(spotsWithReview[0])
     }
 );
 
-    
+
 router.get( // I want to refactor the for loop
     '/',
     async (req, res, next) => {
-        
+
         const error = new Error();
         let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
-        
+
         const where = {};
         const pagination = {};
-        
+
         if(!page) page = 1;
         if(!size) size = 5;
         page = parseInt(page)
@@ -240,14 +240,14 @@ router.get( // I want to refactor the for loop
         minLng = parseInt(minLng)
         minPrice = parseInt(minPrice)
         maxPrice = parseInt(maxPrice)
-        
-        
-    if(isNaN(page) || (page < 1 || page > 10)){  
+
+
+    if(isNaN(page) || (page < 1 || page > 10)){
         error.page = 'Page must be greater than or equal to 1'
     }
     if(isNaN(size) || (size < 1 || size > 20)){
         error.size = 'Size must be greater than or equal to 1 and less than 10'
-    }  
+    }
     if(minLat && (isNaN(minLat) || (minLat < -90 || minLat > 90))){
         error.minLat = 'Invalid minimum latitude value'
     }
@@ -282,11 +282,11 @@ router.get( // I want to refactor the for loop
     if (maxLng && minLng) where.lng = { [Op.between]: [minLng, maxLng] }
     else if (minLng) where.lng = { [Op.gte]: minLng }
     else if (maxLng) where.lng = { [Op.lte]: maxLng }
-    
+
     minPrice ? where.price = {[Op.gte]: minPrice} : null
     maxPrice ? where.price = {[Op.lte]: maxPrice} : null
     minPrice && maxPrice ? where.price = {[Op.between]: [minPrice, maxPrice]} : null
-    
+
     pagination.limit = size;
     pagination.offset = size * (page - 1)
 
@@ -296,7 +296,7 @@ router.get( // I want to refactor the for loop
             {model: SpotImage},
         ],
         where,
-        ...pagination
+        // ...pagination
     });
 
     const spots = [];
@@ -312,13 +312,13 @@ router.get( // I want to refactor the for loop
         })
         spot = spot.toJSON()
         spot.averageRating = review[0].toJSON().averageRating
-    
+
         spots.push(spot)
     }
-    
+
     for (let spot of spots){
         let previewImage;
-        
+
         spot.SpotImages.forEach(el => {
             if(el.preview === true){
                 previewImage = el.url
@@ -349,7 +349,7 @@ router.post(
             res.status(404);
             return next(err);
         }
-        
+
         let alreadyReviewed = await Review.findAll({
             where : {
                 spotId: +req.params.id,
@@ -376,12 +376,12 @@ router.post(
             res.status(400);
             return next(err)
         }
-    
-        
+
+
         const newReview = await Review.create({
             spotId: +req.params.id,
             userId: +req.user.id,
-            review, 
+            review,
             stars
         })
         res.status(201);
@@ -415,13 +415,13 @@ router.post(
             err.message = "Cannot start or end booking in the past";
             res.status(400);
             return next(err)
-        } 
+        }
 
         // console.log()
         // console.log(Date.parse(startDate))
         // console.log(Date.parse(endDate))
         // console.log()
-        
+
 
         let arrivalDate = new Date(startDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
         let departureDate = new Date(endDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
@@ -613,9 +613,9 @@ router.put(
             err.message = "Validation Error"
             return next(err)
         }
-         
+
         await spot.update({...updatedSpot})
-        
+
         res.status(201)
         return res.json(spot)
     }
@@ -639,7 +639,7 @@ router.post(
         }
         if(!lat || (parseInt(lat) > 90) || parseInt(lat) < -90){
             err.lat = "Lat must be a number between -90 and 90 degrees"
-        } 
+        }
         if(!lng || (parseInt(lng) > 180 || parseInt(lng) < -180)){
             err.lng = "Lng Must be a number between -180 and 180 degrees"
         }
@@ -660,17 +660,17 @@ router.post(
         }
         const newSpot = await Spot.create({
             ownerId: req.user.id,
-            address, 
-            city, 
-            state, 
-            country, 
-            lat, 
-            lng, 
-            name, 
-            description, 
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
             price
         })
-        
+
         res.status(201)
         return res.json(newSpot)
     }
@@ -696,7 +696,7 @@ router.delete(
             err.message = "Forbidden"
             res.status(403)
             return next(err)
-        }   
+        }
 
         await spotToDelete.destroy();
         res.status(200)

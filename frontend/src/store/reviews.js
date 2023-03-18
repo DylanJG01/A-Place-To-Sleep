@@ -4,6 +4,8 @@ export const GET_SPOT_REVIEWS = 'reviews/GET_SPOT_REVIEWS'
 export const GET_USER_REVIEWS = 'reviews/GET_USER_REVIEWS'
 export const ADD_REVIEW = 'reviews/ADD_REVIEW'
 export const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
+export const EDIT_USER_REVIEW = 'reviews/EDIT_USER_REVIEW'
+export const EDIT_SPOT_REVIEW = 'reviews/EDIT_SPOT_REVIEW'
 
 // export const EDIT_REVIEW = 'review/EDIT_REVIEW' //Currently unrequired.
 
@@ -27,6 +29,17 @@ const deleteReview = (review) => ({
     type: DELETE_REVIEW,
     review,
 })
+
+const editUserReview = (review) => ({
+    type: EDIT_USER_REVIEW,
+    review
+})
+
+const editSpotReview = (review) => ({
+    type: EDIT_SPOT_REVIEW,
+    review
+})
+
 
 export const reviewsBySpot = (spotId) => async dispatch => {
     if(isNaN(parseInt(spotId))) return //We shouldn't need this anymore, this can be on the backlog for things to test
@@ -65,14 +78,32 @@ export const addReviewThunk = (review, spotId, user) => async dispatch => {
     }
 }
 
+export const editReviewThunk = (review, id) => async dispatch => {
+    console.log(review)
+    const res = await csrfFetch(`/api/reviews/${id}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(review)
+    })
+
+    console.log("!!!!")
+    if (res.ok){
+        const review = await res.json()
+
+        return dispatch(editReview(review, id))
+    }
+}
+
 export const deleteReviewThunk = (review) => async dispatch => {
     // console.log(review)
     const res = await csrfFetch(`/api/reviews/${review.id}`, {
-        method: 'DELETE', 
+        method: 'DELETE',
         headers: {"Content-Type": "application/json"},
     })
 
     if (res.ok){
+        console.log(res)
+        const review = res.json();
         // const message = await res.json();
         // console.log("DeleteReviewThunk")
         return dispatch(deleteReview(review))
@@ -82,11 +113,11 @@ export const deleteReviewThunk = (review) => async dispatch => {
 
 const initialState = {
     spot: {
-        
+
     },
     user: {
         reviewId: {
-        
+
         }
     }
 }
@@ -94,9 +125,9 @@ const initialState = {
 export default function reviewReducer(state = initialState, action){
     switch(action.type){
         case GET_SPOT_REVIEWS: {
-            const reviews = { spot: {} }; // 
+            const reviews = { spot: {} }; //
             // console.log("ReviewReducer Get Spot Reviews", action.reviews.Reviews)
-            action.reviews.Reviews.forEach(review => { 
+            action.reviews.Reviews.forEach(review => {
                 // console.log("REVIEW", review)
                 reviews.spot[review.id] = review
             })
@@ -133,9 +164,16 @@ export default function reviewReducer(state = initialState, action){
             delete newState.user[action.review.id]
             return newState
         }
+        case EDIT_USER_REVIEW: {
+            const newState = {...state}
+
+            return newState
+        }
+        case EDIT_SPOT_REVIEW: {
+            const newState = {...state}
+
+            return newState
+        }
         default: return state
     }
 }
-
-
-

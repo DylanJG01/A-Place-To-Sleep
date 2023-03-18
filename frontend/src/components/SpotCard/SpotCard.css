@@ -6,9 +6,12 @@
 }
 .spot-card {
     min-width: 250px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin: 0 4%;
     margin-bottom: 20px;
+}
+.spot-card:hover{
+    cursor: pointer;
 }
 .spot-card a {
     width: 100%;
@@ -22,6 +25,7 @@
     height: 270px;
     display: flex;
     object-fit: fill;
+    border-radius: 5%;
 }
 
 .cost-update-delete-div {

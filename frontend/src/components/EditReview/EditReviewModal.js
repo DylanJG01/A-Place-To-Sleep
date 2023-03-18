@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { addReviewThunk } from "../../store/reviews";
-import { useDispatch } from "react-redux";
+import { editReviewThunk } from "../../store/reviews";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import './AddReview.css'
+import _checked from "./_checked";
+
+import '../AddReview/AddReview.css'
 import "../LoginFormModal/LoginForm.css"; // I don't think I need this.
 //
 
-function AddReviewModal({spotId, user}) {
+function EditReviewModal({review}) {
     const dispatch = useDispatch();
     const [reviewText, setReviewText] = useState("");
-    const [stars, setStars] = useState(0)
+    const [stars, setStars] = useState(review.stars)
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const [disableBtn, setDisableBtn] = useState(true)
+
+    useEffect(() => {
+        if (reviewText.length < 10 || !stars) return setDisableBtn(true)
+        return setDisableBtn(false)
+    }, [reviewText, stars])
+
+    useEffect(() => {
+        setReviewText(review.review)
+    },[review])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
         // console.log("Handle submit", spotId)
         // console.log(stars)
-        return dispatch(addReviewThunk({ review: reviewText, stars: +stars }, spotId, user ))
+        return dispatch(editReviewThunk({ review: reviewText, stars: +stars }, review.id))
             .then(closeModal)
             .catch(
                 async (res) => {
@@ -28,11 +39,6 @@ function AddReviewModal({spotId, user}) {
                 }
             );
     };
-
-    useEffect(() => {
-        if (reviewText.length < 10 || !stars) return setDisableBtn(true)
-        return setDisableBtn(false)
-    }, [reviewText, stars])
 
     return (
         <>
@@ -56,15 +62,15 @@ function AddReviewModal({spotId, user}) {
                 </label>
 
                 <div className="rate">
-                    <input type="radio" id="star1" name="rate" required value={stars} onChange={e => setStars(5)} />
+                    <input type="radio" id="star1" name="rate" required value={stars} onChange={e => setStars(5)} checked={(5===stars)}/>
                     <label htmlFor="star1" title="text"></label>
-                    <input type="radio" id="star2" name="rate" value={stars} onChange={e => setStars(4)} />
+                    <input type="radio" id="star2" name="rate" value={stars} onChange={e => setStars(4)} checked={(4===stars)}/>
                     <label htmlFor="star2" title="text"></label>
-                    <input type="radio" id="star3" name="rate" value={stars} onChange={e => setStars(3)} />
+                    <input type="radio" id="star3" name="rate" value={stars} onChange={e => setStars(3)} checked={(3===stars)} />
                     <label htmlFor="star3" title="text"></label>
-                    <input type="radio" id="star4" name="rate" value={stars} onChange={e => setStars(2)} />
+                    <input type="radio" id="star4" name="rate" value={stars} onChange={e => setStars(2)} checked={(2===stars)}/>
                     <label htmlFor="star4" title="text"></label>
-                    <input type="radio" id="star5" name="rate" value={stars} onChange={e => setStars(1)} />
+                    <input type="radio" id="star5" name="rate" value={stars} onChange={e => setStars(1)} checked={(1===stars)} />
                     <label htmlFor="star5" title="text"></label>
                 </div>
                 <button type="submit" disabled={disableBtn}>Submit Review</button>
@@ -73,4 +79,4 @@ function AddReviewModal({spotId, user}) {
     );
 }
 
-export default AddReviewModal;
+export default EditReviewModal;

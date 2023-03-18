@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from  'react-redux' 
+import { useDispatch, useSelector } from  'react-redux'
 import { reviewsBySpot } from '../../store/reviews';
 import { getSingleSpot } from '../../store/spots';
 import DeleteReviewButton from '../DeleteReview'
+import EditReviewModal from '../EditReview';
 import _dateFormatter from './_dateFormatter';
 import _avgRating from './_avgRating';
 
@@ -14,30 +15,37 @@ const ReviewsBySpot = () => {
 
     const reviews = useSelector(state => state.reviews.spot)
     const user = useSelector(state => state.session.user)
-    
+
     useEffect(() => {
         dispatch(reviewsBySpot(spotId))
     }, [dispatch, spotId])
 
     // console.log("REVIEWS@!@!@!" , reviews)
-    
+
     return (
-      <> 
+      <>
             {Object.values(reviews).length ?
         <ul className='spot-reviews'>
         {   Object.values(reviews).map(review => (
-            <li key={review.id}><div className='reviewer-name'>{review.User.firstName}</div> 
+            <li key={review.id}><div className='reviewer-name'>{review.User.firstName}</div>
                 <div className='review-date'>{_dateFormatter(review.createdAt)}</div>
             <div>
                 <div className='the-actual-review'>{review.review}</div>
-                {user && user.id === review.userId ? <button className={'delete-button'}><DeleteReviewButton review={review}/></button> : <></>}
+                {user && user.id === review.userId ?
+                <>
+                <button className={'delete-button'}><DeleteReviewButton review={review}/></button>
+                <button className={'delete-button'}><EditReviewModal review={review}/></button>
+                </>
+                : <></>
+                }
+
             </div>
             </li>
             ))
         }
         </ul> : <></>
 }
-   
+
     </>
     )
 }

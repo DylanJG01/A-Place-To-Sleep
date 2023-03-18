@@ -61,7 +61,7 @@ const EditSpotForm = () => {
         }))
     }, [country, address, city, state, latitude, longitude, description, title, price])
 
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -92,7 +92,7 @@ const EditSpotForm = () => {
             );
         return history.push(`/spots/${createdSpot.id}`)
     }
-    
+
     if (!user) return (
         <h2>Please Login to edit this spot</h2>
     )
@@ -262,7 +262,7 @@ const EditSpotForm = () => {
                     </label>
                 </div>
                 <div>
-                    <button className="delete-button update-button" type="submit" disabled={false}>Update Spot</button>
+                    <button className="delete-button update-button" type="submit">Update Spot</button>
                 </div>
             </form>
         </div>
