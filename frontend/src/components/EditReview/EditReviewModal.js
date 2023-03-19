@@ -8,7 +8,7 @@ import '../AddReview/AddReview.css'
 import "../LoginFormModal/LoginForm.css"; // I don't think I need this.
 //
 
-function EditReviewModal({review}) {
+function EditReviewModal({review, spotOrUser}) {
     const dispatch = useDispatch();
     const [reviewText, setReviewText] = useState("");
     const [stars, setStars] = useState(review.stars)
@@ -25,12 +25,14 @@ function EditReviewModal({review}) {
         setReviewText(review.review)
     },[review])
 
+    console.log("!@#$@!$12432143214", spotOrUser)
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
         // console.log("Handle submit", spotId)
         // console.log(stars)
-        return dispatch(editReviewThunk({ review: reviewText, stars: +stars }, review.id))
+        return dispatch(editReviewThunk({ review: reviewText, stars: +stars }, review.id, spotOrUser))
             .then(closeModal)
             .catch(
                 async (res) => {

@@ -78,7 +78,8 @@ export const addReviewThunk = (review, spotId, user) => async dispatch => {
     }
 }
 
-export const editReviewThunk = (review, id) => async dispatch => {
+export const editReviewThunk = (review, id, spotOrUser) => async dispatch => {
+
     console.log(review)
     const res = await csrfFetch(`/api/reviews/${id}`, {
         method: "PUT",
@@ -86,11 +87,14 @@ export const editReviewThunk = (review, id) => async dispatch => {
         body: JSON.stringify(review)
     })
 
-    console.log("!!!!")
+
     if (res.ok){
         const review = await res.json()
-
-        return dispatch(editReview(review, id))
+        if(spotOrUser === "user"){
+            return dispatch(editUserReview(review, id))
+        } else if (spotOrUser === "spot"){
+            return dispatch(editSpotReview(review, id))
+        }
     }
 }
 
@@ -166,12 +170,19 @@ export default function reviewReducer(state = initialState, action){
         }
         case EDIT_USER_REVIEW: {
             const newState = {...state}
-
+            console.log("CONSOLEDFAFDS", action)
+            newState.user[action.review.id][action.review.id] = {...newState.user[action.review.id][action.review.id]}
+            newState.user[action.review.id][action.review.id].review = action.review.review
+            newState.user[action.review.id][action.review.id].stars = action.review.stars
+            // newState.user[action.review.id] = {[action.review.id]: action.review }
             return newState
         }
         case EDIT_SPOT_REVIEW: {
             const newState = {...state}
-
+            newState.spot[action.review.id] = {...newState.spot[action.review.id] }
+            newState.spot[action.review.id].review = action.review.review
+            newState.spot[action.review.id].stars = action.review.stars
+            // newState.user[action.review.id] = action.review
             return newState
         }
         default: return state

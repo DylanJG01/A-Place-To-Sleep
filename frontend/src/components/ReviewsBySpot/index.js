@@ -34,7 +34,7 @@ const ReviewsBySpot = () => {
                 {user && user.id === review.userId ?
                 <>
                 <button className={'delete-button'}><DeleteReviewButton review={review}/></button>
-                <button className={'delete-button'}><EditReviewModal review={review}/></button>
+                <button className={'delete-button'}><EditReviewModal review={review} spotOrUser={"spot"}/></button>
                 </>
                 : <></>
                 }

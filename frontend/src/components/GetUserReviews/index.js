@@ -35,7 +35,8 @@ const UserReviews = () => {
                 <div className='get-reviews-review'>{review.review}</div>
                 <div className='get-reviews-stars'><i className="fas fa-sharp fa-solid fa-star" /> {review.stars}</div>
                 <button className={'delete-button'}><DeleteReviewButton review={review} /></button>
-                <button className={'delete-button'}><EditReviewButton review={review}/></button>
+                {/* <button className={'delete-button'}><EditReviewButton review={review}/></button> */}
+                <button className={'delete-button'}><EditReviewButton review={review} spotOrUser={"user"}/></button>
                 </li>
             )}}))}
         </ul>
