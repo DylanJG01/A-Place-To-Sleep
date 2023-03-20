@@ -9,11 +9,11 @@ router.get(
     '/current',
     requireAuth,
     async (req, res, next) => {
-        
+
         let userBookings = await Booking.findAll({
             where: {userId: req.user.id},
         });
-        
+
         userBookings = userBookings.map(el => el.toJSON())
 
         let spots = [];
@@ -52,25 +52,22 @@ router.put(
     async (req, res, next) => {
         const err = new Error();
         let bookingToEdit = await Booking.findByPk(req.params.id)
-        
+
         if(!bookingToEdit){
             err.message = "Booking couldn't be found";
             res.status(404);
             return next(err);
         }
-        
+
         if(req.user.id !== bookingToEdit.userId){
             err.message = "Forbidden";
             res.status(404);
             return next(err);
         }
-        
+
         let spot = bookingToEdit.toJSON().spotId
 
-
         const { startDate, endDate } = req.body;
-
-   
 
         if(new Date(endDate) < new Date()){
             err.message = "Past bookings can't be modified"
@@ -80,7 +77,7 @@ router.put(
             err.message = "Cannot start or end booking in the past";
             res.status(403);
             return next(err)
-        } 
+        }
 
         let arrivalDate = new Date(startDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
         let departureDate = new Date(endDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
@@ -168,11 +165,11 @@ router.delete(
     async (req, res, next) => {
         const err = new Error();
         let booking = await Booking.findByPk(+req.params.id);
-        
+
         if(!booking){
             err.message = "Booking couldn't be found";
             res.status(404);
-            return next(err); 
+            return next(err);
         }
 
         let spot = await Spot.findByPk(booking.toJSON().spotId);
@@ -197,7 +194,7 @@ router.delete(
         }
 
         await booking.destroy();
-        
+
         return res.json({message: "Successfully deleted"})
     }
 )
