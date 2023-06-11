@@ -9,22 +9,23 @@ import "./AddSpotForm.css"
 const AddSpotForm = () => {
     const dispatch = useDispatch()
     const history = useHistory();
-    const [country, setCountry] = useState('')//country
-    const [address, setAddress] = useState('')//address
-    const [city, setCity] = useState('')//city
-    const [state, setState] = useState('')//state
-    const [latitude, setLatitude] = useState('')//lat
-    const [longitude, setLongitude] = useState('')//lng
-    const [description, setDescription] = useState('')//description
-    const [title, setTitle] = useState('')//name
-    const [price, setPrice] = useState('')
+    const [country, setCountry] = useState('fds')//country
+    const [address, setAddress] = useState('fds')//address
+    const [city, setCity] = useState('fds')//city
+    const [state, setState] = useState('fds')//state
+    const [latitude, setLatitude] = useState('1')//lat
+    const [longitude, setLongitude] = useState('1')//lng
+    const [description, setDescription] = useState('fdsjaklfjdskafhddskajlfhajkhfkdasjfhdlsakjhfdsaklhfdjskafhlksadjfhskjdafhakl')//description
+    const [title, setTitle] = useState('fd')//name
+    const [price, setPrice] = useState('1')
     const [pictures, setPictures] = useState([])
     const [errors, setErrors] = useState([])
-    const [picture1, setPicture1] = useState('')
-    const [picture2, setPicture2] = useState('')
-    const [picture3, setPicture3] = useState('')
-    const [picture4, setPicture4] = useState('')
-    const [picture5, setPicture5] = useState('')
+    const [image, setImage] = useState(null)
+    // const [picture1, setPicture1] = useState('')
+    // const [picture2, setPicture2] = useState('')
+    // const [picture3, setPicture3] = useState('')
+    // const [picture4, setPicture4] = useState('')
+    // const [picture5, setPicture5] = useState('')
     const [displayErrors, setDisplayErrors] = useState(false)
 
     const user = useSelector(state => state.session.user)
@@ -34,9 +35,11 @@ const AddSpotForm = () => {
 
         if(errors.length){
             setDisplayErrors(true)
-            // console.log(errors)
+            console.log(errors)
             return
         }
+
+        console.log(image)
         const spot = {
             country,
             address,
@@ -47,13 +50,14 @@ const AddSpotForm = () => {
             description,
             name: title,
             price: +price,
-            SpotImages: pictures
+            // SpotImages: pictures
+            image
         }
             await dispatch(addSpotThunk(user, spot))
-            .then(res => history.push(`/spots/${res.id}`))
+            // .then(res => history.push(`/spots/${res.id}`))
                .catch(
                     async (res) => {
-                        // console.log(res)
+                        console.log(res)
                         const data = await res.json();
                         if (data && data.errors) setErrors(data.errors);
                     }
@@ -62,14 +66,14 @@ const AddSpotForm = () => {
         // return history.push(`/spots/${createdSpot.id}`)
     }
 
-    useEffect(() => {
-        setPictures([picture1 === '' ? null : picture1,
-            picture2 === '' ? null : picture2,
-            picture3 === '' ? null : picture3,
-            picture4 === '' ? null : picture4,
-            picture5 === '' ? null : picture5
-        ])
-    },[picture1, picture2, picture3, picture4, picture5])
+    // useEffect(() => {
+    //     setPictures([picture1 === '' ? null : picture1,
+    //         picture2 === '' ? null : picture2,
+    //         picture3 === '' ? null : picture3,
+    //         picture4 === '' ? null : picture4,
+    //         picture5 === '' ? null : picture5
+    //     ])
+    // },[picture1, picture2, picture3, picture4, picture5])
 
     useEffect(() => {
         setErrors(_spotValidator({
@@ -84,7 +88,12 @@ const AddSpotForm = () => {
             price: +price,
             pictures
         }))
-    }, [country, address, city, state, latitude, longitude, description, title, price, pictures])
+    }, [country, address, city, state, latitude, longitude, description, title, price, pictures, image])
+
+    const updateFile = (e) => {
+        const file = e.target.files[0];
+        if (file) setImage(file);
+      };
 
     if (!user) return (
         <h2>Please Login to create a new spot</h2>
@@ -247,7 +256,10 @@ const AddSpotForm = () => {
                     />
                 </label>
                 </div>
-                <label className="img-form-label">
+                <label>
+                    <input type="file" onChange={updateFile} />
+                </label>
+                        {/* <label className="img-form-label">
                     <div className={''}>
                         <div>Liven up your spots with photos</div>
                     </div>
@@ -310,7 +322,7 @@ const AddSpotForm = () => {
                     />
                     {displayErrors && errors.includes("Url5") && !_imgValidator(picture5) && (
                         <div className="error description-error">Valid url required that ends with .jpg, .jpeg, or .png</div>)}
-                </label>
+                </label> */}
                 <div>
                     <button className="delete-button update-button" type="submit" disabled={false}>Create Spot</button>
                 </div>

@@ -75,12 +75,12 @@ export const getUserSpots = () => async dispatch => {
 
 export const addSpotThunk = (user, spot) => async dispatch => {
 
-    const spotImages = []
+    // const spotImages = []
     //Create a spotImage Array filled only with (not null) values
-    spot.SpotImages.forEach(img => {
-        if (img !== null) spotImages.push(img)
-    })
-
+    // spot.SpotImages.forEach(img => {
+    //     if (img !== null) spotImages.push(img)
+    // })
+    const theImage = spot.image
     const res = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -90,16 +90,23 @@ export const addSpotThunk = (user, spot) => async dispatch => {
     if(res.ok) {
         const spot = await res.json()
 
-        // console.log("SPOT IMAGES", spotImages)
-        spot.SpotImages = []
+        console.log("SPOT IMAGES", spot.spotImages)
         let preview = true;
 
-        for(const image of spotImages){
+        console.log(theImage)
+
+        if (theImage){
+
+            const formData = new FormData()
+            formData.append("image", theImage)
+            formData.append("preview", preview)
 
             const res = await csrfFetch(`/api/spots/${spot.id}/images`,{
                 method: 'POST',
-                // headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({url: image, preview: preview})
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                body: formData
             })
 
             preview = false;//Set preview to true only for first time, then all others are false.

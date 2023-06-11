@@ -1,7 +1,7 @@
 import _imgValidator from "./_imageValidator";
 
 export default function spotValidator(spot){
-    const errors = []; 
+    const errors = [];
     // console.log(spot.lat)
     if(!spot.country) errors.push("Country")
     if(!spot.address) errors.push("Address")
@@ -17,10 +17,10 @@ export default function spotValidator(spot){
 
     for(let i = 0; i < 5; i++) {
         // console.log(picture)
-        const picture = spot.pictures[i]
-        if(i === 0 && !picture) errors.push("Preview")
-        else if (!picture){}
-        else if (!_imgValidator(picture)) errors.push(`Url${i + 1}`)
+        // const picture = spot.pictures[i]
+        // if(i === 0 && !picture) errors.push("Preview")
+        // else if (!picture){}
+        // else if (!_imgValidator(picture)) errors.push(`Url${i + 1}`)
     }
     // console.log(errors)
     if(!errors.length) return []

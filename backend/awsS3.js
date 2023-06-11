@@ -16,6 +16,7 @@ const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 const singlePublicFileUpload = async (file) => {
   const { originalname, mimetype, buffer } = await file;
   const path = require("path");
+  console.log("WHADHADHSAHDS")
   // name of the file in your S3 bucket will be the date in ms plus the extension name
   const Key = new Date().getTime().toString() + path.extname(originalname);
   const uploadParams = {
@@ -24,8 +25,9 @@ const singlePublicFileUpload = async (file) => {
     Body: buffer,
     ACL: "public-read",
   };
-  const result = await s3.upload(uploadParams).promise();
 
+  const result = await s3.upload(uploadParams).promise();
+  console.log(result)
   // save the name of the file in your bucket as the key in your database to retrieve for later
   return result.Location;
 };
