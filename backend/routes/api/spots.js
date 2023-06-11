@@ -8,6 +8,7 @@ const { check } = require('express-validator');
 const { application } = require('express');
 const user = require('../../db/models/user');
 const review = require('../../db/models/review');
+const { singlePublicFileUpload } = require('../../awsS3');
 
 router.get(
     '/:id/reviews',
@@ -508,6 +509,8 @@ router.post(
     async (req, res, next) => {
         let { url, preview } = req.body;
 
+        const awsImage =  await singlePublicFileUpload(req.file)
+
         const spot = await Spot.findByPk(+req.params.id);
 
         if(!spot){
@@ -526,7 +529,7 @@ router.post(
 
         const newSpotImg = await SpotImage.create({
             spotId: req.params.id,
-            url,
+            url: awsImage,
             preview
         })
         // console.log(newSpotImg)

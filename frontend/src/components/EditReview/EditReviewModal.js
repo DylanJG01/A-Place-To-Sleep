@@ -25,7 +25,7 @@ function EditReviewModal({review, spotOrUser}) {
         setReviewText(review.review)
     },[review])
 
-    console.log("!@#$@!$12432143214", spotOrUser)
+    // console.log("!@#$@!$12432143214", spotOrUser)
 
     const handleSubmit = (e) => {
         e.preventDefault();

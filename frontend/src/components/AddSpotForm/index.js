@@ -18,7 +18,7 @@ const AddSpotForm = () => {
     const [description, setDescription] = useState('')//description
     const [title, setTitle] = useState('')//name
     const [price, setPrice] = useState('')
-    const [pictures, setPictures] = useState([]) 
+    const [pictures, setPictures] = useState([])
     const [errors, setErrors] = useState([])
     const [picture1, setPicture1] = useState('')
     const [picture2, setPicture2] = useState('')
@@ -31,7 +31,7 @@ const AddSpotForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if(errors.length){
             setDisplayErrors(true)
             // console.log(errors)
@@ -64,7 +64,7 @@ const AddSpotForm = () => {
 
     useEffect(() => {
         setPictures([picture1 === '' ? null : picture1,
-            picture2 === '' ? null : picture2,  
+            picture2 === '' ? null : picture2,
             picture3 === '' ? null : picture3,
             picture4 === '' ? null : picture4,
             picture5 === '' ? null : picture5
@@ -102,7 +102,7 @@ const AddSpotForm = () => {
                             {displayErrors && errors.includes("Country") &&
                             (<div className="error">Country is required</div>)}
                         </div>
-                        <input 
+                        <input
                             className="country"
                             type="text"
                             value={country}

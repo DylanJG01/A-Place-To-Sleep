@@ -89,16 +89,16 @@ export const addSpotThunk = (user, spot) => async dispatch => {
 
     if(res.ok) {
         const spot = await res.json()
-        
+
         // console.log("SPOT IMAGES", spotImages)
         spot.SpotImages = []
         let preview = true;
 
         for(const image of spotImages){
-            
+
             const res = await csrfFetch(`/api/spots/${spot.id}/images`,{
                 method: 'POST',
-                headers: { "Content-Type": "application/json" },
+                // headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({url: image, preview: preview})
             })
 
@@ -138,7 +138,7 @@ export const deleteSpotThunk = (spot) => async dispatch => {
     // console.log("SPOT BEFORE fetch",spot)
 
     const res = await csrfFetch(`/api/spots/${spot.id}`, {
-        method: 'DELETE', 
+        method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
     })
     // console.log("SPOT AFTER fetch", spot)
@@ -217,7 +217,7 @@ export default function spotReducer(state = initialState, action) {
             newState.singleSpot = {}
             return newState
         }
-        default: 
+        default:
             return state
     }
 }
