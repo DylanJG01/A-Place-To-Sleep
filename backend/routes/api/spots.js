@@ -8,7 +8,7 @@ const { check } = require('express-validator');
 const { application } = require('express');
 const user = require('../../db/models/user');
 const review = require('../../db/models/review');
-const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3');
+const { multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3');
 
 router.get(
     '/:id/reviews',
@@ -505,15 +505,13 @@ router.post(
 
 router.post(
     '/:id/images',
-    singleMulterUpload("image"),
+    multipleMulterUpload("image"),
     requireAuth,
     async (req, res, next) => {
         let { url, preview } = req.body;
 
-        console.log("")
-        console.log("WHADDUP?")
         console.log(req.file)
-        const awsImage = await singlePublicFileUpload(req.file)
+        const awsImage = await multiplePublicFileUpload(req.file)
 
         const spot = await Spot.findByPk(+req.params.id);
 
