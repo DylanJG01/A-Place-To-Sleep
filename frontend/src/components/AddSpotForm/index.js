@@ -21,6 +21,7 @@ const AddSpotForm = () => {
     const [pictures, setPictures] = useState([])
     const [errors, setErrors] = useState([])
     const [image, setImage] = useState(null)
+    const [images, setImages] = useState([])
     // const [picture1, setPicture1] = useState('')
     // const [picture2, setPicture2] = useState('')
     // const [picture3, setPicture3] = useState('')
@@ -90,10 +91,18 @@ const AddSpotForm = () => {
         }))
     }, [country, address, city, state, latitude, longitude, description, title, price, pictures, image])
 
+    useEffect(() => {
+        console.log(images)
+    }, [images])
     const updateFile = (e) => {
         const file = e.target.files[0];
         if (file) setImage(file);
       };
+
+    const updateFiles = (e) => {
+        const files = e.target.files;
+        setImages(files);
+    };
 
     if (!user) return (
         <h2>Please Login to create a new spot</h2>
@@ -258,6 +267,13 @@ const AddSpotForm = () => {
                 </div>
                 <label>
                     <input type="file" onChange={updateFile} />
+                </label>
+                <label>
+                    Multiple Upload
+                    <input
+                    type="file"
+                    multiple
+                    onChange={updateFiles} />
                 </label>
                         {/* <label className="img-form-label">
                     <div className={''}>
