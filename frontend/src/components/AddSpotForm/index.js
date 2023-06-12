@@ -9,24 +9,18 @@ import "./AddSpotForm.css"
 const AddSpotForm = () => {
     const dispatch = useDispatch()
     const history = useHistory();
-    const [country, setCountry] = useState('fds')//country
-    const [address, setAddress] = useState('fds')//address
-    const [city, setCity] = useState('fds')//city
-    const [state, setState] = useState('fds')//state
-    const [latitude, setLatitude] = useState('1')//lat
-    const [longitude, setLongitude] = useState('1')//lng
-    const [description, setDescription] = useState('fdsjaklfjdskafhddskajlfhajkhfkdasjfhdlsakjhfdsaklhfdjskafhlksadjfhskjdafhakl')//description
-    const [title, setTitle] = useState('fd')//name
-    const [price, setPrice] = useState('1')
-    const [pictures, setPictures] = useState([])
+    const [country, setCountry] = useState('')//country
+    const [address, setAddress] = useState('')//address
+    const [city, setCity] = useState('')//city
+    const [state, setState] = useState('')//state
+    const [latitude, setLatitude] = useState('')//lat
+    const [longitude, setLongitude] = useState('')//lng
+    const [description, setDescription] = useState('')//description
+    const [title, setTitle] = useState('')//name
+    const [price, setPrice] = useState('')
     const [errors, setErrors] = useState([])
-    const [image, setImage] = useState(null)
-    const [images, setImages] = useState([])
-    // const [picture1, setPicture1] = useState('')
-    // const [picture2, setPicture2] = useState('')
-    // const [picture3, setPicture3] = useState('')
-    // const [picture4, setPicture4] = useState('')
-    // const [picture5, setPicture5] = useState('')
+    const [images, setImages] = useState([null, null, null, null, null]);
+    const [fileInputKeys, setFileInputKeys] = useState([0, 0, 0, 0, 0]);
     const [displayErrors, setDisplayErrors] = useState(false)
 
     const user = useSelector(state => state.session.user)
@@ -40,7 +34,6 @@ const AddSpotForm = () => {
             return
         }
 
-        console.log(image)
         const spot = {
             country,
             address,
@@ -51,30 +44,21 @@ const AddSpotForm = () => {
             description,
             name: title,
             price: +price,
-            // SpotImages: pictures
-            image
+            images
+            // image1
         }
             await dispatch(addSpotThunk(user, spot))
-            // .then(res => history.push(`/spots/${res.id}`))
+            .then(res => history.push(`/spots/${res.id}`))
                .catch(
                     async (res) => {
                         console.log(res)
                         const data = await res.json();
                         if (data && data.errors) setErrors(data.errors);
                     }
-        );
+                );
         // console.log(createdSpot)
         // return history.push(`/spots/${createdSpot.id}`)
     }
-
-    // useEffect(() => {
-    //     setPictures([picture1 === '' ? null : picture1,
-    //         picture2 === '' ? null : picture2,
-    //         picture3 === '' ? null : picture3,
-    //         picture4 === '' ? null : picture4,
-    //         picture5 === '' ? null : picture5
-    //     ])
-    // },[picture1, picture2, picture3, picture4, picture5])
 
     useEffect(() => {
         setErrors(_spotValidator({
@@ -87,22 +71,41 @@ const AddSpotForm = () => {
             description,
             name: title,
             price: +price,
-            pictures
+            images
         }))
-    }, [country, address, city, state, latitude, longitude, description, title, price, pictures, image])
+    }, [country, address, city, state, latitude, longitude, description, title, price, images])
 
     useEffect(() => {
         console.log(images)
+
     }, [images])
-    const updateFile = (e) => {
-        const file = e.target.files[0];
-        if (file) setImage(file);
+
+    const updateFile = (e, index) => {
+        // e.preventDefault()
+        // e.stopPropagation()
+        let file;
+        if (e.target.files) file = e.target.files[0];
+        const newImages = [...images]
+        newImages[index] = file;
+        setImages(newImages)
       };
 
-    const updateFiles = (e) => {
-        const files = e.target.files;
-        setImages(files);
-    };
+      const clearFileInput = (index) => {
+        const newImages = [...images];
+        newImages[index] = null;
+        setImages(newImages);
+        setFileInputKeys((prevKeys) => {
+          const newKeys = [...prevKeys];
+          newKeys[index] += 1;
+          return newKeys;
+        });
+      };
+    // const updateFiles = (e) => {
+    //     e.preventDefault()
+    //     e.stopPropgation()
+    //     const files = e.target.files;
+    //     setImages(files);
+    // };
 
     if (!user) return (
         <h2>Please Login to create a new spot</h2>
@@ -265,80 +268,20 @@ const AddSpotForm = () => {
                     />
                 </label>
                 </div>
-                <label>
-                    <input type="file" onChange={updateFile} />
-                </label>
-                <label>
-                    Multiple Upload
-                    <input
-                    type="file"
-                    multiple
-                    onChange={updateFiles} />
-                </label>
-                        {/* <label className="img-form-label">
-                    <div className={''}>
-                        <div>Liven up your spots with photos</div>
-                    </div>
-                    <input
-                        className="img-link"
-                        type="text"
-                        value={picture1}
-                        onChange={(e) => setPicture1(e.target.value)}
-                        // required
-                        placeholder="Preview Image Url"
+                {displayErrors && errors.includes("Image") && (<div className="error">Requires 1 to 5 images</div>)}
+                {images.map((image, index) => (
+                    <div key={index}>
+                        <label>
+                        <input
+                            key={fileInputKeys[index]}
+                            type="file"
+                            onChange={(e) => updateFile(e, index)}
+                            value={undefined} // Clear the value by setting it to undefined
                         />
-
-                    {displayErrors && errors.includes("Preview") &&
-                    (<div className="error description-error">Preview image is required</div>)}
-
-                    {displayErrors && errors.includes("Url1") && !_imgValidator(picture1) && (
-                    <div className="error description-error">Valid url required that ends with .jpg, .jpeg, or .png</div>)}
-
-                </label>
-                <label className="img-form-label">
-                    <input
-                        className="img-link"
-                        type="text"
-                        value={picture2}
-                        onChange={(e) => setPicture2(e.target.value)}
-                        placeholder="Image Url"
-                    />
-                    {displayErrors && errors.includes("Url2") && !_imgValidator(picture2) && (
-                        <div className="error description-error">Valid url required that ends with .jpg, .jpeg, or .png</div>)}
-                </label>
-                <label className="img-form-label">
-                    <input
-                        className="img-link"
-                        type="text"
-                        value={picture3}
-                        onChange={(e) => setPicture3(e.target.value)}
-                        placeholder="Image Url"
-                    />
-                    {displayErrors && errors.includes("Url3") && !_imgValidator(picture3) && (
-                        <div className="error description-error">Valid url required that ends with .jpg, .jpeg, or .png</div>)}
-                </label>
-                <label className="img-form-label">
-                    <input
-                        className="img-link"
-                        type="text"
-                        value={picture4}
-                        onChange={(e) => setPicture4(e.target.value)}
-                        placeholder="Image Url"
-                    />
-                    {displayErrors && errors.includes("Url4") && !_imgValidator(picture4) && (
-                        <div className="error description-error">Valid url required that ends with .jpg, .jpeg, or .png</div>)}
-                </label>
-                <label className="img-form-label description-label">
-                    <input
-                        className="img-link"
-                        type="text"
-                        value={picture5}
-                        onChange={(e) => setPicture5(e.target.value)}
-                        placeholder="Image Url"
-                    />
-                    {displayErrors && errors.includes("Url5") && !_imgValidator(picture5) && (
-                        <div className="error description-error">Valid url required that ends with .jpg, .jpeg, or .png</div>)}
-                </label> */}
+                        </label>
+                        <div onClick={() => clearFileInput(index)}> x </div>
+                    </div>
+                    ))}
                 <div>
                     <button className="delete-button update-button" type="submit" disabled={false}>Create Spot</button>
                 </div>

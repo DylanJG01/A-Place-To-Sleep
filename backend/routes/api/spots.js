@@ -505,13 +505,13 @@ router.post(
 
 router.post(
     '/:id/images',
-    multipleMulterUpload("image"),
+    multipleMulterUpload("images"),
     requireAuth,
     async (req, res, next) => {
-        let { url, preview } = req.body;
 
-        console.log(req.file)
-        const awsImage = await multiplePublicFileUpload(req.file)
+        let preview = true
+        console.log(req.files)
+        const awsImages = await multiplePublicFileUpload(req.files)
 
         const spot = await Spot.findByPk(+req.params.id);
 
@@ -528,14 +528,22 @@ router.post(
             res.status(403)
             return next(err)
         }
+        console.log("??")
 
-        const newSpotImg = await SpotImage.create({
-            spotId: req.params.id,
-            url: awsImage,
-            preview
-        })
+        const newSpotImgs = []
+        for (const awsImage of awsImages){
+
+            console.log(awsImage)
+            const newSpotImg = await SpotImage.create({
+                spotId: req.params.id,
+                url: awsImage,
+                preview
+            })
+            preview = false
+            newSpotImgs.push(newSpotImg)
+        }
         // console.log(newSpotImg)
-        res.json(newSpotImg)
+        res.json(newSpotImgs)
     }
 );
 

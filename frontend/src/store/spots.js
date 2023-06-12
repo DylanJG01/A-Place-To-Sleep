@@ -41,13 +41,10 @@ const deleteSpot = (spot) => ({
 
 export const getAllSpots = () => async dispatch => {
     const res = await csrfFetch('/api/spots')
-    // const res = await fetch('/')
     if(res.ok){
         const spots = await res.json();
-        // console.log("Spots: ", spots);
         return dispatch(allSpots(spots))
     }
-    // return console.log(res.status, "getAllSpots")
 }
 
 export const getSingleSpot = spotId => async dispatch => {
@@ -55,32 +52,20 @@ export const getSingleSpot = spotId => async dispatch => {
     const res = await csrfFetch(`/api/spots/${spotId}`)
     if(res.ok) {
         const spot = await res.json()
-        // console.log ("Spot: ", spot)
         return dispatch(getSpot(spot))
     }
-    // return console.log(res.status, "getSingleSpot")
 }
 
 export const getUserSpots = () => async dispatch => {
     const res = await csrfFetch(`/api/spots/current`)
-
     if(res.ok) {
         const spots = await res.json();
-        // console.log("getUserSpotsThunk", spots)
-        // console.log(spots)
         return dispatch(userSpots( spots))
     }
-    // console.log(res.status, "getUserSpots")
 }
 
 export const addSpotThunk = (user, spot) => async dispatch => {
-
-    // const spotImages = []
-    //Create a spotImage Array filled only with (not null) values
-    // spot.SpotImages.forEach(img => {
-    //     if (img !== null) spotImages.push(img)
-    // })
-    const theImage = spot.image
+    const images = spot.images
     const res = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -89,35 +74,28 @@ export const addSpotThunk = (user, spot) => async dispatch => {
 
     if(res.ok) {
         const spot = await res.json()
+        const formData = new FormData()
 
-        console.log("SPOT IMAGES", spot.spotImages)
-        let preview = true;
+        if (images && images.length){
+            if (images && images.length !== 0) {
+                for (var i = 0; i < images.length; i++) {
+                  formData.append("images", images[i]);
+                }
+              }
+        }
 
-        console.log(theImage)
+        const response = await csrfFetch(`/api/spots/${spot.id}/images`,{
+            method: 'POST',
+            headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            body: formData
+        })
 
-        if (theImage){
-
-            const formData = new FormData()
-            formData.append("image", theImage)
-            formData.append("preview", preview)
-
-            const res = await csrfFetch(`/api/spots/${spot.id}/images`,{
-                method: 'POST',
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
-                body: formData
-            })
-
-            preview = false;//Set preview to true only for first time, then all others are false.
-
-            // console.log("RES", res)
-            if (res.ok) {
-                const image = await res.json()
-                // console.log(image)
-                spot.SpotImages.push(image)
-                // console.log("5555555", spot)
-            }
+        if (response.ok) {
+            const images = await response.json()
+            console.log(spot)
+            spot.SpotImages = images
         }
         dispatch(addSpot(user, spot))
         return spot;
@@ -134,7 +112,6 @@ export const editSpotThunk = (user, spot) => async dispatch => {
 
     if (res.ok) {
         const spot = await res.json()
-        // console.log("SPOT", spot)
         dispatch(editSpot(user, spot))
         spot.id = +id;
         return spot;
@@ -142,13 +119,10 @@ export const editSpotThunk = (user, spot) => async dispatch => {
 }
 
 export const deleteSpotThunk = (spot) => async dispatch => {
-    // console.log("SPOT BEFORE fetch",spot)
-
     const res = await csrfFetch(`/api/spots/${spot.id}`, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
     })
-    // console.log("SPOT AFTER fetch", spot)
     if (res.ok) {
         const message = res.json();
         dispatch(deleteSpot(spot))
@@ -165,18 +139,14 @@ export default function spotReducer(state = initialState, action) {
     switch(action.type) {
         case GET_ALL_SPOTS:{
             const allSpots = {}
-            // console.log("ACTIONSPOTS, action.spots)
             action.spots.spots.forEach(spot => {
-                // console.log("SPOT", spot)
                 allSpots[spot.id] = spot
             })
-            // console.log("ALLSPOTS", allSpots)
             const newState = {...state}
             return {...newState, allSpots}
         }
         case GET_SPOT: {
             const newState = {...state, singleSpot: action.spot}
-            // console.log("GET SPOT IN REDUCER", action.spot)
             const owner = newState.singleSpot.User
             delete newState.singleSpot.User
             newState.singleSpot.Owner = owner
@@ -184,30 +154,24 @@ export default function spotReducer(state = initialState, action) {
             }
         case GET_USER_SPOTS: {
             const allSpots = {}
-            // console.log(action.spots.spots)
             action.spots.spots.forEach(spot => {
                 allSpots[spot.id] = spot
             })
             const newState = {...state, allSpots}
-            // console.log(newState)
             return newState
         }
         case ADD_SPOT: {
             const newState = {...state, singleSpot: {}}
-            // console.log("ACTION", action)
             const singleSpot = {
                 ...action.spot,
                 Owner: {...action.user}
             }
             newState.singleSpot = {...singleSpot}
-            // console.log(newState)
             return newState;
         }
         case EDIT_SPOT: {
             const newState = {...state, singleSpot: {}}
-            // console.log("STATE IN EDITSPOT", state)
             const SpotImages = {...state.singleSpot.SpotImages}
-            // console.log(action)
             const singleSpot = {
                 ...action.spot,
                 Owner: {...action.user}
@@ -218,8 +182,6 @@ export default function spotReducer(state = initialState, action) {
         }
         case DELETE_SPOT : {
             const newState = {...state}
-            // console.log("NEW STATE DELETE SPOT",newState)
-            // console.log("action!", action)
             delete newState.allSpots[action.spot.id]
             newState.singleSpot = {}
             return newState

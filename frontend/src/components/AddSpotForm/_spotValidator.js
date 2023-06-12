@@ -15,14 +15,12 @@ export default function spotValidator(spot){
     latChecker(spot.lat, errors)
     lngChecker(spot.lng, errors)
 
+    let atLeasetOneImage = false
     for(let i = 0; i < 5; i++) {
-        // console.log(picture)
-        // const picture = spot.pictures[i]
-        // if(i === 0 && !picture) errors.push("Preview")
-        // else if (!picture){}
-        // else if (!_imgValidator(picture)) errors.push(`Url${i + 1}`)
+        if (spot.images[i]) atLeasetOneImage = true
     }
     // console.log(errors)
+    if (!atLeasetOneImage) errors.push("Image")
     if(!errors.length) return []
     return errors
 }
