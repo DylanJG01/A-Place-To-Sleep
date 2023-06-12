@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import ReviewsBySpot from '../ReviewsBySpot';
 import AddReview from '../AddReview';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+
 import './SingleSpot.css'
 
 
@@ -34,34 +35,34 @@ const SingleSpot = () => {
      }
     }
 
-    const avgRating = (reviews) =>{ 
-        let total = 0; 
+    const avgRating = (reviews) =>{
+        let total = 0;
         let count = 0;
         reviews.forEach(el => {
             count++;
             total += el.stars})
         if (!total) return;
-        
+
         if ((Math.round((total / count) * 100) / 100) % 1 === 0) return (Math.round((total / count) * 100) / 100).toFixed(1)
         return (Math.round((total/count) * 100) / 100).toFixed(2)}
 
     if(!loaded) return <>Loading Content, please be patient, you wonderful, beautiful human creature.</>
     if (loaded && !Object.values(singleSpot).length) return <>Page Not Found, Page Might Not Exist!</>
 
-    return ( 
+    return (
         <div className='single-spot-page'>
             <h2>{singleSpot.name}</h2>
             <h4>{singleSpot.city}, {singleSpot.state}, {singleSpot.country} </h4>
         <div className='container-div'>
-           
+
             <div className='single-spot-div-1'>
                 <div className='single-spot-div-2'>
                     <img className="preview-image single-spot-img" src={previewImg} alt={"Preview"} />
                 </div>
                 <div className='single-spot-div-3'>
-                    
+
                     {otherImgs.map((img, idx) => (
-                <div className='single-spot-div' key={idx}><img className='other-image' src={img} alt={`Other ${idx}`}/></div> 
+                <div className='single-spot-div' key={idx}><img className='other-image' src={img} alt={`Other ${idx}`}/></div>
                     ))}
                 </div>
             </div>
@@ -79,12 +80,15 @@ const SingleSpot = () => {
                             <i className="fas fa-sharp fa-solid fa-star" />
                             {reviews.length ? avgRating(reviews) : "New"}
                             {reviews.length ? (<p className='dot'>·</p>) : ""}
-                        <div className='review-number'> 
+                        <div className='review-number'>
                             {reviews.length ? reviews.length === 1 ? "1 review" : `${reviews.length} reviews` : ""}
                         </div>
                     </div>
                 </div>
-                <div className='reserve-button-div'><button onClick={() => alert("Feature Coming Soon...")}>Register</button></div>
+                {/* <div className='reserve-button-div'><button onClick={() => alert("Feature Coming Soon...")}>Register</button></div>
+                 */}
+                 <DatePicker />
+
             </div>
         </div>
             <div className='above-post-review'>
@@ -96,7 +100,7 @@ const SingleSpot = () => {
                 </div>
             </div>
         <div>
-                {user && !Object.values(reviews).find(review => review.userId === user.id) && 
+                {user && !Object.values(reviews).find(review => review.userId === user.id) &&
                     singleSpot.Owner.id !== user.id &&
                 <button className={"post-review-button"}>
                     <OpenModalMenuItem
@@ -104,7 +108,7 @@ const SingleSpot = () => {
                         modalComponent={<AddReview spotId={spotId} user={user} />}
                     />
                 </button>}
-                {!reviews.length && user && 
+                {!reviews.length && user &&
                 singleSpot.Owner.id !== user.id &&
                 !Object.values(reviews).find(review => review.userId === user.id)
                 && <>Be the first to post a review!</>}
@@ -112,9 +116,9 @@ const SingleSpot = () => {
                 <ReviewsBySpot />
            </div>
         </div>
-        </div> 
+        </div>
     )
-}  
+}
 
 
 

@@ -9,6 +9,9 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import { ModalProvider, Modal } from './context/Modal';
 import * as sessionActions from './store/session';
 
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+
 const store = configureStore();
 
 if (process.env.NODE_ENV !== 'production') {
@@ -21,14 +24,16 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root(){
   return (
-    <ModalProvider>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-          <Modal />
-        </BrowserRouter>
-      </Provider>
-    </ModalProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ModalProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+            <Modal />
+          </BrowserRouter>
+        </Provider>
+      </ModalProvider>
+    </LocalizationProvider>
   )
 }
 
