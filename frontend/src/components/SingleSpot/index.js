@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import ReviewsBySpot from '../ReviewsBySpot';
 import AddReview from '../AddReview';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-
+import Booking from '../Booking'
 import './SingleSpot.css'
 
 
@@ -87,7 +87,7 @@ const SingleSpot = () => {
                 </div>
                 {/* <div className='reserve-button-div'><button onClick={() => alert("Feature Coming Soon...")}>Register</button></div>
                  */}
-                 <DatePicker />
+                 <Booking />
 
             </div>
         </div>
