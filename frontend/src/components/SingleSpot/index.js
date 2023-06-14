@@ -87,7 +87,7 @@ const SingleSpot = () => {
                 </div>
                 {/* <div className='reserve-button-div'><button onClick={() => alert("Feature Coming Soon...")}>Register</button></div>
                  */}
-                 <Booking />
+                 <Booking spotId={spotId}/>
 
             </div>
         </div>

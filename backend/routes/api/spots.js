@@ -105,7 +105,8 @@ router.get(
             el = {
                 spotId: el.spotId,
                 startDate: el.startDate,
-                endDate: el.endDate
+                endDate: el.endDate,
+                id: el.id
             }
             return el;
         })
@@ -410,9 +411,9 @@ router.post(
         }
 
         const { startDate, endDate } = req.body;
-        // console.log(startDate, new Date())
+        console.log(new Date(startDate), new Date())
 
-        if (new Date(startDate) < new Date() || new Date(endDate) < new Date()) {
+        if (new Date(startDate) < new Date().setHours(0, 0, 0, 0) || new Date(endDate) < new Date()) {
             err.message = "Cannot start or end booking in the past";
             res.status(400);
             return next(err)
@@ -499,7 +500,8 @@ router.post(
             startDate,
             endDate,
         })
-        res.json(newBooking)
+
+        return res.json(newBooking)
     }
 );
 
@@ -512,7 +514,6 @@ router.post(
         let preview = true
         console.log(req.files)
         const awsImages = await multiplePublicFileUpload(req.files)
-
         const spot = await Spot.findByPk(+req.params.id);
 
         if(!spot){
@@ -742,7 +743,5 @@ router.use(
         })
     }
 );
-
-
 
 module.exports = router;
