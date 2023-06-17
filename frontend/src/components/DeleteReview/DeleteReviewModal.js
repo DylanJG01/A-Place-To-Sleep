@@ -6,7 +6,7 @@ import { deleteReviewThunk } from "../../store/reviews";
 // import { getSingleSpot } from '../../store/spots';
 // import { useParams } from 'react-router-dom'
 
-export default function DeleteSpotModal({ review }) {
+export default function DeleteReviewModal({ review }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal()
     // const { spotId } = useParams();
@@ -19,7 +19,7 @@ export default function DeleteSpotModal({ review }) {
     }
 //    useEffect(() => {
 //     dispatch(getSingleSpot(spotId))
-        
+
 //    }, [dispatch, reviews])
 
     return (

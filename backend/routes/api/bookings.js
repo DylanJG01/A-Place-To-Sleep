@@ -15,7 +15,6 @@ router.get(
         });
 
         userBookings = userBookings.map(el => el.toJSON())
-
         let spots = [];
 
         for(let booking of userBookings){
@@ -41,7 +40,6 @@ router.get(
             delete el.Spot.createdAt
             return el;
         })
-
         res.json({Bookings: userBookings})
     }
 );

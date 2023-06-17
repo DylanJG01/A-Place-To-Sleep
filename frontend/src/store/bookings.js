@@ -32,7 +32,7 @@ const addBooking = booking => ({
 })
 
 export const getUserBookingsThunk = userId => async dispatch => {
-  const res = await csrfFetch(`/api/bookings/user/${userId}`)
+  const res = await csrfFetch(`/api/bookings/current`)
   if (res.ok) {
     const bookings = await res.json()
     dispatch(getUserBookings(bookings))
@@ -97,9 +97,13 @@ const initialState = {
 export default function bookingReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER_BOOKINGS:
-        const bookings = action.bookings.Bookings.reduce((acc, el) => acc[el.id] = el ,{})
+        const bookings = action.bookings.Bookings.reduce((acc, el) => {
+          acc[el.id] = el
+          return acc
+        },{})
       return {
         ...state,
+        spotBookings: {...state.spotBookings},
         userBookings: bookings
       }
     case GET_SPOT_BOOKINGS:

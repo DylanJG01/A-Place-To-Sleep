@@ -106,7 +106,8 @@ router.get(
                 spotId: el.spotId,
                 startDate: el.startDate,
                 endDate: el.endDate,
-                id: el.id
+                id: el.id,
+                userId: el.userId
             }
             return el;
         })
