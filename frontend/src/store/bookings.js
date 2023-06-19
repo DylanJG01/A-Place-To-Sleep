@@ -107,11 +107,7 @@ export default function bookingReducer(state = initialState, action) {
         userBookings: bookings
       }
     case GET_SPOT_BOOKINGS:
-        // const spot_bookings = action.bookings.Bookings.reduce((acc, el, i) =>{
-        //     el.id = i + 1
-        //     acc[el.id] = el
-        //     return acc;
-        // },{})
+
       return {
         ...state,
         spotBookings: action.bookings
@@ -125,17 +121,20 @@ export default function bookingReducer(state = initialState, action) {
         }
       }
     case DELETE_BOOKING:
-      const { [action.bookingId]: deletedBooking, ...updatedSpotBookings } = state.spotBookings;
+      console.log("!!!!!!!", action)
+      const updatedBookings = state.spotBookings.Bookings.filter(el => el.id !== action.bookingId)
       return {
         ...state,
-        spotBookings: updatedSpotBookings
+        spotBookings: {Bookings: updatedBookings}
       }
     case ADD_BOOKING:
+      console.log(state.spotBookings)
+      const Bookings = [...state.spotBookings.Bookings]
+      Bookings.push(action.booking)
       return {
         ...state,
         spotBookings: {
-          ...state.spotBookings,
-          [action.booking.id]: action.booking
+          Bookings
         }
       }
     default:

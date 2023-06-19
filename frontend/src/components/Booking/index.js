@@ -5,6 +5,7 @@ import { addBookingThunk, getSpotBookingsThunk, getUserBookingsThunk } from '../
 import getBookingDates from "./_helpers";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import BookingModal from './BookingModal'
+import './Booking.css'
 
 const dayjs = require('dayjs')
 
@@ -15,7 +16,7 @@ const Booking = ({spotId}) => {
     const [startDate, setStartDate] = useState(null)
     // const [userSpotBookings, setUserSptBookings] = useState(allUserBookings?.map(el => el))
     const [endDate, setEndDate] = useState(null)
-    const [maxDate, setMaxDate] = useState(dayjs(Date.now()))
+    const [maxDate, setMaxDate] = useState(null)
 
     useEffect(() => {
         dispatch(getSpotBookingsThunk(spotId))
@@ -35,6 +36,8 @@ const Booking = ({spotId}) => {
             return alert("Start date must proceed end date")
         }
         await dispatch(addBookingThunk(bookingData, spotId))
+        setStartDate(null)
+        setEndDate(null)
 
     }
 
@@ -59,19 +62,13 @@ const Booking = ({spotId}) => {
         setMaxDate(dayjs(startDate).add(21, 'day'))
     }
 
-    const openModal = () => {
-        return <OpenModalMenuItem itemText='fdsafdsa'
-            modalComponent={<BookingModal bookings={bookings}/>}
-            />
-    }
-
     return (
-        <>
-        { bookings && bookings.reduce((acc, el) =>  el.userId === user.id ? true : null, false) &&
+        <div className="booking-div">
+        { bookings && bookings.reduce((acc, el) =>  el.userId === user?.id ? true : null, false) &&
             <div className='what' >
-                <button className="bookings-modal">
+                <button className="bookings-modal-button">
                 <OpenModalMenuItem itemText="You've booked this spot!"
-                    modalComponent={<BookingModal bookings={bookings} user={user}/>}
+                    modalComponent={<BookingModal bookings={bookings} user={user} setDates={setDates}/>}
                     />
                 </button>
                 {/* <div onclick={openModal}> </div> */}
@@ -83,7 +80,7 @@ const Booking = ({spotId}) => {
         onChange={(startDate) => setDates(startDate)}
         shouldDisableDate={isUnavailableDay}
         minDate={dayjs(Date.now()).add(1, 'day')}
-        // views={['year', 'month', 'day']}
+        views={['year', 'month', 'day']}
         />
 
         <DatePicker
@@ -97,7 +94,7 @@ const Booking = ({spotId}) => {
         />
 
         <button disabled={!(startDate) || !(endDate)} onClick={() => bookMe()}>Book me!</button>
-        </>
+        </div>
     )
 }
 

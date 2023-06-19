@@ -125,7 +125,7 @@
 .reserve-div {
     width: 29%;
     border: 2px solid black;
-    height: 120px;
+    /* height: 120px; */
     display: flex;
     flex-direction: column;
     border-radius: 5%;

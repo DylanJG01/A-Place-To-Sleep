@@ -17,13 +17,13 @@
     left: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    
+
 }
 
 /* #modal-content {
     position: absolute;
     background-color: white;
-    
+
     flex-direction: column;
     width: 25%;
 } */
@@ -35,6 +35,7 @@
     background-color: rgb(255, 255, 255);
     box-shadow: 3px 3px 10px rgba(0 0 0 / 0.5);
     border-radius: 5%;
+    z-index: 3;
 }
 
 #modal-content h1 {
@@ -45,7 +46,7 @@
 }
 
 #modal-content form {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin: 10px;

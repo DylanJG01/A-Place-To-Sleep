@@ -2,23 +2,29 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { DatePicker } from '@mui/x-date-pickers';
-import { addBookingThunk, editSpotBookingsThunk, getSpotBookingsThunk, getUserBookingsThunk } from '../../store/bookings'
+import { addBookingThunk, deleteBookingThunk, editSpotBookingsThunk, getSpotBookingsThunk, getUserBookingsThunk } from '../../store/bookings'
 import getBookingDates from "./_helpers";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import BookingModal from './BookingModal'
 
 const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc)
 
-const EditBooking = ({ booking, bookings, user}) => {
+const EditBooking = ({ booking, bookings, user, setDates}) => {
     const dispatch = useDispatch()
     const [disabledDates, setDisabledDates] = useState([])
-    const [newStartDate, setNewStartDate] = useState(dayjs(booking.startDate))
-    const [newEndDate, setNewEndDate] = useState(dayjs(booking.endDate))
-    const [maxDate, setMaxDate] = useState(dayjs(Date.now()))
+    const [newStartDate, setNewStartDate] = useState(dayjs(booking.startDate).add(1, 'day'))
+    const [newEndDate, setNewEndDate] = useState(dayjs(booking.endDate).add(1, 'day'))
+    const [maxDate, setMaxDate] = useState(null)
 
     useEffect(() => {
     const bookingsExceptEdit = bookings.filter(el => el.id !== booking.id)
     setDisabledDates(getBookingDates(bookingsExceptEdit))
+    for (let i = 0; i < 21; i++){
+        if (isUnavailableDay(dayjs(booking.startDate).add(i, 'day'))) return setMaxDate(dayjs(booking.startDate).add(i, 'day'))
+    }
+    setMaxDate(dayjs(booking.startDate).add(21, 'day'))
     }, [bookings])
 
     const bookMe = async () => {
@@ -31,7 +37,6 @@ const EditBooking = ({ booking, bookings, user}) => {
         }
         await dispatch(editSpotBookingsThunk(bookingData, booking.spotId))
     }
-
     const isUnavailableDay = (date) => {
         return disabledDates.reduce((acc, el)=> {
              if (date.get('day') === dayjs(el).get('day')
@@ -44,13 +49,8 @@ const EditBooking = ({ booking, bookings, user}) => {
          }, false)
     }
 
-    const setDates = (newStartDate) => {
-        setNewStartDate(newStartDate)
-        for (let i = 0; i < 21; i++){
-            if (isUnavailableDay(dayjs(newStartDate).add(i, 'day'))) return setMaxDate(dayjs(newStartDate).add(i, 'day'))
-        }
-        setNewEndDate(null)
-        setMaxDate(dayjs(newStartDate).add(21, 'day'))
+    const deleteBooking = (e) => {
+        return dispatch(deleteBookingThunk(booking.id))
     }
 
     const openModal = () => {
@@ -59,12 +59,13 @@ const EditBooking = ({ booking, bookings, user}) => {
             />
     }
 
+
     return (
-        <>
+        <div>
         <DatePicker
         label="Start Date"
         value={newStartDate}
-        onChange={(newStartDate) => setDates(newStartDate)}
+        onChange={(newStartDate) => setNewStartDate(newStartDate)}
         shouldDisableDate={isUnavailableDay}
         minDate={dayjs(Date.now()).add(1, 'day')}
         views={['year', 'month', 'day']}
@@ -81,7 +82,8 @@ const EditBooking = ({ booking, bookings, user}) => {
         />
 
         <button disabled={!(newStartDate) || !(newEndDate)} onClick={() => bookMe()}>Edit Booking</button>
-        </>
+        <button onClick={deleteBooking}>Delete booking</button>
+        </div>
     )
 }
 
