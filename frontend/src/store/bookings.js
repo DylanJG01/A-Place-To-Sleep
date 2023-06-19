@@ -66,7 +66,6 @@ export const deleteBookingThunk = bookingId => async dispatch => {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })
-
   if (res.ok) {
     dispatch(deleteBooking(bookingId))
     const message = await res.json()
@@ -107,10 +106,13 @@ export default function bookingReducer(state = initialState, action) {
         userBookings: bookings
       }
     case GET_SPOT_BOOKINGS:
-
+      const spotBookings = action.bookings.Bookings.reduce((acc, el) => {
+        acc[el.id] = el
+        return acc
+      }, {})
       return {
         ...state,
-        spotBookings: action.bookings
+        spotBookings: spotBookings
       }
     case EDIT_SPOT_BOOKINGS:
       return {
@@ -121,21 +123,20 @@ export default function bookingReducer(state = initialState, action) {
         }
       }
     case DELETE_BOOKING:
-      console.log("!!!!!!!", action)
-      const updatedBookings = state.spotBookings.Bookings.filter(el => el.id !== action.bookingId)
+      const bookingsArr = {...state.spotBookings}
+      delete bookingsArr[action.bookingId]
+
       return {
         ...state,
-        spotBookings: {Bookings: updatedBookings}
+        spotBookings: {...bookingsArr}
       }
+
     case ADD_BOOKING:
-      console.log(state.spotBookings)
-      const Bookings = [...state.spotBookings.Bookings]
-      Bookings.push(action.booking)
+      const newBookings = {...state.spotBookings}
+      newBookings[action.booking.id] = action.booking
       return {
         ...state,
-        spotBookings: {
-          Bookings
-        }
+        spotBookings: {...newBookings}
       }
     default:
       return state

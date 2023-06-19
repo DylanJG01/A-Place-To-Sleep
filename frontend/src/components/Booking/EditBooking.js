@@ -6,6 +6,7 @@ import { addBookingThunk, deleteBookingThunk, editSpotBookingsThunk, getSpotBook
 import getBookingDates from "./_helpers";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import BookingModal from './BookingModal'
+import { useModal } from "../../context/Modal";
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc');
@@ -17,24 +18,37 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
     const [newStartDate, setNewStartDate] = useState(dayjs(booking.startDate).add(1, 'day'))
     const [newEndDate, setNewEndDate] = useState(dayjs(booking.endDate).add(1, 'day'))
     const [maxDate, setMaxDate] = useState(null)
+    const [minDate, setMinDate] = useState(dayjs(Date.now()).add(2, 'day'))
+
+    const {setModalContent, closeModal} = useModal()
 
     useEffect(() => {
-    const bookingsExceptEdit = bookings.filter(el => el.id !== booking.id)
+    const bookingsExceptEdit = Object.values(bookings).filter(el => el.id !== booking.id)
     setDisabledDates(getBookingDates(bookingsExceptEdit))
-    for (let i = 0; i < 21; i++){
-        if (isUnavailableDay(dayjs(booking.startDate).add(i, 'day'))) return setMaxDate(dayjs(booking.startDate).add(i, 'day'))
-    }
-    setMaxDate(dayjs(booking.startDate).add(21, 'day'))
     }, [bookings])
+
+
+    const startDateFunc = (startDate) => {
+        setNewStartDate(startDate)
+        setMinDate(dayjs(startDate).add(1, 'day'))
+        for (let i = 0; i < 21; i++){
+            if (isUnavailableDay(dayjs(startDate).add(i, 'day'))) return setMaxDate(dayjs(startDate).add(i, 'day'))
+        }
+        setMaxDate(dayjs(startDate).add(21, 'day'))
+    }
 
     const bookMe = async () => {
         const bookingData = {
             startDate: newStartDate.format('YYYY-MM-DD'),
-             endDate: newEndDate.format('YYYY-MM-DD')
+            endDate: newEndDate.format('YYYY-MM-DD'),
+            startId: booking.startId,
+            id: booking.id,
+            userId: booking.userId
         }
         if (!(newStartDate.format('YYYY-MM-DD') < newEndDate.format('YYYY-MM-DD'))){
             return alert("Start date must proceed end date")
         }
+        console.log(booking)
         await dispatch(editSpotBookingsThunk(bookingData, booking.spotId))
     }
     const isUnavailableDay = (date) => {
@@ -49,23 +63,18 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
          }, false)
     }
 
-    const deleteBooking = (e) => {
-        return dispatch(deleteBookingThunk(booking.id))
+    const deleteBooking = async (e) => {
+        let x = await dispatch(deleteBookingThunk(booking.id))
+        if (x.message) return setModalContent(<h2>Booking successfully cancelled</h2>)
+        else setModalContent(<h2>Something went wrong, booking was not cancelled</h2>)
     }
-
-    const openModal = () => {
-        return <OpenModalMenuItem itemText='fdsafdsa'
-            modalComponent={<BookingModal bookings={bookings}/>}
-            />
-    }
-
 
     return (
-        <div>
+        <div className="edit-booking-div">
         <DatePicker
         label="Start Date"
         value={newStartDate}
-        onChange={(newStartDate) => setNewStartDate(newStartDate)}
+        onChange={(newStartDate) => startDateFunc(newStartDate)}
         shouldDisableDate={isUnavailableDay}
         minDate={dayjs(Date.now()).add(1, 'day')}
         views={['year', 'month', 'day']}
@@ -75,14 +84,20 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
         label="End Date"
         value={newEndDate}
         onChange={(newEndDate) => setNewEndDate(newEndDate)}
-        minDate={dayjs(newStartDate).add(1, 'day')}
+        minDate={minDate}
         maxDate={maxDate}
         shouldDisableDate={isUnavailableDay}
         views={['year', 'month', 'day']}
         />
 
-        <button disabled={!(newStartDate) || !(newEndDate)} onClick={() => bookMe()}>Edit Booking</button>
+        {(dayjs(booking.startDate)) > dayjs(Date.now()) ?
+        <>
+        <button disabled={!newStartDate || !newEndDate } onClick={() => bookMe()}>Update Booking</button>
         <button onClick={deleteBooking}>Delete booking</button>
+        </> :
+        <>Booking in progress</>
+        }
+
         </div>
     )
 }

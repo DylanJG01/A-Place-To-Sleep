@@ -10,13 +10,15 @@ import './Booking.css'
 const dayjs = require('dayjs')
 
 const Booking = ({spotId}) => {
-    const [bookings, allUserBookings, user] = useSelector(state => [state.bookings.spotBookings.Bookings, state.bookings.userBookings, state.session.user])
+    const [bookings, allUserBookings, user] = useSelector(state => [state.bookings.spotBookings, state.bookings.userBookings, state.session.user])
     const dispatch = useDispatch()
     const [disabledDates, setDisabledDates] = useState([])
     const [startDate, setStartDate] = useState(null)
     // const [userSpotBookings, setUserSptBookings] = useState(allUserBookings?.map(el => el))
     const [endDate, setEndDate] = useState(null)
     const [maxDate, setMaxDate] = useState(null)
+    const [minDate, setMinDate] = useState(dayjs(Date.now()).add(2, 'day'))
+    const [bookingSuccessful, setBookingSuccessful] = useState(false)
 
     useEffect(() => {
         dispatch(getSpotBookingsThunk(spotId))
@@ -24,10 +26,20 @@ const Booking = ({spotId}) => {
     }, [dispatch, spotId])
 
     useEffect(() => {
-    setDisabledDates(getBookingDates(bookings))
+        console.log("!!")
+        const arr = Object.values(bookings)
+        setDisabledDates(getBookingDates(arr))
     }, [bookings])
 
+    useEffect(() => {
+        setTimeout(() => setBookingSuccessful(false), 2500)
+    }, [bookingSuccessful])
+
     const bookMe = async () => {
+        if (startDate >= endDate) {
+            return alert("End Date cannot be on or before start date")
+        }
+
         const bookingData = {
             startDate: startDate.format('YYYY-MM-DD'),
              endDate: endDate.format('YYYY-MM-DD')
@@ -35,10 +47,10 @@ const Booking = ({spotId}) => {
         if (!(startDate.format('YYYY-MM-DD') < endDate.format('YYYY-MM-DD'))){
             return alert("Start date must proceed end date")
         }
-        await dispatch(addBookingThunk(bookingData, spotId))
+        let x = await dispatch(addBookingThunk(bookingData, spotId))
+        setBookingSuccessful(true)
         setStartDate(null)
         setEndDate(null)
-
     }
 
     const isUnavailableDay = (date) => {
@@ -55,16 +67,18 @@ const Booking = ({spotId}) => {
 
     const setDates = (startDate) => {
         setStartDate(startDate)
+        // setEndDate(null)
+        setMinDate(dayjs(startDate).add(1, 'day'))
         for (let i = 0; i < 21; i++){
             if (isUnavailableDay(dayjs(startDate).add(i, 'day'))) return setMaxDate(dayjs(startDate).add(i, 'day'))
         }
-        setEndDate(null)
         setMaxDate(dayjs(startDate).add(21, 'day'))
     }
 
     return (
         <div className="booking-div">
-        { bookings && bookings.reduce((acc, el) =>  el.userId === user?.id ? true : null, false) &&
+        {bookingSuccessful && <div>Booking Successful!</div>}
+        { bookings && Object.values(bookings).reduce((acc, el) =>  el.userId === user?.id ? true : null, false) &&
             <div className='what' >
                 <button className="bookings-modal-button">
                 <OpenModalMenuItem itemText="You've booked this spot!"
@@ -87,7 +101,7 @@ const Booking = ({spotId}) => {
         label="End Date"
         value={endDate}
         onChange={(endDate) => setEndDate(endDate)}
-        minDate={dayjs(startDate).add(1, 'day')}
+        minDate={minDate}
         maxDate={maxDate}
         shouldDisableDate={isUnavailableDay}
         views={['year', 'month', 'day']}
