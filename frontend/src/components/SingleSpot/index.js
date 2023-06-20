@@ -18,8 +18,11 @@ const SingleSpot = () => {
 
 
     useEffect(() => {
-        dispatch(getSingleSpot(spotId))
-        setLoaded(true)
+        const load = async () => {
+            await dispatch(getSingleSpot(spotId))
+            setLoaded(true)
+        }
+        load()
     }, [dispatch, spotId])
 
     let previewImg = "";

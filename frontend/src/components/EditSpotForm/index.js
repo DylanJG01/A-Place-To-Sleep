@@ -22,19 +22,18 @@ const EditSpotForm = () => {
     const [errors, setErrors] = useState([])
     const [displayErrors, setDisplayErrors] = useState(false)
     const { spotId } = useParams();
-
-    const [user, spot] = useSelector(state => {
-        // console.log("!!!!!", state)
-        return [state.session.user, state.spots.singleSpot]
-    })
+    const [user, spot] = useSelector(state => [state.session.user, state.spots.singleSpot])
+    const [loaded, setLoaded] = useState()
 
     useEffect(() => {
-        dispatch(getSingleSpot(spotId))
+        const load = async () => {
+            await dispatch(getSingleSpot(spotId))
+            setLoaded(true)
+        }
+        load()
     }, [dispatch, spotId])
 
     useEffect(() => {
-        // console.log(spot)
-        // console.log("!SPOT", !Object.values(spot).length)
         if (!Object.values(spot).length) return
         setCountry(spot.country)
         setAddress(spot.address)
@@ -102,7 +101,7 @@ const EditSpotForm = () => {
     if (!user) return (
         <h2>Please Login to edit this spot</h2>
     )
-    if (!Object.values(spot).length) return (
+    if (!loaded) return (
         <h2>Loading</h2>
     )
 

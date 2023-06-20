@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserSpots } from '../../store/spots'
 import SpotCard from '../SpotCard'
@@ -7,17 +7,16 @@ import '../Spots/Spots.css'
 const UserSpots = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    const userSpots = useSelector(state =>
-      {
-         return Object.values(state.spots.allSpots)})
+    const userSpots = useSelector(state => Object.values(state.spots.allSpots))
+    const [loaded, setLoaded] = useState(false)
 
 
-         //What do I want to do ?
-         // Only give UserSpots a value after user state is updated. I don't want to
-         //preload the page with the previous store setting. 
     useEffect(() => {
-        dispatch(getUserSpots())
-
+        const load = async () => {
+            await dispatch(getUserSpots())
+            setLoaded(true)
+        }
+        load()
     }, [dispatch])
 
     if (!user) {
@@ -26,16 +25,18 @@ const UserSpots = () => {
         )
     }
 
-    // console.log("userSpots!!" ,userSpots)
+    if (!loaded) return <>Loading...</>
     return (
         <>
         <h1 className='manage-spots-h1'>Manage Spots</h1>
         <div className='main-spot-container-div'>
             <ul className={"spots__list"}>
                 {!!userSpots.length ? userSpots.map((spot) => (
-                    <SpotCard spot={spot} key={spot.id} />  
-                )) : <h1>Loading Content</h1>}
+                    <SpotCard spot={spot} key={spot.id} />
+                )) : <></>}
             </ul>
+
+            {!userSpots.length && <h2 className='no-spots'>You have no spots!</h2>}
 
         </div>
         </>
