@@ -35,3 +35,7 @@ text-align: center;
 .reviews-div {
     margin-bottom: 2rem;
 }
+.no-reviews {
+    text-align: center;
+    margin-top: 2rem;
+}
