@@ -53,8 +53,8 @@ const EditSpotForm = () => {
             address,
             city,
             state,
-            lat: +latitude,
-            lng: +longitude,
+            lat: latitude,
+            lng: longitude,
             description,
             name: title,
             price: +price
@@ -69,6 +69,12 @@ const EditSpotForm = () => {
             setDisplayErrors(true)
             // console.log(errors)
             return
+        }
+        if (latitude === "") {
+            setLatitude(0)
+        }
+        if(longitude === ""){
+
         }
         const spot = {
             id: spotId,
@@ -103,49 +109,57 @@ const EditSpotForm = () => {
     if ((user && Object.values(spot).length) && user.id !== spot.ownerId) return (
         <>{history.push('/spots/current')} </>)
 
-    return (
-        <div className="add-spot-form">
-            <h1> Update your Spot </h1>
-            <form onSubmit={handleSubmit} className="add-spot-form">
-                <div className="location-information">
-                    <label>
-                        <div className={'flx'}>
-                            <div>
-                                Country
-                            </div>
-                            {displayErrors && errors.includes("Country") &&
-                                (<div className="error">Country is required</div>)}
-                        </div>
-                        <input
-                            className="country"
-                            type="text"
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
-                            placeholder="Country"
-                        // required
-                        />
-                    </label>
-                    <label>
-                        <div className={'flx'}>
-                            <div>Street Address</div>
-                            {displayErrors && errors.includes("Address") &&
-                                (<div className="error">Address is required</div>)}
-                        </div>
-                        <input
-                            className="address"
-                            type="text"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            placeholder="Street Address"
-                        // required
-                        />
-                    </label>
-                    <div className="city-state-div">
+        return  (
+            <div className="add-spot-form">
+                <h1> Create a New Spot! </h1>
+                <form onSubmit={handleSubmit} className="add-spot-form">
+                    <div className="location-information">
                         <label>
+                            <div className={'flx'}>
+                                <div>
+                                    Country
+                                </div>
+                                {displayErrors && errors.includes("Country") &&
+                                (<div className="error">Country is required</div>)}
+
+                                {displayErrors && errors.includes("country-long") &&
+                                (<div className="error">Country length exceeded</div>)}
+                            </div>
+                            <input
+                                className="country"
+                                type="text"
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
+                                placeholder="Country"
+                                // required
+                            />
+                        </label>
+                        <label>
+                            <div className={'flx'}>
+                            <div>Street Address</div>
+                                {displayErrors && errors.includes("Address") &&
+                                (<div className="error">Address is required</div>)}
+
+                                 {displayErrors && errors.includes("add-long") &&
+                                (<div className="error">Address length exceeded</div>)}
+                            </div>
+                            <input
+                                className="address"
+                                type="text"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Street Address"
+                                // required
+                            />
+                        </label>
+                        <div className="city-state-div">
+                        <label className="city-label">
                             <div className={'flx city-label'}>
                                 <div>City</div>
                                 {displayErrors && errors.includes("City") &&
-                                    (<div className="error">City is required</div>)}
+                                (<div className="error">City is required</div>)}
+                                {displayErrors && errors.includes("city-long") &&
+                                (<div className="error">City length exceeded</div>)}
                             </div>
                             <input
                                 className="city"
@@ -160,7 +174,10 @@ const EditSpotForm = () => {
                             <div className={'flx'}>
                                 <div>State</div>
                                 {displayErrors && errors.includes("State") &&
-                                    (<div className="error">State is required</div>)}
+                                (<div className="error">State is required</div>)}
+
+                                {displayErrors && errors.includes("state-long") &&
+                                (<div className="error">State length exceeded</div>)}
                             </div>
                             <input
                                 className="state"
@@ -171,13 +188,13 @@ const EditSpotForm = () => {
                                 placeholder="State"
                             />
                         </label>
-                    </div>
-                    <div className="lat-and-lng-div">
-                        <label>
+                        </div>
+                        <div className="lat-and-lng-div">
+                        <label className="lat-label">
                             <div className={'flx'}>
                                 <div>Latitude</div>
                                 {displayErrors && errors.includes("Latitude") &&
-                                    (<div className="error">Latitude is required</div>)}
+                                (<div className="error">Latitude required</div>)}
                             </div>
                             <input
                                 className="latitude"
@@ -192,7 +209,7 @@ const EditSpotForm = () => {
                             <div className={'flx'}>
                                 <div>Longitude</div>
                                 {displayErrors && errors.includes("Longitude") &&
-                                    (<div className="error">Longitude required</div>)}
+                                (<div className="error">Longitude required</div>)}
                             </div>
                             <input
                                 className="longitude"
@@ -203,9 +220,9 @@ const EditSpotForm = () => {
                                 placeholder="Longitude"
                             />
                         </label>
+                        </div>
                     </div>
-                </div>
-                <div className="title-and-price">
+                    <div className="title-and-price">
                     <label className="description-label">
                         <div className={'flx'}>
                             <div>Describe your place to guests</div>
@@ -221,11 +238,11 @@ const EditSpotForm = () => {
                             cols={40}
                         />
                         {displayErrors && errors.includes("Description") &&
-                            (<div className="error description-error">Description is required (min 30 characters)</div>)}
+                        (<div className="error description-error">Description is required (30 - 254 characters)</div>)}
                     </label>
-                </div>
-                <div >
-                    <label className="description-label">
+                    </div>
+                    <div >
+                        <label className="description-label">
                         <div className={'flx add-form-spot-title'}>
                             <div>Create a title for your spot</div>
                             <div className="smaller-text">Catch guests attention with a spot title that highlights what makes your place special.</div>
@@ -238,18 +255,21 @@ const EditSpotForm = () => {
                             // required
                             placeholder="Name of your spot"
                         />
-                        {displayErrors && errors.includes("Name") &&
-                            (<div className="error description-error">Name is required</div>)}
-                        {displayErrors && errors.includes("Title") &&
-                            (<div className="error description-error">Name too long</div>)}
+                            {displayErrors && errors.includes("Name") &&
+                                (<div className="error description-error">Name is required</div>)}
+                            {displayErrors && errors.includes("title-long") &&
+                                (<div className="error description-error">Name length exceeded</div>)}
                     </label>
                     <label className="description-label">
-                        <div className={'flx price-box'}>
+                            <div className={'flx price-box'}>
                             <div>Set a base price for your spot</div>
                             <div className="smaller-text">Competitive pricing can help your listing stand out and rank higher in search results.</div>
                             <div></div>
                             {displayErrors && errors.includes("Price") &&
-                                (<div className="error description-error">Price is required</div>)}
+                                    (<div className="error description-error">Price is required</div>)}
+                             {displayErrors && errors.includes("negative-price") &&
+                                    (<div className="error description-error">Price cannot be negative</div>)}
+
                         </div>
                         <input
                             className="price"
@@ -260,7 +280,7 @@ const EditSpotForm = () => {
                             placeholder="Price per night (USD)"
                         />
                     </label>
-                </div>
+                    </div>
                 <div>
                     <button className="delete-button update-button" type="submit">Update Spot</button>
                 </div>

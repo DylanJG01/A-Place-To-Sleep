@@ -13,7 +13,7 @@ function LoginFormModal() {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const [disableBtn, setDisableBtn] = useState(true)
-    const [submitted, setSubmitted] = useState(true)
+    const [submitted, setSubmitted] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,7 +35,6 @@ function LoginFormModal() {
 
     useEffect(() => {
         const err = []
-
         if (credential.length < 4) err.push("Username too short")
         if (password.length < 6) err.push("Password too short")
         setErrors(err)
@@ -79,7 +78,9 @@ function LoginFormModal() {
                 </label>
                 <button type="submit">Log In</button>
             </form>
-            <p className={'demo-user'} onClick={() => demoUserLogin()}>Demo User</p>
+            <div className="p-wrapper">
+             <p className={'demo-user'} onClick={() => demoUserLogin()}>Demo User</p>
+            </div>
         </>
     );
 }

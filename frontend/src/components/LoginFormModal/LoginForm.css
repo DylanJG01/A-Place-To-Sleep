@@ -7,8 +7,6 @@
     border: 1px solid #444444;
     padding: 0.5rem;
     width: max-content;
-    align-self: center;
-    text-align: center;
     text-decoration: underline;
     border-radius: 0.5rem;
     background: #444444;
@@ -18,4 +16,8 @@
     cursor: pointer;
     background: #747474;
     color: white;
+}
+.p-wrapper {
+    display: flex;
+    justify-content: center;
 }

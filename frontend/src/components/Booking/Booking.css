@@ -18,6 +18,9 @@
     display: flex;
     flex-direction: column;
 }
+.edit-booking-div button {
+    border-radius: 0;
+}
 .edit-booking-div > h3 {
     text-align: center;
     margin-bottom: 1.5rem;

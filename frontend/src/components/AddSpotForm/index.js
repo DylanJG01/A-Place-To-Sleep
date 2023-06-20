@@ -30,7 +30,6 @@ const AddSpotForm = () => {
 
         if(errors.length){
             setDisplayErrors(true)
-            console.log(errors)
             return
         }
 
@@ -122,6 +121,9 @@ const AddSpotForm = () => {
                             </div>
                             {displayErrors && errors.includes("Country") &&
                             (<div className="error">Country is required</div>)}
+
+                            {displayErrors && errors.includes("country-long") &&
+                            (<div className="error">Country length exceeded</div>)}
                         </div>
                         <input
                             className="country"
@@ -137,6 +139,9 @@ const AddSpotForm = () => {
                         <div>Street Address</div>
                             {displayErrors && errors.includes("Address") &&
                             (<div className="error">Address is required</div>)}
+
+                             {displayErrors && errors.includes("add-long") &&
+                            (<div className="error">Address length exceeded</div>)}
                         </div>
                         <input
                             className="address"
@@ -153,6 +158,8 @@ const AddSpotForm = () => {
                             <div>City</div>
                             {displayErrors && errors.includes("City") &&
                             (<div className="error">City is required</div>)}
+                            {displayErrors && errors.includes("city-long") &&
+                            (<div className="error">City length exceeded</div>)}
                         </div>
                         <input
                             className="city"
@@ -168,6 +175,9 @@ const AddSpotForm = () => {
                             <div>State</div>
                             {displayErrors && errors.includes("State") &&
                             (<div className="error">State is required</div>)}
+
+                            {displayErrors && errors.includes("state-long") &&
+                            (<div className="error">State length exceeded</div>)}
                         </div>
                         <input
                             className="state"
@@ -184,7 +194,7 @@ const AddSpotForm = () => {
                         <div className={'flx'}>
                             <div>Latitude</div>
                             {displayErrors && errors.includes("Latitude") &&
-                            (<div className="error">Latitude is required</div>)}
+                            (<div className="error">Latitude required</div>)}
                         </div>
                         <input
                             className="latitude"
@@ -228,7 +238,7 @@ const AddSpotForm = () => {
                         cols={40}
                     />
                     {displayErrors && errors.includes("Description") &&
-                    (<div className="error description-error">Description is required (min 30 characters)</div>)}
+                    (<div className="error description-error">Description is required (30 - 254 characters)</div>)}
                 </label>
                 </div>
                 <div >
@@ -247,8 +257,8 @@ const AddSpotForm = () => {
                     />
                         {displayErrors && errors.includes("Name") &&
                             (<div className="error description-error">Name is required</div>)}
-                        {displayErrors && errors.includes("Title") &&
-                            (<div className="error description-error">Name too long</div>)}
+                        {displayErrors && errors.includes("title-long") &&
+                            (<div className="error description-error">Name length exceeded</div>)}
                 </label>
                 <label className="description-label">
                         <div className={'flx price-box'}>
@@ -257,6 +267,9 @@ const AddSpotForm = () => {
                         <div></div>
                         {displayErrors && errors.includes("Price") &&
                                 (<div className="error description-error">Price is required</div>)}
+                         {displayErrors && errors.includes("negative-price") &&
+                                (<div className="error description-error">Price cannot be negative</div>)}
+
                     </div>
                     <input
                         className="price"
