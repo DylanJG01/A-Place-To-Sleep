@@ -2,6 +2,7 @@
     z-index: none;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 .booking-modal {
     padding: 1rem;
@@ -56,6 +57,10 @@
 }
 .successful-booking {
     position: absolute;
+    background-color: #ffffff;
+    top: 10rem;
+    padding: .25rem;
+    border-radius: 1rem;
 }
 
 .bookings-list > div {
@@ -111,4 +116,8 @@
 .close:hover {
     background: #444444;
     cursor: pointer;
+}
+.booking-delete{
+    padding: 1rem;
+    text-align: center;
 }

@@ -76,7 +76,10 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
 
     const deleteBooking = async (e) => {
         let x = await dispatch(deleteBookingThunk(booking.id))
-        if (x.message) return setModalContent(<h2>Booking successfully cancelled</h2>)
+        if (x.message) {
+            setTimeout(() => closeModal(), 1000)
+            return setModalContent(<h2 className="booking-delete" onClick={closeModal}>Booking successfully cancelled</h2>)
+        }
         else setModalContent(<h2>Something went wrong, booking was not cancelled</h2>)
     }
 

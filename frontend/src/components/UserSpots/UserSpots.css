@@ -9,11 +9,6 @@
     margin-top: 2rem;
 }
 
-img {
-    /* object-fit: contain; */
-    /* height: 250px; */
-}
-
 body {
     margin: 0;
 }
@@ -21,10 +16,4 @@ body {
 
 .cost-update-delete-div {
     font-size: 14px;
-}
-.spots__listsss {
-    /* width: 100%;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap; */
 }

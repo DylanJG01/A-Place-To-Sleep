@@ -5,6 +5,7 @@ import { addBookingThunk, getSpotBookingsThunk, getUserBookingsThunk } from '../
 import getBookingDates from "./_helpers";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import BookingModal from './BookingModal'
+import { useModal } from "../../context/Modal";
 import './Booking.css'
 
 const dayjs = require('dayjs')
@@ -19,7 +20,7 @@ const Booking = ({spotId}) => {
     const [maxDate, setMaxDate] = useState(null)
     const [minDate, setMinDate] = useState(dayjs(Date.now()).add(2, 'day'))
     const [bookingSuccessful, setBookingSuccessful] = useState(false)
-
+    const {setModalContent, closeModal} = useModal()
     useEffect(() => {
         dispatch(getSpotBookingsThunk(spotId))
         dispatch(getUserBookingsThunk())
@@ -31,7 +32,7 @@ const Booking = ({spotId}) => {
     }, [bookings])
 
     useEffect(() => {
-        setTimeout(() => setBookingSuccessful(false), 2500)
+
     }, [bookingSuccessful])
 
     const bookMe = async () => {
@@ -50,9 +51,18 @@ const Booking = ({spotId}) => {
             return alert("Start date must proceed end date")
         }
         let x = await dispatch(addBookingThunk(bookingData, spotId))
-        setBookingSuccessful(true)
-        setStartDate(null)
-        setEndDate(null)
+        if (x.id) {
+            setStartDate(null)
+            setEndDate(null)
+            setModalContent(
+                <div className="success-booking-update">
+                        <h3>Booking successfull</h3>
+                        <p>Start Date: {x.startDate.slice(0, 10)}</p>
+                        <p>End Date: {x.endDate.slice(0, 10)}</p>
+                        <div className="close" onClick={closeModal}>Close</div>
+                </div>)
+        }
+
     }
 
     const isUnavailableDay = (date) => {
