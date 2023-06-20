@@ -30,17 +30,17 @@ function BookingModal({ bookings, user, setDates }) {
     }
 
     return (
-        <div>
+        <div className="booking-modal">
             <h2>Reservations</h2>
-            <div>
+            <div className="bookings-list">
                 <h4>These are your current bookings for this location</h4>
                 {Object.values(bookings).filter(el => el.userId === user?.id).map(el => (
                     // <EditBooking booking={el} bookings={bookings} user={user} setDates={setDates} key={el.id}/>
                     <div key={el.id}>
-                        <div>{el.startDate.slice(0, 10)} - {el.endDate.slice(0, 10)}</div>
+                        <div className="booking-dates">{el.startDate.slice(0, 10)} - {el.endDate.slice(0, 10)}</div>
                         {Date.now() < new Date(el.startDate) ?
                         <>
-                        <button onClick={() => editBooking(el)}>Edit / Cancel booking</button>
+                        <button className='edit-delete-button' onClick={() => editBooking(el)}>Edit / Cancel booking</button>
                         </>
                         :
                         <div>Reservation has begun and can no longer be cancelled</div>

@@ -1,5 +1,5 @@
 .main-spot-container-div {
-    display: flex;
+    /* display: flex; */
     /* border: 1px solid purple; */
     margin: 0 2%;
     justify-content: center;
@@ -7,7 +7,7 @@
 
 img {
     /* object-fit: contain; */
-    height: 250px;
+    /* height: 250px; */
 }
 
 body {
@@ -19,8 +19,8 @@ body {
     font-size: 14px;
 }
 .spots__listsss {
-    width: 100%;
+    /* width: 100%;
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
 }

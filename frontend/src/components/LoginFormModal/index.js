@@ -13,9 +13,14 @@ function LoginFormModal() {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const [disableBtn, setDisableBtn] = useState(true)
+    const [submitted, setSubmitted] = useState(true)
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (errors.length){
+            setSubmitted(true)
+            return
+        }
         setErrors([]);
         return dispatch(sessionActions.login({ credential, password }))
             .then(closeModal)
@@ -29,9 +34,11 @@ function LoginFormModal() {
     };
 
     useEffect(() => {
-        if (credential.length < 4
-        || password.length < 6) return setDisableBtn(true)
-        return setDisableBtn(false)
+        const err = []
+
+        if (credential.length < 4) err.push("Username too short")
+        if (password.length < 6) err.push("Password too short")
+        setErrors(err)
     },[credential, password])
 
     const demoUserLogin = () => {
@@ -45,7 +52,7 @@ function LoginFormModal() {
             <h1>Log In</h1>
             <form onSubmit={handleSubmit} className="login-form">
                 <ul>
-                    {errors.map((error, idx) => (
+                    {submitted && errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
@@ -60,7 +67,7 @@ function LoginFormModal() {
 
                     />
                 </label>
-                <label>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                <label>
                     <input
                         className="password"
                         type="password"
@@ -70,7 +77,7 @@ function LoginFormModal() {
                         placeholder="Password"
                     />
                 </label>
-                <button type="submit" disabled={disableBtn}>Log In</button>
+                <button type="submit">Log In</button>
             </form>
             <p className={'demo-user'} onClick={() => demoUserLogin()}>Demo User</p>
         </>

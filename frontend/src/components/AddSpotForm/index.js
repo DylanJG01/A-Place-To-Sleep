@@ -268,8 +268,8 @@ const AddSpotForm = () => {
                     />
                 </label>
                 </div>
-                {displayErrors && errors.includes("Image") && (<div className="error">Requires 1 to 5 images</div>)}
                 <div className="choose-image-div">
+                {displayErrors && errors.includes("Image") && (<div className="error img-err">Requires 1 to 5 images</div>)}
                 {images.map((image, index) => (
                     <div key={index} className="add-image-div">
                         <label>

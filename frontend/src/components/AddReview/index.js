@@ -13,9 +13,14 @@ function AddReviewModal({spotId, user}) {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const [disableBtn, setDisableBtn] = useState(true)
+    const [submitted, setSubmitted] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (errors.length) {
+
+        }
         setErrors([]);
         // console.log("Handle submit", spotId)
         // console.log(stars)
@@ -30,8 +35,10 @@ function AddReviewModal({spotId, user}) {
     };
 
     useEffect(() => {
-        if (reviewText.length < 10 || !stars) return setDisableBtn(true)
-        return setDisableBtn(false)
+        const err = []
+        if (reviewText.length < 10 ) err.push("Review too short")
+        if (!stars) err.push("Must select star rating")
+        setErrors(err)
     }, [reviewText, stars])
 
     return (
@@ -39,7 +46,7 @@ function AddReviewModal({spotId, user}) {
             <h1>How was your stay?</h1>
             <form onSubmit={handleSubmit} className="login-form">
                 <ul>
-                    {errors.map((error, idx) => (
+                    {submitted && errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
@@ -67,7 +74,7 @@ function AddReviewModal({spotId, user}) {
                     <input type="radio" id="star5" name="rate" value={stars} onChange={e => setStars(1)} />
                     <label htmlFor="star5" title="text"></label>
                 </div>
-                <button type="submit" disabled={disableBtn}>Submit Review</button>
+                <button type="submit">Submit Review</button>
             </form>
         </>
     );

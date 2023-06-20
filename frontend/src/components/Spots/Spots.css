@@ -1,27 +1,9 @@
-/* .spots__list {
-    display: flex;
-    flex-wrap: wrap;
-}
-*/
-/* .spot-card {
-        display: flex;
-        width: 20%;
-        border: 1px solid red;
-        justify-content: space-around;
-        margin: 1% 2%;
-        flex-direction: column;
-}  */
-
 
 
 .main-spot-container-div {
-    display: flex;
+    /* display: flex; */
     /* border: 1px solid purple; */
-    margin: 0 2%;
-} 
-
-img {
-    /* object-fit: contain; */
-    height: 250px;
+    /* margin: 0 2%; */
 }
+
 body {margin: 0;}

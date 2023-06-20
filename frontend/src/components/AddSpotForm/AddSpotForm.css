@@ -34,6 +34,7 @@ label input {
     justify-content: center;
     width: auto;
     /* border: 2px solid #0A0708; */
+    padding: .25rem;
     color: white;
 }
 
@@ -42,7 +43,7 @@ textarea {
     background-color: #0A0708;
     color: white;
     resize: none;
-    padding: 0.25rem;
+    padding: 0.5rem;
 }
 
 .lat-and-lng-div {
@@ -125,4 +126,7 @@ width: 100%;
 }
 .choose-image-div {
     margin-top: 1rem;
+}
+.img-err {
+    text-align: center;
 }

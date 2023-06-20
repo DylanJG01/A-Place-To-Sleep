@@ -26,7 +26,6 @@ const Booking = ({spotId}) => {
     }, [dispatch, spotId])
 
     useEffect(() => {
-        console.log("!!")
         const arr = Object.values(bookings)
         setDisabledDates(getBookingDates(arr))
     }, [bookings])

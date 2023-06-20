@@ -116,6 +116,7 @@
     margin: .5rem;
     align-items: center;
     width: 325px;
+    color: black;
 }
 .single-spot-price {
     display: flex;

@@ -48,8 +48,19 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
         if (!(newStartDate.format('YYYY-MM-DD') < newEndDate.format('YYYY-MM-DD'))){
             return alert("Start date must proceed end date")
         }
-        console.log(booking)
-        await dispatch(editSpotBookingsThunk(bookingData, booking.spotId))
+        // console.log(booking)
+        let x = await dispatch(editSpotBookingsThunk(bookingData, booking.spotId))
+        console.log(x)
+        if (x){
+            setModalContent(
+            <div className="success-booking-update">
+                    <h3>Booking successfully updated to</h3>
+                    <p>Start Date: {x.startDate.slice(0, 10)}</p>
+                    <p>End Date: {x.endDate.slice(0, 10)}</p>
+                    <div className="close" onClick={closeModal}>Close</div>
+            </div>)
+        }
+
     }
     const isUnavailableDay = (date) => {
         return disabledDates.reduce((acc, el)=> {
@@ -71,6 +82,8 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
 
     return (
         <div className="edit-booking-div">
+        <h3>Edit Booking</h3>
+
         <DatePicker
         label="Start Date"
         value={newStartDate}
@@ -91,10 +104,10 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
         />
 
         {(dayjs(booking.startDate)) > dayjs(Date.now()) ?
-        <>
-        <button disabled={!newStartDate || !newEndDate } onClick={() => bookMe()}>Update Booking</button>
-        <button onClick={deleteBooking}>Delete booking</button>
-        </> :
+        <div className="another-name">
+        <button className="edit-delete-booking-button" disabled={!newStartDate || !newEndDate } onClick={() => bookMe()}>Update Booking</button>
+        <button className="edit-delete-booking-button" onClick={deleteBooking}>Delete booking</button>
+        </div> :
         <>Booking in progress</>
         }
 

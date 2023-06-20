@@ -89,7 +89,10 @@ const SingleSpot = () => {
                  */}
                 { user && singleSpot?.ownerId !== user.id ?
                     <Booking spotId={spotId}/> :
-                    <div>You own this property.</div>
+                    user ?
+                    <div>You own this property.</div> :
+                    <div>Log in to reserve spot.</div>
+
                 }
 
             </div>
@@ -105,7 +108,7 @@ const SingleSpot = () => {
        <div className='reviews-div'>
             {user && !Object.values(reviews).find(review => review.userId === user?.id) &&
                 singleSpot?.Owner.id !== user?.id &&
-            <button className={"post-review-button"}>
+            <button className="delete-button post-review-button">
                 <OpenModalMenuItem
                     itemText="Post Your Review"
                     modalComponent={<AddReview spotId={spotId} user={user} />}

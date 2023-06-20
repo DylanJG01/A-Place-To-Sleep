@@ -15,11 +15,12 @@ function SignupFormModal() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
-    const [disableBtn, setDisableBtn] = useState(true)
+    const [submitted, setSubmitted] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if(errors.length) {
+            setSubmitted(true)
             return
         }
         if (password === confirmPassword) {
@@ -51,7 +52,7 @@ function SignupFormModal() {
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
-                    {errors.map((error, idx) => <li className='test' key={idx}>{error}</li>)}
+                    {submitted && errors.map((error, idx) => <li className='test' key={idx}>{error}</li>)}
                 </ul>
                 <label className="email">
                     <input

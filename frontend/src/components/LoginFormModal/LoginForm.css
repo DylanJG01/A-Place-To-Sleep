@@ -4,10 +4,18 @@
     border: 1px solid black;
 } */
 .demo-user {
+    border: 1px solid #444444;
+    padding: 0.5rem;
+    width: max-content;
+    align-self: center;
     text-align: center;
     text-decoration: underline;
-    color: blue;
+    border-radius: 0.5rem;
+    background: #444444;
+    margin-bottom: 0.5rem;
 }
 .demo-user:hover{
     cursor: pointer;
+    background: #747474;
+    color: white;
 }

@@ -1,13 +1,9 @@
-.spots__list {
-    width: 100%;
-    display: flex;
-    /* justify-content: space-around;    */
-    flex-wrap: wrap;
-}
+
 .spot-card {
-    min-width: 250px;
+    min-width: 200px;
+    max-width: 300px;
     /* border: 1px solid black; */
-    /* margin: 0 4%; */
+    margin: 0 2%;
     margin-bottom: 20px;
     padding: .25rem;
     border-top-right-radius: 5% ;
@@ -51,4 +47,28 @@
 .spot-card-text {
     display: flex;
     justify-content: space-between;
+}
+
+.spots__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .spots__list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .spots__list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .spots__list {
+        grid-template-columns: 1fr;
+    }
 }
