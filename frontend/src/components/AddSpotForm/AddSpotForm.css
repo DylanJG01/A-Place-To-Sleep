@@ -1,6 +1,6 @@
 
-.error { 
-    font-size: 14px;
+.error {
+    font-size: 13px;
     color: red;
     margin-left: 5px;
     padding-top: 2px;
@@ -29,15 +29,20 @@ label div {
     /* height: 50px; */
 }
 label input {
-    /* background-color: black; */
+    background-color: #0A0708;
     display: flex;
     justify-content: center;
     width: auto;
-    border: 2px solid black;
+    /* border: 2px solid #0A0708; */
+    color: white;
 }
 
 textarea {
-    border: 2px solid black
+    border: 2px solid #444444;
+    background-color: #0A0708;
+    color: white;
+    resize: none;
+    padding: 0.25rem;
 }
 
 .lat-and-lng-div {
@@ -46,16 +51,19 @@ width: 100%;
 }
 
 .lat-and-lng-div label {
-    width:50%;
+    width: 47.5%;
 }
-
+.city-label,
+.lat-label {
+    margin-right: 5%;
+}
 .city-state-div {
     display: flex;
     width: 100%;
 }
 
 .city-state-div label {
-    width: 50%;
+    width: 47.5%;
 }
 .location-information {
     padding-bottom: 10px;
@@ -91,15 +99,30 @@ width: 100%;
     font-size: 12px;
 }
 
-.delete-button {
-    background-color: rgb(198, 105, 105);
-        box-shadow: 2px 2px 1px black;
-        height: 25px;
-        display: flex;
-        align-items: center;
-        /* width: 95%; */
-        color: white;
-}
 .update-button {
     margin-top: 10px;
+}
+
+.add-image-div{
+    display: flex;
+    margin-bottom: .5rem;
+}
+.last-label {
+    margin-bottom: 23px;
+}
+.create-spot-div {
+    margin-bottom: 2rem;
+}
+.reset-image{
+    background-color: #747474
+
+    ;
+}
+.reset-image:hover{
+    background-color: #B1B1B1;
+    color: black;
+    cursor: pointer;
+}
+.choose-image-div {
+    margin-top: 1rem;
 }

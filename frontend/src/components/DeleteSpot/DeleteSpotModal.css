@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin: 10px;
-    background-color: darkgray;
+    /* background-color: darkgray; */
     align-items: center;
 }
 .delete-spot-modal-div button {
@@ -11,9 +11,6 @@
     display: flex;
     justify-content: center;
     color: white;
-}
-#modal-content {
-    background-color: darkgray;
 }
 
 .delete-spot-modal-div h3 {

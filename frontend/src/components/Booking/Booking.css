@@ -1,7 +1,37 @@
 .booking-div{
     z-index: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-booking-div {
     padding: 2rem;
+}
+.your-spot-bookings {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+.date-pickers > div {
+    /* background-color: pink; */
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-me-button {
+    background-color: #0A0708;
+    box-shadow: 2px 2px 1px black;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    color: white;
+}
+.book-me-button:hover {
+    cursor: pointer;
+    background-color: #444444;
+}
+.successful-booking {
+    position: absolute;
 }

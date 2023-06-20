@@ -19,6 +19,9 @@ function SignupFormModal() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(errors.length) {
+            return
+        }
         if (password === confirmPassword) {
             setErrors([]);
             return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
@@ -33,15 +36,14 @@ function SignupFormModal() {
 
 
      useEffect(() => {
-        if (username.length < 4
-         ||email.length === 0
-         ||firstName.length === 0
-         ||lastName.length === 0
-         ||password.length < 6
-         ||confirmPassword.length < 6
-         ||confirmPassword !== password ) return setDisableBtn(true)
-
-        return setDisableBtn(false);
+        const err = []
+        if (username.length < 4) err.push("Username must be between 4 and 20 characters")
+        if (email.length === 0 || !email.includes(".") || !email.includes("@")) err.push("Email must be valid")
+        if (firstName.length === 0) err.push("Must have firstname")
+        if (lastName.length === 0) err.push("Must have lastname")
+        if (password.length < 6) err.push("Passwords must over 6 characters")
+        if (password !== confirmPassword) err.push("Passwords must match")
+        setErrors(err)
     }, [username, firstName, lastName, password, confirmPassword, email])
 
     return (
@@ -49,7 +51,7 @@ function SignupFormModal() {
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    {errors.map((error, idx) => <li className='test' key={idx}>{error}</li>)}
                 </ul>
                 <label className="email">
                     <input
@@ -61,7 +63,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <label className="username">
-                    
+
                     <input
                         type="text"
                         value={username}
@@ -106,7 +108,7 @@ function SignupFormModal() {
                         placeholder="Confirm password"
                     />
                 </label>
-                <button type="submit" disabled={disableBtn}>Sign Up</button>
+                <button id='sign-in-btn' type="submit">Sign Up</button>
             </form>
         </>
     );

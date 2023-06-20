@@ -39,6 +39,9 @@ const Booking = ({spotId}) => {
         if (startDate >= endDate) {
             return alert("End Date cannot be on or before start date")
         }
+        if (endDate - startDate > 1814400000) {
+            return alert("You may only book a spot for three weeks maximum")
+        }
 
         const bookingData = {
             startDate: startDate.format('YYYY-MM-DD'),
@@ -77,37 +80,39 @@ const Booking = ({spotId}) => {
 
     return (
         <div className="booking-div">
-        {bookingSuccessful && <div>Booking Successful!</div>}
+        {bookingSuccessful && <div className="successful-booking">Booking Successful!</div>}
         { bookings && Object.values(bookings).reduce((acc, el) =>  el.userId === user?.id ? true : null, false) &&
-            <div className='what' >
-                <button className="bookings-modal-button">
-                <OpenModalMenuItem itemText="You've booked this spot!"
+            <div className='your-spot-bookings' >
+                <button className="delete-button">
+                <OpenModalMenuItem itemText="Your current bookings"
                     modalComponent={<BookingModal bookings={bookings} user={user} setDates={setDates}/>}
                     />
                 </button>
                 {/* <div onclick={openModal}> </div> */}
             </div>
         }
-        <DatePicker
-        label="Start Date"
-        value={startDate}
-        onChange={(startDate) => setDates(startDate)}
-        shouldDisableDate={isUnavailableDay}
-        minDate={dayjs(Date.now()).add(1, 'day')}
-        views={['year', 'month', 'day']}
-        />
+        <div className="date-pickers">
+            <DatePicker
+            label="Start Date"
+            value={startDate}
+            onChange={(startDate) => setDates(startDate)}
+            shouldDisableDate={isUnavailableDay}
+            minDate={dayjs(Date.now()).add(1, 'day')}
+            views={['year', 'month', 'day']}
+            />
 
-        <DatePicker
-        label="End Date"
-        value={endDate}
-        onChange={(endDate) => setEndDate(endDate)}
-        minDate={minDate}
-        maxDate={maxDate}
-        shouldDisableDate={isUnavailableDay}
-        views={['year', 'month', 'day']}
-        />
+            <DatePicker
+            label="End Date"
+            value={endDate}
+            onChange={(endDate) => setEndDate(endDate)}
+            minDate={minDate}
+            maxDate={maxDate}
+            shouldDisableDate={isUnavailableDay}
+            views={['year', 'month', 'day']}
+            />
+        </div>
 
-        <button disabled={!(startDate) || !(endDate)} onClick={() => bookMe()}>Book me!</button>
+        <button className="book-me-button" disabled={!(startDate) || !(endDate)} onClick={() => bookMe()}>Book Spot</button>
         </div>
     )
 }

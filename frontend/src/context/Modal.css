@@ -32,9 +32,9 @@
 #modal-content {
     width: 475px;
     position: absolute;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 3px 3px 10px rgba(0 0 0 / 0.5);
-    border-radius: 5%;
+    background-color: #0A0708;
+    box-shadow: 0px 0px 5px 5px rgba(255 255 255 / 0.5);
+    border-radius: 1rem;
     z-index: 3;
 }
 
@@ -61,13 +61,13 @@
 
 #modal-content input {
     /* background-color: red; */
-    /* box-shadow: 1px 1px 1px black; */
+    box-shadow: 0px 0px 0px 1px #B1B1B1;
     border: 2px solid rgb(0, 0, 0);
     width: 100%;
 }
 #modal-content button {
-    /* color: red; */
-    background-color: #FF5A5F;
+    color: white;
+    background-color: #444444;
     box-shadow: 2px 2px 1px black;
     height: 45px;
     display: flex;
@@ -78,6 +78,7 @@
 
 #modal-content button:hover {
     cursor: pointer;
+    background-color: #747474;
 }
 
 #modal-content ul{
@@ -94,6 +95,12 @@
     display: inline-block;
     text-align: center;
 }
+
+#sign-in-btn {
+    color: red;
+    height: 100px;
+}
+
 
 @media screen and (max-width: 500px){
     #modal * {

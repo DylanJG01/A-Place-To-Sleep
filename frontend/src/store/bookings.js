@@ -107,7 +107,7 @@ export default function bookingReducer(state = initialState, action) {
       }
     case GET_SPOT_BOOKINGS:
       const spotBookings = action.bookings.Bookings.reduce((acc, el) => {
-        acc[el.id] = el
+        if(el) acc[el.id] = el
         return acc
       }, {})
       return {

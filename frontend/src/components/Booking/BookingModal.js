@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { addBookingThunk, deleteBookingThunk, editSpotBookingsThunk, getSpotBookingsThunk, getUserBookingsThunk } from '../../store/bookings'
+import React, { useState } from "react";
+import { editSpotBookingsThunk } from '../../store/bookings'
 
 import { useDispatch } from "react-redux";
-import { DatePicker } from '@mui/x-date-pickers';
 import { useModal } from "../../context/Modal";
 import EditBooking from "./EditBooking";
 
-import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-
-// const dayjs = require('dayjs')
-
-//
 
 function BookingModal({ bookings, user, setDates }) {
     const dispatch = useDispatch();
@@ -33,12 +27,6 @@ function BookingModal({ bookings, user, setDates }) {
 
     const editBooking = (booking) => {
         setModalContent(<EditBooking booking={booking} bookings={bookings} user={user} setDates={setDates}/>)
-    }
-
-    const deleteBooking = async (e, booking) => {
-        let x = await dispatch(deleteBookingThunk(booking.id))
-        if (x.message) return setModalContent(<h2>Booking successfully cancelled</h2>)
-        else setModalContent(<h2>Something went wrong, booking was not cancelled</h2>)
     }
 
     return (

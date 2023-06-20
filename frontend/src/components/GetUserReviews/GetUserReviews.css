@@ -1,5 +1,6 @@
 .manage-reviews-h1 {
-padding-left: 40px;
+/* padding-left: 40px; */
+text-align: center;
 }
 
 .get-reviews-spot-name {
@@ -24,9 +25,13 @@ padding-left: 40px;
     margin-bottom: 5px;
 }
 
-.manage-reviews.div {
+.manage-reviews-div {
     width: 90%;
     display: flex;
     flex-direction: column;
     margin-left: 5%;
+}
+
+.reviews-div {
+    margin-bottom: 2rem;
 }

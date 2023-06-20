@@ -17,8 +17,6 @@ function SpotCard ({spot}) {
         <>
         <div className={"spot-card"} onClick={e => history.push(`/spots/${spot.id}`)}>
             <img src={spot.preview} alt={"Spot preview"}/>
-            {/* <Link key={spot.id} to={`/spots/${spot.id}`}> */}
-
             <div className='spot-card-info'>
                 <div className='spot-card-text'>
                     <p>{spot.name} </p>
@@ -32,15 +30,9 @@ function SpotCard ({spot}) {
                     </div>
                     <div className='update-delete-div'>
                     <Route path={"/spots/current"}>
-                        <button className={"edit-button"} onClick={e => {
-                            // e.stopPropagation()
-                            // history.push(`/spots/${spot.id}/edit`)
-                            updateSpot(e)
-                            }}>Update</button>
-                            {/* <NavLink to={`/spots/${spot.id}`}>
-                             <button className={"edit-button"} onClick={e => e.stopPropagation()}>Update</button>
-                             </NavLink> */}
-                        <button className={"delete-button"} onClick={e => e.stopPropagation()}><DeleteSpotButton spot={spot} /></button>
+                        <button className="delete-button" onClick={e => updateSpot(e)}>Update</button>
+
+                        <button className="delete-button" onClick={e => e.stopPropagation()}><DeleteSpotButton spot={spot} /></button>
                     </Route>
                     </div>
                 </div>

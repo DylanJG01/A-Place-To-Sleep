@@ -87,31 +87,34 @@ const SingleSpot = () => {
                 </div>
                 {/* <div className='reserve-button-div'><button onClick={() => alert("Feature Coming Soon...")}>Register</button></div>
                  */}
-                 <Booking spotId={spotId}/>
+                { user && singleSpot?.ownerId !== user.id ?
+                    <Booking spotId={spotId}/> :
+                    <div>You own this property.</div>
+                }
 
             </div>
         </div>
-            <div className='above-post-review'>
-                <i className="fas fa-sharp fa-solid fa-star" />
-                {reviews.length ? avgRating(reviews) : "New"}
-                {reviews.length ? (<p className='dot'>·</p>) : ""}
-                <div className='review-number'>
-                    {reviews.length ? reviews.length === 1 ? "1 review" : `${reviews.length} reviews` : ""}
-                </div>
+        <div className='above-post-review'>
+            <i className="fas fa-sharp fa-solid fa-star" />
+            {reviews.length ? avgRating(reviews) : "New"}
+            {reviews.length ? (<p className='dot'>·</p>) : ""}
+            <div className='review-number'>
+                {reviews.length ? reviews.length === 1 ? "1 review" : `${reviews.length} reviews` : ""}
             </div>
-        <div>
-                {user && !Object.values(reviews).find(review => review.userId === user.id) &&
-                    singleSpot.Owner.id !== user.id &&
-                <button className={"post-review-button"}>
-                    <OpenModalMenuItem
-                        itemText="Post Your Review"
-                        modalComponent={<AddReview spotId={spotId} user={user} />}
-                    />
-                </button>}
-                {!reviews.length && user &&
-                singleSpot.Owner.id !== user.id &&
-                !Object.values(reviews).find(review => review.userId === user.id)
-                && <>Be the first to post a review!</>}
+        </div>
+       <div className='reviews-div'>
+            {user && !Object.values(reviews).find(review => review.userId === user?.id) &&
+                singleSpot?.Owner.id !== user?.id &&
+            <button className={"post-review-button"}>
+                <OpenModalMenuItem
+                    itemText="Post Your Review"
+                    modalComponent={<AddReview spotId={spotId} user={user} />}
+                />
+            </button>}
+            {!reviews.length && user &&
+            singleSpot.Owner.id !== user.id &&
+            !Object.values(reviews).find(review => review.userId === user.id)
+            && <>Be the first to post a review!</>}
             <div>
                 <ReviewsBySpot />
            </div>
@@ -119,7 +122,5 @@ const SingleSpot = () => {
         </div>
     )
 }
-
-
 
 export default SingleSpot

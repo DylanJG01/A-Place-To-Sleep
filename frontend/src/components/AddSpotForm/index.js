@@ -148,7 +148,7 @@ const AddSpotForm = () => {
                         />
                     </label>
                     <div className="city-state-div">
-                    <label>
+                    <label className="city-label">
                         <div className={'flx city-label'}>
                             <div>City</div>
                             {displayErrors && errors.includes("City") &&
@@ -180,7 +180,7 @@ const AddSpotForm = () => {
                     </label>
                     </div>
                     <div className="lat-and-lng-div">
-                        <label>
+                    <label className="lat-label">
                         <div className={'flx'}>
                             <div>Latitude</div>
                             {displayErrors && errors.includes("Latitude") &&
@@ -269,8 +269,9 @@ const AddSpotForm = () => {
                 </label>
                 </div>
                 {displayErrors && errors.includes("Image") && (<div className="error">Requires 1 to 5 images</div>)}
+                <div className="choose-image-div">
                 {images.map((image, index) => (
-                    <div key={index}>
+                    <div key={index} className="add-image-div">
                         <label>
                         <input
                             key={fileInputKeys[index]}
@@ -279,10 +280,11 @@ const AddSpotForm = () => {
                             value={undefined} // Clear the value by setting it to undefined
                         />
                         </label>
-                        <div onClick={() => clearFileInput(index)}> x </div>
+                        <div className="reset-image" onClick={() => clearFileInput(index)}> x </div>
                     </div>
                     ))}
-                <div>
+                </div>
+                <div className="create-spot-div">
                     <button className="delete-button update-button" type="submit" disabled={false}>Create Spot</button>
                 </div>
             </form>

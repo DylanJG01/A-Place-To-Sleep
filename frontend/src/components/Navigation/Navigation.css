@@ -1,26 +1,47 @@
 /* #root {
     background-color: grey;
 } */
-html{background-color: grey;}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* color: black; */
+    font-family: 'Special Elite', cursive;
+}
+html{
+    background-color: #444444;
+}
+body {
+    color: #B1B1B1;
+}
 .hidden {
     display: none;
 }
 .profile-dropdown {
     position: absolute;
     top: 75px;
-    background: white;
-    padding-inline-start: 0;
+    background: #747474;
+    border-radius: .25rem;
+    /* padding-inline-start: 0; */
     list-style-type: none;
     /* width: 125px; */
-    border: 1px solid black;
-    padding-bottom: 5px;
+    /* border: 1px solid black; */
+    /* padding-bottom: 5px; */
+
 }
 ul {
     list-style-type: none;
 }
-.profile-dropdown * {
-    border: 1px solid black;
-    /* background-color: red; */
+.profile-dropdown li{
+    padding-bottom: .25rem;
+}
+.profile-dropdown li:hover {
+    /* border: 1px solid black; */
+    background-color: #B1B1B1;
+}
+#logout-button-li {
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
 }
 /* .profile-dropdown ul {
     display: none;
@@ -31,7 +52,9 @@ ul {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    padding: .5rem 0;
+    border-bottom: 1px solid black;
+    margin-bottom: 1rem;
     /* width: 100vw; */
 }
 
@@ -51,43 +74,60 @@ ul {
     flex-direction: row-reverse;
 }
 .profile-button li{
-    /* margin: 3px; */
-    /* background-color: blue; */
+
     position: relative;
     display: flex;
-    /* top: 25px; */
+
     padding-left: 15px;
     padding-top: 5px;
     padding-right: 15px;
     border: 0;
+    color: black;
 }
 
 .profile-button li:hover{
     cursor: pointer;
-    background-color: rgba(0, 255, 0, .5);
+    /* background-color: rgba(0, 255, 0, .5); */
 }
 .profile-button > button {
     height: 40px;
     width: 75px;
-    border-radius: 40%;
+    border-radius: 5rem;
+    background: none;
+    color: #B1B1B1;
+    border: 1px solid #B1B1B1;
+}
+.profile-button > button:hover {
+    cursor: pointer;
+    background-color: black;
 }
 .profile-section {
     display: flex;
     margin-right: 2%;
 }
+
 .add-spot {
-    margin-right: 3%;
-    /* border: 1px solid blue; */
-    width: 175px;
-    display: flex;
+    margin-right: 1rem;
+    padding: .5rem;
 }
+.add-spot:hover{
+    background-color: black;
+    border-radius: 5rem;
+    /* padding: .5rem; */
+    box-shadow: 0px 0px 0px 5px black;
+}
+
 .add-a-spot-div {
     display: flex;
     align-items: center;
 }
 .add-a-spot-div * {
-    color: rgb(128, 0, 0);
+    color: #B1B1B1;
     text-decoration: none;
+}
+.add-a-spot-div *:hover {
+    color: #B1B1B1;
+    /* background-color: green; */
 }
 .fas {
     /* font-size: 25px; */
@@ -98,14 +138,14 @@ ul {
 }
 
 #logout-button-li {
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    height: 35px;
+    /* padding: 0; */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* height: 35px; */
 }
 #logout-button-li:hover{
-    cursor: default;
-    background-color: white;
+    cursor: pointer;
+    /* background-color: white; */
 }
 #logout-button-li > button {
     font-size: 15px;
@@ -124,15 +164,26 @@ ul {
     text-decoration: none;
     border: none;
 }
+.manage-spots:hover{
+    /* color: pink; */
+}
 
 #hello-user:hover, #user-email:hover{
-    background-color: white;
+    /* background-color: white; */
+    /* cursor: pointer; */
     cursor: default;
+    background: none;
+}
+
+#user-email {
+    border-bottom: 1px solid black;
+    padding-bottom: .5rem;
 }
 
 #site-icon-div {
     height: 50px;
-    display: flex;
+    /* display: flex; */
+    margin-left: 2rem;
 }
 #site-icon-img {
     object-fit: contain;
@@ -140,26 +191,28 @@ ul {
 }
 
 * {
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif */
 }
 .spot-reviews {
     display: flex;
     flex-direction: column-reverse;
     padding-inline-start: 0;
 }
-
-.spot-reviews li {
-    margin: 10px 0px;
+.spot-review-li {
+    margin-bottom: 1.5rem;
 }
 
 .delete-button {
-    background-color: rgb(198, 105, 105);
-    box-shadow: 2px 2px 1px black;
-    height: 25px;
-    display: flex;
+    background-color: rgb(0, 0, 0);
+    /* box-shadow: 2px 2px 1px black; */
     align-items: center;
-    /* width: 95%; */
-    color: white;
+    padding: .25rem;
+    color: #B1B1B1;
+}
+.delete-button:hover {
+    cursor: pointer;
+    background-color: #444444;
+    /* color:  */
 }
 .edit-button {
 background-color: rgb(198, 105, 105);
@@ -171,7 +224,7 @@ background-color: rgb(198, 105, 105);
     color: white;
 }
 .post-review-button {
-    background-color: rgb(198, 105, 105);
+    background-color: rgb(0, 0, 0);
     box-shadow: 2px 2px 1px black;
     height: 25px;
     display: flex;
@@ -189,6 +242,7 @@ background-color: rgb(198, 105, 105);
 
 .review-date {
     margin: 5px 0;
+    font-size: .75rem;
 }
 
 .reviewer-name {
@@ -198,4 +252,35 @@ background-color: rgb(198, 105, 105);
 
 .manage-spots-h1 {
     text-align: center;
+}
+.ptr-icon {
+    display: flex;
+    align-items: center;
+    color: #B1B1B1;
+}
+.ptr-icon:hover {
+    color: #B1B1B1;
+}
+.ptr-text {
+    margin-left: .5rem;
+    padding: .5rem;
+}
+.ptr-text:hover{
+    background-color: black;
+    border-radius: 5rem;
+    /* padding: 0.5rem; */
+    box-shadow: 0px 0px 0px 5px black;
+}
+
+.nav-list a {
+    text-decoration: none;
+    /* color: silver; */
+}
+
+.nav-list a:hover{
+    /* color: #B1B1B1; */
+}
+.spot-card-info div {
+    margin-top: .25rem;
+    /* background-color: green; */
 }

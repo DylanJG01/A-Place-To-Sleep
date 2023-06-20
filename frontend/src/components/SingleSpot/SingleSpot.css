@@ -102,6 +102,7 @@
     display: flex;
     border-bottom: 1px solid black;
     margin-top: 15px;
+    justify-content: space-between;
 }
 
 .host-and-description {
@@ -109,28 +110,28 @@
 }
 
 
-
 .price-and-review {
     display: flex;
     justify-content: space-between;
-    margin: 0 10px;
-    align-items: center
+    margin: .5rem;
+    align-items: center;
+    width: 325px;
 }
 .single-spot-price {
-        display: flex;
-        align-items: center;
-        font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 1rem;
 }
 
 .reserve-div {
-    width: 29%;
     border: 2px solid black;
-    /* height: 120px; */
     display: flex;
     flex-direction: column;
-    border-radius: 5%;
-    margin-bottom: 15px;
-    padding-bottom: 5px;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    z-index: 0;
+    background-color: #747474;
 }
 
 .reserve-button-div {
@@ -152,8 +153,8 @@
 }
 
 .single-spot-price > h5 {
-    margin-left: 3px;
-    padding-top: 5px
+    margin-left: .25rem;
+    /* padding-top: 5px */
 }
 
 .single-spot-review {
