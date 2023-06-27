@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { DatePicker } from '@mui/x-date-pickers';
@@ -12,7 +11,7 @@ const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc)
 
-const EditBooking = ({ booking, bookings, user, setDates}) => {
+const EditBooking = ({booking, bookings}) => {
     const dispatch = useDispatch()
     const [disabledDates, setDisabledDates] = useState([])
     const [newStartDate, setNewStartDate] = useState(dayjs(booking.startDate).add(1, 'day'))
@@ -48,7 +47,6 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
         if (!(newStartDate.format('YYYY-MM-DD') < newEndDate.format('YYYY-MM-DD'))){
             return alert("Start date must proceed end date")
         }
-        // console.log(booking)
         let x = await dispatch(editSpotBookingsThunk(bookingData, booking.spotId))
         console.log(x)
         if (x){
@@ -77,8 +75,12 @@ const EditBooking = ({ booking, bookings, user, setDates}) => {
     const deleteBooking = async (e) => {
         let x = await dispatch(deleteBookingThunk(booking.id))
         if (x.message) {
-            setTimeout(() => closeModal(), 1000)
-            return setModalContent(<h2 className="booking-delete" onClick={closeModal}>Booking successfully cancelled</h2>)
+            // setTimeout(() => closeModal(), 1000)
+            return setModalContent(
+                    <div className="successful-delete-modal">
+                        <h2 className="booking-delete" onClick={closeModal}>Booking successfully cancelled</h2>
+                        <button className="close-delete-modal" onClick={closeModal}>Close</button>
+                </div>)
         }
         else setModalContent(<h2>Something went wrong, booking was not cancelled</h2>)
     }

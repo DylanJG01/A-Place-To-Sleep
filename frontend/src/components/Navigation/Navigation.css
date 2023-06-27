@@ -13,7 +13,7 @@ html{
     background-image: linear-gradient(to left, #444444, #555555);
 }
 body {
-    color: #B1B1B1;
+    color: white;
 }
 .hidden {
     display: none;
@@ -21,8 +21,9 @@ body {
 .profile-dropdown {
     position: absolute;
     top: 75px;
-    background: #747474;
+    background: #000000;
     border-radius: .25rem;
+    padding: .25rem;
     /* padding-inline-start: 0; */
     list-style-type: none;
     /* width: 125px; */
@@ -83,24 +84,28 @@ ul {
     padding-top: 5px;
     padding-right: 15px;
     border: 0;
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .profile-button li:hover{
     cursor: pointer;
     /* background-color: rgba(0, 255, 0, .5); */
+    /* color: black !important; */
 }
 .profile-button > button {
     height: 40px;
     width: 75px;
     border-radius: 5rem;
     background: none;
-    color: #B1B1B1;
+    color: white;
     border: 1px solid #B1B1B1;
 }
 .profile-button > button:hover {
     cursor: pointer;
     background-color: black;
+}
+.profile-btn:hover {
+    color: black;
 }
 .profile-section {
     display: flex;
@@ -123,11 +128,11 @@ ul {
     align-items: center;
 }
 .add-a-spot-div * {
-    color: #B1B1B1;
+    color: white;
     text-decoration: none;
 }
 .add-a-spot-div *:hover {
-    color: #B1B1B1;
+    /* color: #B1B1B1; */
     /* background-color: green; */
 }
 .fas {
@@ -161,7 +166,7 @@ ul {
     background-color: red;
 }
 .manage-spots {
-    color: black;
+    color: white;
     text-decoration: none;
     border: none;
 }
@@ -194,6 +199,9 @@ ul {
 * {
     /* font-family: Verdana, Geneva, Tahoma, sans-serif */
 }
+.fa-star {
+    margin: 0 .25rem;
+}
 .spot-reviews {
     display: flex;
     flex-direction: column-reverse;
@@ -208,7 +216,7 @@ ul {
     /* box-shadow: 2px 2px 1px black; */
     align-items: center;
     padding: .25rem;
-    color: #B1B1B1;
+    color: #ffffff;
 }
 .delete-button:hover {
     cursor: pointer;
@@ -234,6 +242,7 @@ background-color: rgb(198, 105, 105);
     display: flex;
     font-size: 22px;
     margin: 10px 0;
+    align-items: baseline;
 }
 
 .review-date {
@@ -252,11 +261,9 @@ background-color: rgb(198, 105, 105);
 .ptr-icon {
     display: flex;
     align-items: center;
-    color: #B1B1B1;
+    color: #ffffff;
 }
-.ptr-icon:hover {
-    color: #B1B1B1;
-}
+
 .ptr-text {
     margin-left: .5rem;
     padding: .5rem;

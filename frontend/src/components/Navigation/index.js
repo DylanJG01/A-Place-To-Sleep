@@ -10,8 +10,8 @@ function Navigation({ isLoaded }) {
     return (
         <nav className='header'>
             <ul className='nav-list'>
-                <li classname="home-nav-link">
-                    <NavLink to="/" classname="home-nav-link">
+                <li className="home-nav-link">
+                    <NavLink to="/" className="home-nav-link">
                     <div className='ptr-icon'>
                     {/* <h4>A Place To Sleep</h4> */}
                     <div id='site-icon-div'>

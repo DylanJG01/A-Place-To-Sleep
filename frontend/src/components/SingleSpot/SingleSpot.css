@@ -138,6 +138,9 @@
     z-index: 0;
     background-color: #747474;
 }
+.reserve-div * {
+    /* color: white; */
+}
 
 .reserve-button-div {
     display: flex;
@@ -147,14 +150,14 @@
 .reserve-button-div > button {
     /* width: 90%;
     border: 1px solid black; */
-        background-color: #de585d;
-            box-shadow: 2px 2px 1px black;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            width: 95%;
-            color: white;
-            justify-content: center;
+    background-color: #de585d;
+    box-shadow: 2px 2px 1px black;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    width: 95%;
+    color: white;
+    justify-content: center;
 }
 
 .single-spot-price > h5 {

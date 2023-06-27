@@ -35,15 +35,28 @@ export const getUserBookingsThunk = userId => async dispatch => {
   const res = await csrfFetch(`/api/bookings/current`)
   if (res.ok) {
     const bookings = await res.json()
-    dispatch(getUserBookings(bookings))
+    const spotBookings = bookings.Bookings.reduce((acc, el) => {
+      if(el) acc[el.id] = el
+      return acc
+    }, {})
+
+    dispatch(getUserBookings(spotBookings))
+    return spotBookings
   }
 }
 
 export const getSpotBookingsThunk = spotId => async dispatch => {
   const res = await csrfFetch(`/api/spots/${spotId}/bookings`)
+
   if (res.ok) {
     const bookings = await res.json()
-    dispatch(getSpotBookings(bookings))
+    const spotBookings = bookings.Bookings.reduce((acc, el) => {
+      if(el) acc[el.id] = el
+      return acc
+    }, {})
+
+    dispatch(getSpotBookings(spotBookings))
+    return spotBookings
   }
 }
 
@@ -79,10 +92,8 @@ export const addBookingThunk = (bookingData, spotId) => async dispatch => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(bookingData)
   })
-
   if (res.ok) {
     const booking = await res.json()
-
     dispatch(addBooking(booking))
     return booking;
   }
@@ -96,23 +107,16 @@ const initialState = {
 export default function bookingReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER_BOOKINGS:
-        const bookings = action.bookings.Bookings.reduce((acc, el) => {
-          acc[el.id] = el
-          return acc
-        },{})
       return {
         ...state,
         spotBookings: {...state.spotBookings},
-        userBookings: bookings
+        userBookings: action.bookings
       }
     case GET_SPOT_BOOKINGS:
-      const spotBookings = action.bookings.Bookings.reduce((acc, el) => {
-        if(el) acc[el.id] = el
-        return acc
-      }, {})
       return {
         ...state,
-        spotBookings: spotBookings
+        spotBookings: action.bookings,
+        userBookings: {...state.userBookings}
       }
     case EDIT_SPOT_BOOKINGS:
       return {
@@ -120,15 +124,20 @@ export default function bookingReducer(state = initialState, action) {
         spotBookings: {
           ...state.spotBookings,
           [action.booking.id]: action.booking
+        },
+        userBookings: {
+          ...state.userBookings,
+          [action.booking.id]: action.booking
         }
       }
     case DELETE_BOOKING:
-      const bookingsArr = {...state.spotBookings}
-      delete bookingsArr[action.bookingId]
-
+      const [spotBookingsArr, userBookingsArr] = [{...state.spotBookings}, {...state.userBookings}]
+      delete spotBookingsArr[action.bookingId]
+      delete userBookingsArr[action.bookingId]
       return {
         ...state,
-        spotBookings: {...bookingsArr}
+        spotBookings: {...spotBookingsArr},
+        userBookings: {...userBookingsArr}
       }
 
     case ADD_BOOKING:

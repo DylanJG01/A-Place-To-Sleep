@@ -11,7 +11,7 @@ import './Booking.css'
 const dayjs = require('dayjs')
 
 const Booking = ({spotId}) => {
-    const [bookings, allUserBookings, user] = useSelector(state => [state.bookings.spotBookings, state.bookings.userBookings, state.session.user])
+    const [bookings, user] = useSelector(state => [state.bookings.spotBookings, state.bookings.userBookings, state.session.user])
     const dispatch = useDispatch()
     const [disabledDates, setDisabledDates] = useState([])
     const [startDate, setStartDate] = useState(null)
@@ -32,7 +32,6 @@ const Booking = ({spotId}) => {
     }, [bookings])
 
     useEffect(() => {
-
     }, [bookingSuccessful])
 
     const bookMe = async () => {

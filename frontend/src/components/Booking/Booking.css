@@ -15,7 +15,7 @@
 }
 .edit-booking-div {
     padding: 2rem;
-    background-color: #747474;
+    /* background-color: #747474; */
     display: flex;
     flex-direction: column;
 }
@@ -30,6 +30,13 @@
 .edit-booking-div * {
     margin-bottom: .75rem;
 }
+.spots-to-book {
+    color: black;
+    text-align: center;
+}
+.spots-to-book:hover {
+    color: white;
+}
 .your-spot-bookings {
     list-style: none;
     margin-bottom: 1rem;
@@ -40,7 +47,18 @@
     display: flex;
     flex-direction: column;
 }
-
+.successful-delete-modal {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.close-delete-modal {
+    /* color: green !important; */
+    width: fit-content !important;
+    padding: 0 .5rem;
+    margin-bottom: .5rem;
+}
 .book-me-button {
     background-color: #0A0708;
     box-shadow: 2px 2px 1px black;
@@ -75,12 +93,15 @@
 
 .edit-delete-button {
     color: white;
-    background-color: #444444;
+    background-color: black;
     box-shadow: 2px 2px 1px black;
     padding: .25rem;
     /* display: flex; */
 }
-
+.edit-delete-button:hover {
+    cursor: pointer;
+    background-color: #444444;
+}
 .bookings-dates {
 
 }
@@ -119,5 +140,47 @@
 }
 .booking-delete{
     padding: 1rem;
+    text-align: center;
+}
+.my-bookings-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+.my-bookings-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+.view-spots {
+    margin-top: 2rem;
+    text-align: center;
+}
+.booking-li {
+    text-decoration: none;
+    list-style: none;
+    border: 1px solid black;
+    margin-top: 1rem;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-spot-name{
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.my-booking-start-date {
+    margin-right: 1rem;
+}
+.my-booking-dates {
+    margin-bottom: 1rem;
+}
+
+.user-bookings-list h2{
     text-align: center;
 }
