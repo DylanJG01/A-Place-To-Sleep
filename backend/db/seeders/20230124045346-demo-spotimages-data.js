@@ -40,27 +40,27 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: 'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*CNGOGuIUsNE5Vz4fFQG99Q.jpeg',
+        url: 'https://images.nightcafe.studio/jobs/Mgc16sYkVNyFqbJJxORP/Mgc16sYkVNyFqbJJxORP--1--gylts.jpg?tr=w-1600,c-at_max',
         preview: true
       },
       {
         spotId: 3,
-        url: 'https://travelmelodies.com/wp-content/uploads/2019/05/travel-melodies-humayuns-tomb-in-delhi-india-garden-tomb-1024x768.jpg',
+        url: 'https://images.nightcafe.studio/jobs/sk3cbeBbY6B5WY9VUDjm/sk3cbeBbY6B5WY9VUDjm--1--izs1l.jpg?tr=w-1600,c-at_max',
         preview: false
       },
       {
         spotId: 3,
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNtfRfzxLRBLMIYbG3OCSHGli1ZGlOczM9P5MXHQtgOiZQglhLemu3KFg3PXrRRylM3Os&usqp=CAU',
+        url: 'https://images.nightcafe.studio/jobs/sk3cbeBbY6B5WY9VUDjm/sk3cbeBbY6B5WY9VUDjm--4--tjkss.jpg?tr=w-1600,c-at_max',
         preview: false
       },
       {
         spotId: 3,
-        url: 'https://i0.wp.com/imagewrighter.com/wp-content/uploads/2019/08/Humayun-Tomb-10.jpg?resize=768%2C1110&ssl=1',
+        url: 'https://images.nightcafe.studio/jobs/sk3cbeBbY6B5WY9VUDjm/sk3cbeBbY6B5WY9VUDjm--4--tjkss.jpg?tr=w-1600,c-at_max',
         preview: false
       },
       {
         spotId: 3,
-        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2luIjamZBFwdGO0W4YsoSWG78ES1MgoynbjTFhn-oyUbWzTBcbk35cOMy6GQghNzti90&usqp=CAU',
+        url: 'https://images.nightcafe.studio/jobs/k37a4otN0aY7xambEVtc/k37a4otN0aY7xambEVtc--1--okci4.jpg?tr=w-1600,c-at_max',
         preview: false
       },
       {
