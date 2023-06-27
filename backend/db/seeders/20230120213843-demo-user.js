@@ -2,7 +2,7 @@
 const bcrypt = require("bcryptjs");
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  
+  options.schema = process.env.SCHEMA;
 }
 
 /** @type {import('sequelize-cli').Migration} */
@@ -20,16 +20,23 @@ module.exports = {
       {
         email: 'the@dog.io',
         username: 'DoggoMcDogDog',
-        firstName: 'MrDog',
-        lastName: 'TheBigDog',
+        firstName: 'Mr',
+        lastName: 'Spooky',
         hashedPassword: bcrypt.hashSync('treats&pets4lyfe')
       },
       {
         email: 'TheLastWord@doom.yesterday',
         username: 'Snuffles',
         firstName: 'Harbinger',
-        lastName: 'Flounderer',
+        lastName: 'Of Doom',
         hashedPassword: bcrypt.hashSync('TheEndApproaches')
+      },
+      {
+        email: 'DemoUser@demo.user',
+        username: 'demouser',
+        firstName: 'Demo',
+        lastName: 'User',
+        hashedPassword: bcrypt.hashSync('password')
       },
     ], {})
   },
