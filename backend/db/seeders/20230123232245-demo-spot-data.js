@@ -42,7 +42,7 @@ module.exports = {
         lat: 28.5933,
         lng: 77.2507,
         name: 'Humayun’s Tomb',
-        description: "Humayun's tomb is the tomb of Humayun in Delhi, India. The tomb was commissioned by Humayun's first wife and chief consort, Empress Bega Begum under her patronage in 1558, and designed by Mirak Mirza Ghiyas and his son, Sayyid Muhammad, Persian architects chosen by her.",
+        description: "Humayun's tomb is the tomb of Humayun in Delhi, India. The tomb was commissioned by Humayun's first wife and chief consort, Empress Bega Begum in 1558, and designed by Mirak Mirza Ghiyas and his son, Sayyid Muhammad.",
         price: 3000
       },
       {
