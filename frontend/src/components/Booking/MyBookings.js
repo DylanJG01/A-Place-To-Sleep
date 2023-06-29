@@ -19,6 +19,7 @@ const MyBookings = () => {
           const masterBookingList = { ...allSpotBookings };
           for (const key in userBookings) {
             const spotBookings = await dispatch(getSpotBookingsThunk(userBookings[key].spotId));
+
             if (!masterBookingList[userBookings[key].spotId]) {
               masterBookingList[userBookings[key].spotId] = [];
             }
@@ -33,7 +34,6 @@ const MyBookings = () => {
     const editBooking = (booking, bookings) => {
         setModalContent(<EditBooking booking={booking} bookings={bookings} user={user}/>)
     }
-
     if (!loaded) {
         return <h2>Loading... </h2>
     }
@@ -47,6 +47,7 @@ const MyBookings = () => {
                 {Object.values(allUserBookings).map(el => (
                 <li key={el.id} className="booking-li">
                     <div className="booking-spot-name">{el?.Spot?.name}</div>
+                    <img className="booking-img" src={`${el?.Spot.previewImage}`} alt='spot-image'/>
                     <div className="my-booking-dates">
                     <span className="my-booking-start-date my-booking-date">{el.startDate.slice(0, 10)}</span>
                     <span className="my-booking-date">{el.endDate.slice(0, 10)}</span>

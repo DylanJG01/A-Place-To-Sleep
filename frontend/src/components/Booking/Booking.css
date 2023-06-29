@@ -13,6 +13,11 @@
 .booking-modal > h4 {
     margin-bottom: 1rem;
 }
+.booking-img{
+    width: 200px;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
 .edit-booking-div {
     padding: 2rem;
     /* background-color: #747474; */

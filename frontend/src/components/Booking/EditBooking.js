@@ -48,7 +48,6 @@ const EditBooking = ({booking, bookings}) => {
             return alert("Start date must proceed end date")
         }
         let x = await dispatch(editSpotBookingsThunk(bookingData, booking.spotId))
-        console.log(x)
         if (x){
             setModalContent(
             <div className="success-booking-update">

@@ -50,11 +50,14 @@ export const getSpotBookingsThunk = spotId => async dispatch => {
 
   if (res.ok) {
     const bookings = await res.json()
-    const spotBookings = bookings.Bookings.reduce((acc, el) => {
+    let spotBookings = {};
+
+    if (typeof bookings !== 'string') {
+      spotBookings = bookings.Bookings.reduce((acc, el) => {
       if(el) acc[el.id] = el
       return acc
     }, {})
-
+}
     dispatch(getSpotBookings(spotBookings))
     return spotBookings
   }
