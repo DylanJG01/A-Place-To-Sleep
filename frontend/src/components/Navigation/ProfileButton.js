@@ -52,7 +52,7 @@ function ProfileButton({ user }) {
                     <>
                         <li id="hello-user">Hello, {user.firstName}</li>
                         <li id="user-email">{user.email}</li>
-                        <li className='profile-btn' onClick={() => history.push('/spots/current')}>Manage Spots</li>
+                        <li className='profile-btn top-mrgin' onClick={() => history.push('/spots/current')}>Manage Spots</li>
                         <li className='profile-btn' onClick={() => history.push('/reviews/current')}>Manage Reviews</li>
                         <li className='profile-btn' onClick={() => history.push('/bookings')}> My Bookings</li>
                         <li className='profile-btn' id="logout-button-li" onClick={logout}>Log Out </li>

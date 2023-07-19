@@ -173,7 +173,9 @@ ul {
 .manage-spots:hover{
     /* color: pink; */
 }
-
+.top-mrgin{
+    margin-top: .2rem;
+}
 #hello-user:hover, #user-email:hover{
     /* background-color: white; */
     /* cursor: pointer; */
@@ -182,7 +184,7 @@ ul {
 }
 
 #user-email {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(121, 121, 121);
     padding-bottom: .5rem;
 }
 

@@ -27,7 +27,7 @@ const ReviewsBySpot = () => {
             {Object.values(reviews).length ?
         <ul className='spot-reviews'>
         {   Object.values(reviews).map(review => (
-            <li className='spot-review-li' key={review.id}><div className='reviewer-name'>{review.User.firstName} {review.stars}<i className="fas fa-sharp fa-solid fa-star" /></div>
+            <li className='spot-review-li' key={review.id}><div className='reviewer-name'>{review.User.firstName} {review.User.lastName} {review.stars}<i className="fas fa-sharp fa-solid fa-star" /></div>
                 <div className='review-date'>{_dateFormatter(review.createdAt)}</div>
             <div>
                 <div className='the-actual-review'>{review.review}</div>
