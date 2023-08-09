@@ -61,7 +61,6 @@ const Booking = ({spotId}) => {
                         <div className="close" onClick={closeModal}>Close</div>
                 </div>)
         }
-
     }
 
     const isUnavailableDay = (date) => {

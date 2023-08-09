@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { DatePicker } from '@mui/x-date-pickers';
-import { addBookingThunk, deleteBookingThunk, editSpotBookingsThunk, getSpotBookingsThunk, getUserBookingsThunk } from '../../store/bookings'
+import {deleteBookingThunk, editSpotBookingsThunk, getUserBookingsThunk } from '../../store/bookings'
 import getBookingDates from "./_helpers";
-import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-import BookingModal from './BookingModal'
 import { useModal } from "../../context/Modal";
 
 const dayjs = require('dayjs')
@@ -112,6 +110,8 @@ const EditBooking = ({booking, bookings}) => {
         <button className="edit-delete-booking-button" disabled={!newStartDate || !newEndDate } onClick={() => bookMe()}>Update Booking</button>
         <button className="edit-delete-booking-button" onClick={deleteBooking}>Delete booking</button>
         </div> :
+        dayjs(booking.endDate) < dayjs(Date.now()) ? <>Booking Complete!</>
+        :
         <>Booking in progress</>
         }
 
