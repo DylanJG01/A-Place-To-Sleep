@@ -5,6 +5,11 @@ import { useModal } from "../../context/Modal";
 import './Booking.css'
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import EditBooking from "./EditBooking";
+import { dateCalendarClasses } from "@mui/x-date-pickers";
+
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc)
 
 const MyBookings = () => {
     const [allUserBookings, user] = useSelector(state => [state.bookings.userBookings, state.session.user])
@@ -12,6 +17,7 @@ const MyBookings = () => {
     const [allSpotBookings, setAllSpotBookings] = useState({})
     const [loaded, setLoaded] = useState(false)
     const {setModalContent} = useModal();
+    const [today, setToday] = useState(dayjs(Date.now()))
 
     useEffect(() => {
         const load = async () => {
@@ -19,7 +25,6 @@ const MyBookings = () => {
           const masterBookingList = { ...allSpotBookings };
           for (const key in userBookings) {
             const spotBookings = await dispatch(getSpotBookingsThunk(userBookings[key].spotId));
-
             if (!masterBookingList[userBookings[key].spotId]) {
               masterBookingList[userBookings[key].spotId] = [];
             }
@@ -52,9 +57,12 @@ const MyBookings = () => {
                     <span className="my-booking-start-date my-booking-date">{el.startDate.slice(0, 10)}</span>
                     <span className="my-booking-date">{el.endDate.slice(0, 10)}</span>
                     </div>
+                    {today < dayjs(el.startDate) ?
                     <div>
                     <button className='edit-delete-button' onClick={() => editBooking(el, allSpotBookings[el.spotId])}>Edit / Cancel booking</button>
-                    </div>
+                    </div> : dayjs(el.endDate) > today ? <> Booking in Progress</> :
+                    <>Booking Complete</>
+                    }
                 </li>))}
                 </div>
                 :

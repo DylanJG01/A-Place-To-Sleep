@@ -81,10 +81,17 @@ const EditBooking = ({booking, bookings}) => {
         }
         else setModalContent(<h2>Something went wrong, booking was not cancelled</h2>)
     }
-
+    /**
+     * This should be reorganized to only show the date pickers if edit
+     */
     return (
         <div className="edit-booking-div">
         <h3>Edit Booking</h3>
+
+
+
+        {(dayjs(booking.startDate)) > dayjs(Date.now()) ?
+        <div className="another-name">
 
         <DatePicker
         label="Start Date"
@@ -105,8 +112,6 @@ const EditBooking = ({booking, bookings}) => {
         views={['year', 'month', 'day']}
         />
 
-        {(dayjs(booking.startDate)) > dayjs(Date.now()) ?
-        <div className="another-name">
         <button className="edit-delete-booking-button" disabled={!newStartDate || !newEndDate } onClick={() => bookMe()}>Update Booking</button>
         <button className="edit-delete-booking-button" onClick={deleteBooking}>Delete booking</button>
         </div> :
