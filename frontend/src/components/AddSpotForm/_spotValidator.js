@@ -2,7 +2,6 @@ import _imgValidator from "./_imageValidator";
 
 export default function spotValidator(spot){
     const errors = [];
-    // console.log(spot.lat)
     if(!spot.country) errors.push("Country")
     if(spot.country && spot.country.length > 50) errors.push("country-long")
 
@@ -29,15 +28,12 @@ export default function spotValidator(spot){
     for(let i = 0; i < 5; i++) {
         if (spot.images[i]) atLeasetOneImage = true
     }
-    // console.log(errors)
     if (!atLeasetOneImage) errors.push("Image")
     if(!errors.length) return []
     return errors
 }
 
 function latChecker(lat, errors) {
-    console.log(lat)
-    console.log(lat === "")
     if(lat === undefined || lat === "") return errors.push("Latitude")
     if(isNaN(lat)) return errors.push("Latitude")
     if (lat > 90 || lat < -90) errors.push("Latitude")

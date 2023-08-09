@@ -50,13 +50,10 @@ const AddSpotForm = () => {
             .then(res => history.push(`/spots/${res.id}`))
                .catch(
                     async (res) => {
-                        console.log(res)
                         const data = await res.json();
                         if (data && data.errors) setErrors(data.errors);
                     }
                 );
-        // console.log(createdSpot)
-        // return history.push(`/spots/${createdSpot.id}`)
     }
 
     useEffect(() => {
@@ -73,11 +70,6 @@ const AddSpotForm = () => {
             images
         }))
     }, [country, address, city, state, latitude, longitude, description, title, price, images])
-
-    useEffect(() => {
-        console.log(images)
-
-    }, [images])
 
     const updateFile = (e, index) => {
         // e.preventDefault()
