@@ -122,15 +122,18 @@ export default function bookingReducer(state = initialState, action) {
         userBookings: {...state.userBookings}
       }
     case EDIT_SPOT_BOOKINGS:
+      let spot = {...state.userBookings[action.booking.id].Spot}
+      let booking = action.booking
+      booking.Spot = spot
       return {
         ...state,
         spotBookings: {
           ...state.spotBookings,
-          [action.booking.id]: action.booking
+          [action.booking.id]: booking
         },
         userBookings: {
           ...state.userBookings,
-          [action.booking.id]: action.booking
+          [action.booking.id]: booking
         }
       }
     case DELETE_BOOKING:

@@ -42,6 +42,7 @@ const MyBookings = () => {
     if (!loaded) {
         return <h2>Loading... </h2>
     }
+
     return (
             <div className="my-bookings-wrapper">
                 <div className="my-bookings-div">
@@ -52,7 +53,7 @@ const MyBookings = () => {
                 {Object.values(allUserBookings).map(el => (
                 <li key={el.id} className="booking-li">
                     <div className="booking-spot-name">{el?.Spot?.name}</div>
-                    <img className="booking-img" src={`${el?.Spot.previewImage}`} alt='spot-image'/>
+                    <img className="booking-img" src={`${el?.Spot?.previewImage}`} alt='spot-image'/>
                     <div className="my-booking-dates">
                     <span className="my-booking-start-date my-booking-date">{el.startDate.slice(0, 10)}</span>
                     <span className="my-booking-date">{el.endDate.slice(0, 10)}</span>
