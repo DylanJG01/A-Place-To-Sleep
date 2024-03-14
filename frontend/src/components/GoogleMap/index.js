@@ -1,15 +1,7 @@
 import { useRef, useEffect } from "react";
-
-export default function Map({
-  center,
-}
-// : {
-//   center: google.maps.LatLngLiteral;
-//   zoom: number;
-// }
-){
+import "./Map.css"
+export default function Map(){
   const ref = useRef();
-  console.log("huh?")
   useEffect(() => {
     new window.google.maps.Map(ref.current, {
       zoom: 4,
