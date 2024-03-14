@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root(){
   return (
-    <Wrapper apiKey="">
+    <Wrapper apiKey={process.env.REACT_APP_MAP_API_KEY}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ModalProvider>
           <Provider store={store}>
