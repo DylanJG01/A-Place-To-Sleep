@@ -10,6 +10,8 @@ import AddSpotForm  from "./components/AddSpotForm";
 import EditSpotForm from "./components/EditSpotForm";
 import UserReviews from "./components/GetUserReviews";
 import MyBookings from "./components/Booking/MyBookings"
+import Map from "./components/GoogleMap"
+
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +45,9 @@ function App() {
           </Route>
           <Route exact path='/bookings'>
             <MyBookings />
+          </Route>
+          <Route exact path='/map'>
+            <Map/>
           </Route>
         </Switch>
       )}

@@ -12,6 +12,8 @@ import * as sessionActions from './store/session';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 
+import { Wrapper } from "@googlemaps/react-wrapper";
+
 const store = configureStore();
 
 if (process.env.NODE_ENV !== 'production') {
@@ -24,16 +26,18 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root(){
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <ModalProvider>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-            <Modal />
-          </BrowserRouter>
-        </Provider>
-      </ModalProvider>
-    </LocalizationProvider>
+    <Wrapper apiKey="AIzaSyBZ4Mw8USOEXXRrtOKXvbCfUEh9OZO63f8">
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ModalProvider>
+          <Provider store={store}>
+            <BrowserRouter>
+              <App />
+              <Modal />
+            </BrowserRouter>
+          </Provider>
+        </ModalProvider>
+      </LocalizationProvider>
+    </Wrapper>
   )
 }
 
