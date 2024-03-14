@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root(){
   return (
-    <Wrapper apiKey="AIzaSyBZ4Mw8USOEXXRrtOKXvbCfUEh9OZO63f8">
+    <Wrapper apiKey="">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ModalProvider>
           <Provider store={store}>
