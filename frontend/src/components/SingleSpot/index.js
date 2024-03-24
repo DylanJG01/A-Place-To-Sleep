@@ -7,7 +7,7 @@ import AddReview from '../AddReview';
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import Booking from '../Booking'
 import './SingleSpot.css'
-
+import Map from '../GoogleMap'
 
 const SingleSpot = () => {
     const dispatch = useDispatch();
@@ -125,6 +125,7 @@ const SingleSpot = () => {
                 <ReviewsBySpot />
            </div>
         </div>
+        <Map lat={singleSpot.lat} lng={singleSpot.lng}/>
         </div>
     )
 }
