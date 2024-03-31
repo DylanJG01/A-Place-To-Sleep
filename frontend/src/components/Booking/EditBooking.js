@@ -72,7 +72,6 @@ const EditBooking = ({booking, bookings}) => {
     const deleteBooking = async (e) => {
         let x = await dispatch(deleteBookingThunk(booking.id))
         if (x.message) {
-            // setTimeout(() => closeModal(), 1000)
             return setModalContent(
                     <div className="successful-delete-modal">
                         <h2 className="booking-delete" onClick={closeModal}>Booking successfully cancelled</h2>
@@ -87,8 +86,6 @@ const EditBooking = ({booking, bookings}) => {
     return (
         <div className="edit-booking-div">
         <h3>Edit Booking</h3>
-
-
 
         {(dayjs(booking.startDate)) > dayjs(Date.now()) ?
         <div className="another-name">
