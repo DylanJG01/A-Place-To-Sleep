@@ -14,8 +14,6 @@ const SingleSpot = () => {
     const { spotId } = useParams();
     const [loaded, setLoaded] = useState(false)
     const [singleSpot, user, reviews] = useSelector(state => [state.spots.singleSpot, state.session.user, Object.values(state.reviews.spot)])
-    // const [singleSpot, user, reviews] = useSelector(state => [state.spots.singleSpot, state.session.user, state.reviews.spot])
-
 
     useEffect(() => {
         const load = async () => {

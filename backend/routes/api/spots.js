@@ -31,9 +31,6 @@ router.get(
 
         for (let review of reviews) {
             review = review.toJSON();
-
-            // console.log(review)
-            // let spot = await Spot.findByPk(review.spotId)
             let user = await User.findByPk(review.userId, {
                 attributes: ['id', 'firstName', 'lastName']
             })
@@ -139,7 +136,6 @@ router.get(
         const spots = [];
 
         for (let spot of userSpots) {
-            // console.log(spot.toJSON())
             let review = await Review.findAll({
                 where: {
                     userId: spot.ownerId
@@ -305,7 +301,6 @@ router.get( // I want to refactor the for loop
     const spots = [];
 
     for (let spot of allSpots) {
-        // console.log(spot.toJSON())
         let review = await Review.findAll({
             where: {
                 spotId: spot.id
@@ -326,12 +321,10 @@ router.get( // I want to refactor the for loop
             if(el.preview === true){
                 previewImage = el.url
             }
-            // console.log(el)
         })
         if(!previewImage){
             previewImage = "No image preview"
         }
-        // console.log(previewImage)
         spot.preview = previewImage
         delete spot.SpotImages;
     }
@@ -412,18 +405,12 @@ router.post(
         }
 
         const { startDate, endDate } = req.body;
-        console.log(new Date(startDate), new Date())
 
         if (new Date(startDate) < new Date().setHours(0, 0, 0, 0) || new Date(endDate) < new Date()) {
             err.message = "Cannot start or end booking in the past";
             res.status(400);
             return next(err)
         }
-
-        // console.log()
-        // console.log(Date.parse(startDate))
-        // console.log(Date.parse(endDate))
-        // console.log()
 
 
         let arrivalDate = new Date(startDate).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
@@ -478,11 +465,9 @@ router.post(
             let dayToBook = arrivalDate;
             while (dayToBook < departureDate){
                 if(bookedDays.includes(dayToBook)){
-                    // console.log(dayToBook.toString())
                     let day = dayToBook.toString().split('').slice(6).join('')
                     let month = dayToBook.toString().split('').slice(4, 6).join('')
                     let year = dayToBook.toString().split('').slice(0, 4).join('')
-                    // console.log(bookedDays, dayToBook)
                     conflicts.push(`Booking conflict: ${month}-${day}-${year}`)
                 }
                 ++dayToBook;
@@ -513,7 +498,6 @@ router.post(
     async (req, res, next) => {
 
         let preview = true
-        console.log(req.files)
         const awsImages = await multiplePublicFileUpload(req.files)
         const spot = await Spot.findByPk(+req.params.id);
 
@@ -530,12 +514,10 @@ router.post(
             res.status(403)
             return next(err)
         }
-        console.log("??")
 
         const newSpotImgs = []
         for (const awsImage of awsImages){
 
-            console.log(awsImage)
             const newSpotImg = await SpotImage.create({
                 spotId: req.params.id,
                 url: awsImage,
@@ -544,7 +526,6 @@ router.post(
             preview = false
             newSpotImgs.push(newSpotImg)
         }
-        // console.log(newSpotImg)
         res.json(newSpotImgs)
     }
 );
@@ -558,8 +539,6 @@ router.put(
         const updatedSpot = {}
 
         const spot = await Spot.findByPk(+req.params.id)
-        // console.log(spot.ownerId)
-
         if(!spot){
             err.message = "Spot does not exist";
             res.status(404);
@@ -643,9 +622,6 @@ router.post(
     async (req, res, next) => {
         const { address, city, state, country, lat, lng, name, description, price } = req.body
         const err = new Error();
-
-
-        // console.log(req.user)
         if(!address || address.length > 256){
             err.address = "Street Address must be between 1 and 256 characters"
         }
@@ -695,7 +671,6 @@ router.delete(
     '/:id',
     requireAuth,
     async (req, res, next) => {
-        // console.log(req.user)
 
         const spotToDelete = await Spot.findByPk(+req.params.id);
 

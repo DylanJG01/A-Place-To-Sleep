@@ -20,8 +20,6 @@ const ReviewsBySpot = () => {
         dispatch(reviewsBySpot(spotId))
     }, [dispatch, spotId])
 
-    // console.log("REVIEWS@!@!@!" , reviews)
-
     return (
       <>
             {Object.values(reviews).length ?

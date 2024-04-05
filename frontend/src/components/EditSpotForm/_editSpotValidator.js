@@ -1,6 +1,5 @@
 export default function spotValidator(spot){
     const errors = [];
-    // console.log(spot.lat)
     if(!spot.country) errors.push("Country")
     if(spot.country && spot.country.length > 50) errors.push("country-long")
 

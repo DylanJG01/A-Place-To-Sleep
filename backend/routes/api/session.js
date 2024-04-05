@@ -64,7 +64,6 @@ router.delete(
 
 router.use((err, req, res, next) => {
   if(err.errors.includes('Email or username is required.') || err.errors.includes('Password is required.')){
-    // console.log("Hit this")
     err.message = "Validation error"
   }
   return next(err);

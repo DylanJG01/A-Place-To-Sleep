@@ -94,7 +94,6 @@ export const addSpotThunk = (user, spot) => async dispatch => {
 
         if (response.ok) {
             const images = await response.json()
-            console.log(spot)
             spot.SpotImages = images
         }
         dispatch(addSpot(user, spot))

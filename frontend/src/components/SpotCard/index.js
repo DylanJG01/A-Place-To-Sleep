@@ -6,7 +6,6 @@ function SpotCard ({spot}) {
     const history = useHistory()
 
     const avgRating = (num) => (Math.round(num * 100) / 100).toFixed(2)
-    // console.log(spot)
 
     const updateSpot = (e) => {
          e.stopPropagation()

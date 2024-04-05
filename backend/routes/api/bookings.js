@@ -115,7 +115,6 @@ router.put(
             }
             if (Object.entries(err).length) {
                 res.status(403)
-                console.log(err)
                 err.message = "Sorry, this spot is already booked for the specified dates"
                 return next(err)
             }
@@ -130,11 +129,9 @@ router.put(
             let dayToBook = arrivalDate;
             while (dayToBook < departureDate) {
                 if (bookedDays.includes(dayToBook)) {
-                    // console.log(dayToBook.toString())
                     let day = dayToBook.toString().split('').slice(6).join('')
                     let month = dayToBook.toString().split('').slice(4, 6).join('')
                     let year = dayToBook.toString().split('').slice(0, 4).join('')
-                    // console.log(month, day, year)
                     conflicts.push(`Booking conflict: ${month}-${day}-${year}`)
                 }
                 ++dayToBook;

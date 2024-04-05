@@ -13,15 +13,12 @@ const UserReviews = () => {
     useEffect (() => {
         dispatch(reviewsByUser(user))
     }, [dispatch, user])
-    // console.log(reviews, "!!")
-    // console.log("!!!!", reviews)
     if (!reviews.length) return (
         <>
     <h1 className='manage-reviews-h1'>My Reviews</h1>
     <h2 className='no-reviews'>Please Visit a spot to post a review!</h2>
         </>
     )
-    // console.log(reviews)
 
     return (
         <div className='manage-reviews-div'>

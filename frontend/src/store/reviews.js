@@ -47,10 +47,8 @@ export const reviewsBySpot = (spotId) => async dispatch => {
 
     if (res.ok) {
         const reviews = await res.json()
-        // console.log("REVIEWS: ", reviews)
         return dispatch(spotReviews(reviews))
     }
-    // return console.log(res.status, "reviewsBySpot")
 }
 
 export const reviewsByUser = () => async dispatch => {
@@ -58,13 +56,11 @@ export const reviewsByUser = () => async dispatch => {
 
     if (res.ok) {
         const reviews = await res.json()
-        // console.log("REVIEWS BY USER: ", reviews    )
         return dispatch(userReviews(reviews))
     }
 }
 
 export const addReviewThunk = (review, spotId, user) => async dispatch => {
-    // console.log(spotId)
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -73,14 +69,12 @@ export const addReviewThunk = (review, spotId, user) => async dispatch => {
 
     if (res.ok){
         const review = await res.json()
-        // console.log("AddReview response", review)
         return dispatch(addReview(review, user))
     }
 }
 
 export const editReviewThunk = (review, id, spotOrUser) => async dispatch => {
 
-    console.log(review)
     const res = await csrfFetch(`/api/reviews/${id}`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
@@ -99,16 +93,12 @@ export const editReviewThunk = (review, id, spotOrUser) => async dispatch => {
 }
 
 export const deleteReviewThunk = (review) => async dispatch => {
-    // console.log(review)
     const res = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'DELETE',
         headers: {"Content-Type": "application/json"},
     })
 
     if (res.ok){
-        // const review = res.json();
-        // const message = await res.json();
-        // console.log("DeleteReviewThunk")
         return dispatch(deleteReview(review.id))
     }
 }
@@ -128,10 +118,8 @@ const initialState = {
 export default function reviewReducer(state = initialState, action){
     switch(action.type){
         case GET_SPOT_REVIEWS: {
-            const reviews = { spot: {} }; //
-            // console.log("ReviewReducer Get Spot Reviews", action.reviews.Reviews)
+            const reviews = { spot: {} };
             action.reviews.Reviews.forEach(review => {
-                // console.log("REVIEW", review)
                 reviews.spot[review.id] = review
             })
             const newState = {...state, ...reviews}
@@ -149,33 +137,25 @@ export default function reviewReducer(state = initialState, action){
 
         case ADD_REVIEW: {
             const newState = {...state}
-            // console.log("ADD REVIEW ACTION", action)
-            // console.log("ADD REVIEW STATE", state)
             const User = {...action.user}
             delete User.email
             delete User.username
             const review = { ...action.review}
             review.User = {...User}
             newState.spot[action.review.id] = {...review}
-
             return newState
         }
         case DELETE_REVIEW: {
             const newState = {...state}
-            // console.log("ACTIONREVIEW", action.review)
-            // console.log(action.review.id)
             delete newState.spot[action.review]
             delete newState.user[action.review]
-            // console.log("NEWSTATE", newState)
             return newState
         }
         case EDIT_USER_REVIEW: {
             const newState = {...state}
-            console.log("CONSOLEDFAFDS", action)
             newState.user[action.review.id][action.review.id] = {...newState.user[action.review.id][action.review.id]}
             newState.user[action.review.id][action.review.id].review = action.review.review
             newState.user[action.review.id][action.review.id].stars = action.review.stars
-            // newState.user[action.review.id] = {[action.review.id]: action.review }
             return newState
         }
         case EDIT_SPOT_REVIEW: {
@@ -183,7 +163,6 @@ export default function reviewReducer(state = initialState, action){
             newState.spot[action.review.id] = {...newState.spot[action.review.id] }
             newState.spot[action.review.id].review = action.review.review
             newState.spot[action.review.id].stars = action.review.stars
-            // newState.user[action.review.id] = action.review
             return newState
         }
         default: return state

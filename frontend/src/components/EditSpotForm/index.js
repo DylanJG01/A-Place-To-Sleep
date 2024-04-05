@@ -66,7 +66,6 @@ const EditSpotForm = () => {
 
         if (errors.length) {
             setDisplayErrors(true)
-            // console.log(errors)
             return
         }
         if (latitude === "") {
@@ -90,7 +89,6 @@ const EditSpotForm = () => {
         const createdSpot = await dispatch(editSpotThunk(user, spot))
             .catch(
                 async (res) => {
-                    // console.log(res)
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
                 }

@@ -1,5 +1,4 @@
 export default function _avgRating(blob){
-    console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<", blob)
     let total = 0;
     let count = 0;
     for (const key in blob){

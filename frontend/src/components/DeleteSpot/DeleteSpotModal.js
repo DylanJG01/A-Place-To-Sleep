@@ -7,7 +7,6 @@ import './DeleteSpotModal.css'
 export default function DeleteSpotModal({spot}){
     const dispatch = useDispatch();
     const { closeModal } = useModal()
-    // console.log(spot)
 
     const confirmDelete = (spot) => {
         dispatch(deleteSpotThunk(spot))
