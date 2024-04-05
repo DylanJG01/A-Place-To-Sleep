@@ -15,7 +15,6 @@ const Booking = ({spotId}) => {
     const dispatch = useDispatch()
     const [disabledDates, setDisabledDates] = useState([])
     const [startDate, setStartDate] = useState(null)
-    // const [userSpotBookings, setUserSptBookings] = useState(allUserBookings?.map(el => el))
     const [endDate, setEndDate] = useState(null)
     const [maxDate, setMaxDate] = useState(null)
     const [minDate, setMinDate] = useState(dayjs(Date.now()).add(2, 'day'))
@@ -51,6 +50,7 @@ const Booking = ({spotId}) => {
         }
         let x = await dispatch(addBookingThunk(bookingData, spotId))
         if (x.id) {
+            console.log(x)
             setStartDate(null)
             setEndDate(null)
             setModalContent(
@@ -77,7 +77,6 @@ const Booking = ({spotId}) => {
 
     const setDates = (startDate) => {
         setStartDate(startDate)
-        // setEndDate(null)
         setMinDate(dayjs(startDate).add(1, 'day'))
         for (let i = 0; i < 21; i++){
             if (isUnavailableDay(dayjs(startDate).add(i, 'day'))) return setMaxDate(dayjs(startDate).add(i, 'day'))
@@ -95,7 +94,6 @@ const Booking = ({spotId}) => {
                     modalComponent={<BookingModal bookings={bookings} user={user} setDates={setDates}/>}
                     />
                 </button>
-                {/* <div onclick={openModal}> </div> */}
             </div>
         }
         <div className="date-pickers">
