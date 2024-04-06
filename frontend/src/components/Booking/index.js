@@ -50,6 +50,7 @@ const Booking = ({spotId}) => {
         }
         let x = await dispatch(addBookingThunk(bookingData, spotId))
         if (x.id) {
+            console.log((endDate - startDate) / 86400000)
             setStartDate(null)
             setEndDate(null)
             setModalContent(
